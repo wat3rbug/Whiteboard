@@ -1,0 +1,12 @@
+<?php
+require "Tables/User.php";
+$firstName = $_POST['firstName'];
+$lastName = $_POST['lastName'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+if (isset($firstName) && isset($lastName) && isset($email) && isset($password)) {
+	$db = new User();
+	$count = $db->addNewUser($firstName, $lastName, $email, $password);
+}
+?>
