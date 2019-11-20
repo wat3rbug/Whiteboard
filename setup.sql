@@ -4,6 +4,7 @@ drop table if exists `comments`;
 drop table if exists `tasks`;
 drop table if exists `project_users`;
 drop table if exists `milestones`;
+drop table if exists `team_names`;
 drop table if exists `teams`;
 drop table if exists `sprints`;
 drop table if exists `projects`;
@@ -23,6 +24,13 @@ create table projects (
 	name varchar(100) not null,
 	start_date date not null,
 	end_date date,
+	description varchar(1000),
+	deleted tinyint(1) not null default 0
+);
+
+create table team_names (
+	id int auto_increment primary key,
+	name varchar(100) not null,
 	deleted tinyint(1) not null default 0
 );
 
@@ -32,6 +40,8 @@ create table teams (
 	foreign key fk_teams_project(project) references projects(id),
 	user int not null,
 	foreign key fk_teams_user(user) references users(id),
+	team_name int not null,
+	foreign key fk_teams_team_names(team_name) references team_names(id),
 	deleted tinyint(1) not null default 0
 );
 

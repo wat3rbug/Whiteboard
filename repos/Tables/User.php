@@ -50,6 +50,21 @@ class User {
 		}
 	}
 	
+	function verifyUser($email, $password) {
+		if (isset($email) && isset($password)) {
+			$sql = "SELECT id from users WHERE (email = ? AND password = ?)";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $email);
+			$statement->bindParam(2, $password);
+			$statement->execute();
+			$count = 0;
+			while ($row = $statement->fetch()) {
+				$count++;
+			}
+			return $count;
+		}
+	}
+	
 	function getNameAndEmailCount($firstName, $lastName, $email) {
 		if (isset($firstName) && isset($lastName) && isset($email)) {
 			$sql = "SELECT id from users WHERE (first_name = ? AND last_name = ?) OR email = ?";

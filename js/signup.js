@@ -39,7 +39,7 @@ function loginUser() {
 			if (result != null){
 				sessionStorage['email'] = email;
 				sessionStorage['password'] = password;
-				window.location.replace("whiteboard.com/projects.html");
+				window.location.replace("whiteboard.com/teams.html");
 			} else {
 				$('#accountModalFail').modal('show');
 			}
