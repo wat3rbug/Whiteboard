@@ -3,7 +3,24 @@ $(document).ready(function () {
 	verifyUser();
 	buildProjectTable();
 	buildTeamTable();
+	buildUsersTable();
 });
+
+function buildUsersTable() {
+	$.ajax({
+		url: "repos/getAllUsers.php",
+		dataType: "json",
+		success: function(users) {
+			$('#usersTable').find('tbody tr').remove();
+			if (users != null) {
+				users.forEach(function (user) {
+					var row = "<tr><td>" + makeCardFromUser(user) + "</td></tr>";
+					$('#usersTable').append(row);
+				})				
+			}
+		}	
+	});
+}
 
 function buildProjectTable() {
 	var teamNames = [];
@@ -82,6 +99,25 @@ function verifyUser() {
 			}
 		}
 	})
+}
+
+function makeCardFromUser(user) {
+	var row = "<div class='card'><div class='card-body'>";
+	row += "<span class='glyphicon glyphicon-user'></span>&nbsp;";
+	row += user.first_name + " " + user.last_name + "</h5>";
+	row += "<p class='card-text'></p>";
+	row += "</div></div>";
+	return row;
+}
+
+function makeCardFromTeam(team, users) {
+	var row = "<div class='card'><div class='card-body'>";
+	row += "<h5 class='card-title'>" + team.name + "</h5>";
+	row += "<p class='card-text'><button type='button' class='btn btn-success' onclick='addUserToteam(" + team.id + ")'>";
+	row += "<span class='glyphicon glyphicon-plus'></span></button>";
+	row += "<select class='browser-default custom-select' id='teamMateSelector_" + team.id + "'>";
+	row += "</select></div></div>";
+	return row;
 }
 
 function makeCardFromProject(project, teamNames) {

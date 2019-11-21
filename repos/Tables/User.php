@@ -67,7 +67,7 @@ class User {
 	
 	function getNameAndEmailCount($firstName, $lastName, $email) {
 		if (isset($firstName) && isset($lastName) && isset($email)) {
-			$sql = "SELECT id from users WHERE (first_name = ? AND last_name = ?) OR email = ?";
+			$sql = "SELECT id from users WHERE (first_name = ? AND last_name = ?) OR email = ? AND deleted = 0";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $firstName);
 			$statement->bindParam(2, $lasstName);
@@ -79,6 +79,16 @@ class User {
 			}
 			return $count;
 		}
+	}
+	
+	function getAllUsers() {
+		$sql = "SELECT * from users WHERE deleted = 0";
+		$statement = $this->conn->prepare($sql);
+		$statement->execute();
+		while ($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
 	}
 }
 ?>
