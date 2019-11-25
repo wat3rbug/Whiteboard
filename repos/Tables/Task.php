@@ -60,7 +60,7 @@ class Task {
 	}
 	
 	function getAllTasks() {
-		$sql = "SELECT tasks.id, projects.name, projects.start_date, projects.end_date, projects.description, tasks.subject, tasks.description, tasks.state, tasks.sprint from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.deleted = 0 ORDER BY tasks.id DESC";
+		$sql = "SELECT tasks.difficulty, tasks.id, projects.name, projects.start_date, projects.end_date, projects.description, tasks.subject, tasks.description, tasks.state, tasks.sprint from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.deleted = 0 ORDER BY tasks.id DESC";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
 		while ($row = $statement->fetch()) {

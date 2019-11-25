@@ -141,7 +141,7 @@ function buildTaskTable() {
 			$('#tasksTable').find('tbody tr').remove();
 			if (tasks != null) {
 				tasks.forEach(function(task) {
-					var row = "<tr><td> " + makeCardForTask(task) + "</td><td>";
+					var row = "<tr><td class='" + task.name +"'> " + makeCardForTask(task) + "</td><td class='" + task.name + "'>";
 					row += "<button type='button' class='btn btn-outline-warning' onclick='editTask(" + task.id + ")'>";
 					row += "<span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
 					row += "<button type='button' class='btn btn-outline-danger' onclick='removeTask(" + task.id + ")'>";
@@ -157,8 +157,13 @@ function buildTaskTable() {
 function makeCardForTask(task) {
 	var row = "<div class='card'><div class='card-body'>";
 	row += "<h5 class='card-title'>" + task.subject + "</h5>";
+	row += "<h6 class='card-subtitle mb-2 text-muted'>Difficulty: " + task.difficulty + "</h6>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Project: " + task.name + "</h6>";
 	row += "<p class='card-text'>Description: " + task.description + "</p>";
 	row += "</div></div>";
 	return row;
+}
+
+function wrapRow(text) {
+	var length = text.length;
 }

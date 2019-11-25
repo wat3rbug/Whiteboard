@@ -6,14 +6,28 @@ function getWebDateFromDB(currentDate) {
 	var day =currentDate.getDate() + 1;
 	return day + " " + month + " " + year;
 }
+function getDBDateFromJSDate(currentDate) {
+	var year = currentDate.getFullYear();
+	var month = currentDate.getMonth() + 1;
+	var day = currentDate.getDate();
+	return year + "-" + month + "-" + day;
+}
 
 function getDateFromString(currentDate) {
 	
 	var sections = currentDate.split("-");
 	var year = parseInt(sections[0]);
-	// assumes it is coming from DB
 	var month = parseInt(sections[1]) - 1;
 	var day = parseInt(sections[2]) -1;
+	result = new Date(year, month, day);
+	return result;
+}
+
+function getDateFromDBString(currentDate) {
+	var sections = currentDate.split("-");
+	var year = parseInt(sections[0]);
+	var month = parseInt(sections[1]) - 1;
+	var day = parseInt(sections[2]);
 	result = new Date(year, month, day);
 	return result;
 }

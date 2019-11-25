@@ -23,9 +23,54 @@ class Project {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	function updateProject($id, $name, $desc, $start, $end) {
+		if (isset($id) && $id > 0 && isset($name) && isset($start) && isset($end)) {
+			$sql = "UPDATE projects SET name = ?, description = ?, start_date =?, end_date = ? WHERE id = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $name);
+			$statement->bindParam(2, $desc);
+			$statement->bindParam(3, $start);
+			$statement->bindParam(4, $end);
+			$statement->bindParam(5, $id);
+			$statement->execute();
+		}
+	}
+	function addProject($name, $desc, $start, $end) {
+		if (isset($name) && isset($start) && isset($end)) {
+			$sql = "INSERT INTO projects (name, description, start_date, end_date) VALUES (?, ?, ?, ?)";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $name);
+			$statement->bindParam(2, $desc);
+			$statement->bindParam(3, $start);
+			$statement->bindParam(4, $end);
+			$statement->execute();
+		}
+	}
+	
+	function getProjectById($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "SELECT * FROM projects WHERE id = ? LIMIT 1";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			while($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
+	function removeProject($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "UPDATE projects SET deleted = 1 WHERE id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+		}
+	}
 	
 	function getAllProjects() {
-		$sql = "SELECT * FROM projects WHERE deleted = 0";
+		$sql = "SELECT * FROM projects WHERE deleted = 0 ORDER BY id DESC";
 		$statement = $this->conn->query($sql);
 		while ($row = $statement->fetch()) {
 			$output[] = $row;				
