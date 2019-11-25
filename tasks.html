@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 	
 	<script src="js/signup.js"></script>
-	<script src="js/teams/teams.js"></script>
+	<script src="js/tasks/tasks.js"></script>
 	<script src="js/dateFunctions.js"></script>
 	
 	<div class="col-sm-12">
@@ -32,10 +32,10 @@
 				<a class="nav-link" id="project-tab" data-toggle="tab" role="tab" aria-control="project" href="projects.html">Projects</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" id="task-tab" data-toggle="tab" role="tab" aria-control="task" href="tasks.html">Tasks</a>
+				<a class="nav-link active" id="task-tab" data-toggle="tab" role="tab" aria-control="task" href="tasks.html">Tasks</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" id="team-tab" data-toggle="tab" role="tab" aria-control="team" href="teams.html">Teams</a>
+				<a class="nav-link" id="team-tab" data-toggle="tab" role="tab" aria-control="team" href="teams.html">Teams</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" id="sprint-tab" data-toggle="tab" role="tab" aria-control="sprint" href="sprints.html">Sprints</a>
@@ -46,49 +46,21 @@
 	
 	<!-- End Top Menu portion -->
 	
-		<div class="row">&nbsp;</div>
-		<div class="row">
-			<div class="col-lg-4">
-				<table class="table" id="projectTable">
-					<thead>
-						<tr>
-							<th scope="col">Projects</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-			<div class="col-lg-3">
-				<button type="button" class="btn btn-success" id="addTeamBtn">
-					<span class="glyphicon glyphicon-plus"></span>
-					Add Team
-				</button>
-				<div class="row">&nbsp;</div>
-				<table class="table" id="teamTable">
-					<thead>
-						<tr>
-							<th scope="col">Teams</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-			<div class="col-lg-3">
-				<table class="table" id="usersTable">
-					<thead>
-						<tr>
-							<th scope="col">Users</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-					
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		<div class="col-sm-10">
+			<table class="table" id="tasksTable">
+				<thead>
+					<tr>
+						<th scope="col">Tasks</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
 		</div>
 	</div>
+</div>
 </body>
 
 
