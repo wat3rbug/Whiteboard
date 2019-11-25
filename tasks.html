@@ -49,10 +49,16 @@
 	<div class="row">&nbsp;</div>
 	<div class="row">
 		<div class="col-sm-10">
+			<button type="button" class="btn btn-success" id="addTaskBtn">
+				<span class="glyphicon glyphicon-plus"></span>
+				Add Task
+			</button>
+			<div class="row">&nbsp;</div>
 			<table class="table" id="tasksTable">
 				<thead>
 					<tr>
 						<th scope="col">Tasks</th>
+						<th scope="col">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -64,42 +70,62 @@
 </body>
 
 
-<!-- Add Team Modal Section -->
+<!-- Add Task Modal Section -->
 
-<div class="modal fade" id="addTeamModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header d-block alert-success">
-				<h5 class="modal-title text-center">Add Team</h5>
+				<h5 class="modal-title text-center">Add Task</h5>
 			</div>
 			<div class="modal-body">
 				
 				<div class="row">
-					<div class="col-sm-6 text-right">Team Name</div>
-					<div class="col-sm-6"><input id="addTeamName"></div>
-				</div>
-				<div class="row">&nbsp;</div>
-				<div class="row">
 					<div class="col-sm-6 text-right">Project</div>
 					<div class="col-sm-6">
-						<select class="browser-default custom-select" id="projectSelector">					
+						<select class="browser-default custom-select" id="addProjSelector">
 						</select>
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-6 text-right">Main User</div>
-					<div class="col-sm-6">
-						<select class="browser-default custom-select" id="userSelector">					
+					<div class="col-sm-6 text-right">Difficulty</div>
+					<div class="col-sm-2">
+						<select class="browser-default custom-select" id="addDiffSelector">
+							<option values="1">1</option>
+							<option values="2">2</option>
+							<option values="3">3</option>
+							<option values="5">5</option>
+							<option values="8">8</option>
+							<option values="13">13</option>
+							<option values="21">21</option>
 						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Subject</div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea class="form-control" rows="1" id="addSubject"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Description</div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea class="form-control" rows="4" id="addDescription"></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" id="pushTeamToDB">
-					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Team
+				<button type="button" class="btn btn-success" id="pushTaskToDB">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Task
 				</button>&nbsp;
-				<button type="button" class="btn btn-outline-secondary" id="cancelAddTeamBtn">
+				<button type="button" class="btn btn-outline-secondary" id="cancelAddTaskBtn">
 					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
 				</button>
 			</div>
@@ -107,6 +133,70 @@
 	</div>
 </div>
 
+
+<!-- Edit Task Modal Section -->
+
+<div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<h5 class="modal-title text-center">Edit Task</h5>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+					<input type="hidden" id="taskIdHdn">
+					<div class="col-sm-6 text-right">Project</div>
+					<div class="col-sm-6">
+						<select class="browser-default custom-select" id="editProjSelector">
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">Difficulty</div>
+					<div class="col-sm-2">
+						<select class="browser-default custom-select" id="editDiffSelector">
+							<option values="1">1</option>
+							<option values="2">2</option>
+							<option values="3">3</option>
+							<option values="5">5</option>
+							<option values="8">8</option>
+							<option values="13">13</option>
+							<option values="21">21</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Subject</div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea class="form-control" rows="1" id="editSubject"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Description</div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea class="form-control" rows="4" id="editDescription"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" id="pushEditTaskToDB">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Edit Task
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelEditTaskBtn">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 </html>
 
 

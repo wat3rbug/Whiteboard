@@ -32,6 +32,14 @@ class Project {
 		}
 		return $output;
 	}
+	function getProjectNameAndIds() {
+		$sql = "SELECT id, name FROM projects WHERE deleted = 0";
+		$statement = $this->conn->query($sql);
+		while ($row = $statement->fetch()) {
+			$output[] = $row;				
+		}
+		return $output;
+	}
 	
 	function getAllProjectsWithTeam() {
 		$sql = "SELECT projects.name, start_date, end_date, team_names.name AS team FROM projects LEFT JOIN teams ON teams.project = projects.id LEFT JOIN team_names ON teams.team_name = team_names.id WHERE projects.deleted = 0";
