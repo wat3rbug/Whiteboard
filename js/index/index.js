@@ -12,7 +12,7 @@ $(document).ready(function() {
 	});
 	
 	// Login Section
-	
+
 	$('#login').on("click", function() {
 		loginUser();
 	});
@@ -22,17 +22,17 @@ function loginUser() {
 	var email = $("#LoginEmail").val();
 	var password = $("#LoginPassword").val();
 	$.ajax({
-		url: "repos/LoginUser.php",
+		url: "repos/loginUser.php",
 		type: "post",
 		data: {
 			"email:": email,
 			"password": password
 		},
 		success: function(result) {
-			if (isNumber(result)){
+			if (isNumber(result[0]['id'])){
 				sessionStorage['email'] = email;
 				sessionStorage['password'] = password;
-				window.location.href("projects.html");
+				window.location.replace("projects.html");
 			} else {
 				$('#accountModalFail').modal('show');
 			}

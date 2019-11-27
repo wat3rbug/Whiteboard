@@ -36,20 +36,12 @@ $(document).ready(function () {
 	
 	// Add Project Modal Section
 	
-	$('#cancelAddProjectBtn').on("click", function() {
-		$('#addProjectModal').modal('hide');	
-	});
-	
 	$('#pushProjectToDB').on("click", function() {
 		pushProjectToDB();
 		clearModals();	
 	});
 	
 	// Edit Project Modal Section
-	
-	$('#cancelEditProjectBtn').on("click", function() {
-		$('#editProjectModal').modal('hide');
-	});
 	
 	$('#pushEditProjectToDB').on("click", function() {
 		pushEditToDB();
@@ -58,12 +50,15 @@ $(document).ready(function () {
 });
 
 function clearModals() {
-	$('#addProjectName').val('');
-	$('#addProjStart').val();
-	$('#addProjEnd').val();
-	$('#editProjectName').val('');
-	$('#editProjStart').val();
-	$('#editProjEnd').val();
+	$('#addProjName').val('');
+	$('#addProjDescription').val('');
+	$('#addProjStart').val('');
+	$('#addProjEnd').val('');
+	
+	$('#editProjName').val('');
+	$('#editProjDescription').val('');
+	$('#editProjStart').val('');
+	$('#editProjEnd').val('');
 }
 
 function pushProjectToDB() {
@@ -124,7 +119,7 @@ function editProject(projectId) {
 					$('#editProjectModal').modal('show');
 					$('#editProjIdHdn').val(project['id']);
 					$('#editProjName').val(project['name']);
-					$('#editDescription').val(project['description']);
+					$('#editProjDescription').val(project['description']);
 					$('#editProjStart').datepicker("setDate", getDateFromDBString(project['start_date']));
 					$('#editProjEnd').datepicker("setDate", getDateFromDBString(project['end_date']));
 				}
@@ -169,12 +164,21 @@ function buildProjectTable() {
 		}	
 	});
 }
+function getWebStrFromDB(currentDate) {
+	var sections = currentDate.split("-");
+	var year = sections[0];
+	var day = sections[2];
+	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var month = months[sections[1] -1];
+	return day + "-" + month + "-" + year;
+		
+}
 
 function makeCardForProject(project) {
 	var row = "<div class='card'><div class='card-body'>";
 	row += "<h5 class='card-title'>" + project.name + "</h5>";
-	row += "<h6 class='card-subtitle mb-2 text-muted'>Start Date: " + project.start_date + "</h6>";
-	row += "<h6 class='card-subtitle mb-2 text-muted'>End Date: " + project.end_date + "</h6>";
+	row += "<h6 class='card-subtitle mb-2 text-muted'>Start Date: " + getWebStrFromDB(project.start_date) + "</h6>";
+	row += "<h6 class='card-subtitle mb-2 text-muted'>End Date: " + getWebStrFromDB(project.end_date) + "</h6>";
 	if (project.description != null)
 		row += "<p class='card-text'>Description: " + project.description + "</p>";
 	row += "</div></div>";
