@@ -12,11 +12,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 	
-	<script src="js/signup.js"></script>
+	<script src="js/index/index.js"></script>
 	
 	<div class="col-sm-12">
 		<div class="jumbotron info">
-			<h1 text="center">Whiteboard</h1>This time we won't stain your hands
+			<h1 text="center">Whiteboard</h1>This time you won't stain your hands
 		</div>
 	</div>
 	<div class="row">&nbsp;</div>
@@ -57,10 +57,17 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header d-block alert-danger">
-				<h5 class="modal-title text-center">Login Unsuccessful</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Login Unsuccessful</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
 			</div>
 			<div class="modal-body">
 				<div class="row">&nbsp;</div>
@@ -68,7 +75,7 @@
 				<div class="row">&nbsp;</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" id="finished">
+				<button type="button" class="btn btn-danger" id="finished" data-dismiss="modal">
 					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
 				</button>
 			</div>
@@ -76,16 +83,57 @@
 	</div>
 </div>
 
-<!-- Successful Account Add Modal -->
+<!-- Failed Account Creation Modal Section -->
+
+<div class="modal fade" id="accountModalFailed" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-danger">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Account Creation Failed</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-lg-12">Unable to create the account.  Please check your account settings.</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" id="finished" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Successful Add Account Modal Section -->
 
 <div class="modal fade" id="accountModalDone" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header d-block alert-success">
-				<h5 class="modal-title text-center">Account Created</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Account Created</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
 			</div>
 			<div class="modal-body">
 				<div class="row">&nbsp;</div>
@@ -93,24 +141,31 @@
 				<div class="row">&nbsp;</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" id="finished">
-					<span class="glyphicon glyphicon-ok"></span>&nbsp;Ok
+				<button type="button" class="btn btn-success" id="finished" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
 				</button>
 			</div>
 		</div>
 	</div>
 </div>
 	
-<!-- Add account modal section -->
+<!-- Add Account Modal Section -->
 
 <div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header d-block alert-success">
-				<h5 class="modal-title text-center">Create New Account</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Create New Account</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -140,7 +195,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-success" id="signup">Sign Up</button>
 				&nbsp;
-				<button type="button" class="btn btn-outline-secondary" id="cancelSignup">
+				<button type="button" class="btn btn-outline-secondary" id="cancelSignup" data-dismiss="modal">
 					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
 				</button>
 			</div>

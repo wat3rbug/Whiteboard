@@ -2,7 +2,6 @@ create database whiteboard;
 use whiteboard;
 drop table if exists `comments`;
 drop table if exists `tasks`;
-drop table if exists `project_users`;
 drop table if exists `milestones`;
 drop table if exists `team_names`;
 drop table if exists `teams`;
@@ -28,9 +27,12 @@ create table projects (
 	deleted tinyint(1) not null default 0
 );
 
-create table team_names (
+create table team_members (
 	id int auto_increment primary key,
-	name varchar(100) not null,
+	team int not null,
+	foreign key fk_team_members_team(team) references teams(id),
+	team_mate int not null,
+	foreign key fl_team_members_mate(team_mate) references users(id),
 	deleted tinyint(1) not null default 0
 );
 
@@ -38,10 +40,7 @@ create table teams (
 	id int auto_increment primary key,
 	project int not null,
 	foreign key fk_teams_project(project) references projects(id),
-	user int not null,
-	foreign key fk_teams_user(user) references users(id),
-	team_name int not null,
-	foreign key fk_teams_team_names(team_name) references team_names(id),
+	name int not null,
 	deleted tinyint(1) not null default 0
 );
 
@@ -59,15 +58,6 @@ create table sprints (
 	start_date date not null,
 	end_date date not null,
 	foreign key fk_sprints_project(project) references projects(id),
-	deleted tinyint(1) not null default 0
-);
-
-create table project_users (
-	id int auto_increment primary key,
-	project int not null,
-	user int not null,
-	foreign key fk_project_users_project(project) references projects(id),
-	foreign key fk_project_users_user(user) references users(id),
 	deleted tinyint(1) not null default 0
 );
 
