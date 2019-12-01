@@ -3,7 +3,7 @@ use whiteboard;
 drop table if exists `comments`;
 drop table if exists `tasks`;
 drop table if exists `milestones`;
-drop table if exists `team_names`;
+drop table if exists `team_members`;
 drop table if exists `teams`;
 drop table if exists `sprints`;
 drop table if exists `projects`;
@@ -74,6 +74,7 @@ create table tasks (
 	state tinyint(4) not null default 0,
 	foreign key fk_task_sprint(sprint) references sprints(id),
 	completed date,
+	type int not null default 0,
 	deleted tinyint(1) not null default 0
 );
 

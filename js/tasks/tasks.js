@@ -31,6 +31,7 @@ function pushEditToDB() {
 	var description = $('#editDescription').val();
 	var diff = $('#editDiffSelector').val();
 	var project = $('#editProjSelector').val();
+	var type = $('#editTaskTypeSelector').val();
 	$.ajax({
 		url: "repos/updateTask.php",
 		type: "post",
@@ -39,7 +40,8 @@ function pushEditToDB() {
 			"subject": subject,
 			"description": description,
 			"diff": diff,
-			"project": project
+			"project": project,
+			"type": type,
 		},
 		success: function() {
 			$('#editTaskModal').modal('hide');
@@ -64,6 +66,7 @@ function editTask(taskId) {
 				$('#editDescription').val(task.description);
 				$('#editDiffSelector').val(task.difficulty);
 				$('#editProjSelector').val(task.project);
+				$("#editTaskTypeSelector").val(task.type);
 				$('#editTaskModal').modal('show');
 			}
 		}
@@ -88,16 +91,18 @@ function addTaskToDB() {
 	var subject = $('#addSubject').val();
 	var description = $('#addDescription').val();
 	var difficulty = $('#addDiffSelector').val();
+	var type = $('#addTaskTypeSelector').val();
 	$.ajax({
 		url: "repos/getUserId.php",
 		type: "post",
+		dataType: "json",
 		data: {
 			"email": sessionStorage['email'],
 			"password": sessionStorage['password']
 		},
 		success: function(result) {
 			if (result != null) {
-				var user = result;
+				var user = result[0]['id'];
 				$.ajax({
 					url: "repos/addTask.php",
 					type: "post",
@@ -106,7 +111,8 @@ function addTaskToDB() {
 						"user": user,
 						"description" : description,
 						"subject": subject,
-						"diff": difficulty
+						"diff": difficulty,
+						"type": type,
 					},
 					success: function() {
 						buildTaskTable();
@@ -142,11 +148,12 @@ function buildTaskTable() {
 			if (tasks != null) {
 				tasks.forEach(function(task) {
 					var row = "<tr><td class='" + task.name +"'> " + makeCardForTask(task) + "</td><td class='" + task.name + "'>";
+					row += "<div style='min-width:65px'>";
 					row += "<button type='button' class='btn btn-outline-warning' onclick='editTask(" + task.id + ")'>";
 					row += "<span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
 					row += "<button type='button' class='btn btn-outline-danger' onclick='removeTask(" + task.id + ")'>";
 					row += "<span class='glyphicon glyphicon-remove'></span></button>";
-					row +"</td></tr>";
+					row +"</div></td></tr>";
 					$('#tasksTable').append(row);	
 				});
 			}
@@ -159,7 +166,16 @@ function makeCardForTask(task) {
 	row += "<h5 class='card-title'>" + task.subject + "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Difficulty: " + task.difficulty + "</h6>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Project: " + task.name + "</h6>";
-	row += "<p class='card-text'>Description: " + task.description + "</p>";
+	row += "<h6 class='card-subtitle mb-2 text-muted'>Type: ";
+	switch (task.type) {
+		case "0": row += "Story";
+		break;
+		case "1": row += "Task";
+		break;
+		case "2": row += "Bug";
+		break;
+	}
+	row += "</h6><p class='card-text'>Description: " + task.description + "</p>";
 	row += "</div></div>";
 	return row;
 }
