@@ -5,7 +5,8 @@ $password = $_POST['password'];
 
 if (isset($password) && isset($email)) {
 	$db = new User();
-	$id = $db->getUserIdFromLogin($email, $password);
-	echo $id;
+	$data = $db->getUserIdFromLogin($email, $password);
+	header('Content-type: application/json');
+	echo json_encode($data);
 }
 ?>

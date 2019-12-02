@@ -2,6 +2,12 @@ $(document).ready(function() {
 	
 	buildTeamTable();
 	
+	// Edit Team Section
+	
+	$('#pushEditTeamToDB').on("click", function() {
+		pushEditToDB();
+	});
+	
 	// Add Team Section
 	
 	$('#addTeamBtn').on("click", function() {
@@ -53,6 +59,63 @@ function makeButtonsForTeam(team) {
 	row += "&nbsp;<button type='button' class='btn btn-outline-danger' onclick='removeTeam(" + team['id'] + ")'>";
 	row += "<span class='glyphicon glyphicon-remove'></span></button></div>";
 	return row;
+}
+
+function editTeam(id) {
+	$.ajax({
+		url: "repos/getTeamById.php",
+		type: "post",
+		data: {
+			"id": id
+		},
+		success: function(results) {
+			if (results != null) {
+				var team = results[0];
+				$('#editTeamModal').modal('show');
+				$('#editTeamName').val(team.name);
+				$('#editTeamHdn').val(team.id);
+				$.ajax({
+					url: "repos/getAllProjects.php",
+					dataType: "json",
+					success: function(results) {
+						if (results != null) {
+							results.forEach(function(project) {
+								$('#editprojectSelector').append($('<option>').text(project['name']).val(project['id']));
+							});
+							$('#editprojectSelector').val(team['project']);
+						}
+					}
+				})
+			}
+		}
+	})
+}
+
+function pushEditToDB() {
+	var id = $('#editTeamHdn').val();
+	var name = $('#editTeamName').val();
+	var project = $('#editprojectSelector').val();
+	clearEditTeamModal();
+	$.ajax({
+		url: "repos/updateTeam.php",
+		type: "post",
+		data: {
+			"id": id,
+			"name": name,
+			"project": project
+		},
+		success: function() {
+			$('#editTeamModal').modal('hide');
+			buildTeamTable();
+			buildProjectTable();
+		}
+	});
+}
+
+function clearEditTeamModal() {
+	$('#editTeamHdn').val('');
+	$('#editTeamName').val('');
+	$('#editprojectSelector').val(0);
 }
 
 function removeTeam(id) {

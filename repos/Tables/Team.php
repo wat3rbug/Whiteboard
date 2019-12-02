@@ -23,6 +23,29 @@ class Team {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	function updateTeam($id, $name, $project) {
+		if (isset($id) && $id > 0 && isset($project) && $project > 0 && isset($name)) {
+			$sql = "UPDATE teams SET name = ?, project = ? WHERE id= ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $name);
+			$statement->bindParam(2, $project);
+			$statement->bindParam(3, $id);
+			$statement->execute();
+		}
+	}
+	
+	function getTeamById($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "SELECT * from teams WHERE id = ? LIMIT 1";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;				
+			}
+			return $output;
+		}
+	}
 	
 	function removeTeam($id) {
 		if (isset($id) && $id > 0) {
