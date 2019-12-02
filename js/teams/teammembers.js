@@ -2,6 +2,26 @@ $(document).ready(function() {
 	
 	buildTeamTable();
 	
+	// Add User Section
+	
+	$('#pushAddTeamUserToDB').on("click", function() {
+		var user = $('#addUserSelector').val();
+		var team = $('#addUserTeamHdn').val();
+		$.ajax({
+			url: "repos/addUserToTeam.php",
+			type: "post",
+			data: {
+				"user": user,
+				"team": team
+			},
+			success: function() {
+				$('#addUserModal').modal('hide');
+				clearAddUserModal();
+				buildTeamTable();
+			}	
+		});
+	});
+	
 	// Edit Team Section
 	
 	$('#pushEditTeamToDB').on("click", function() {
@@ -153,6 +173,12 @@ function clearEditTeamModal() {
 	$('#editprojectSelector').val(0);
 }
 
+function clearAddUserModal() {
+	$('#addUserTeamHdn').val('');
+	$('#addUserTeamName').val('');
+	$('#addUserSelector').val(0);
+}
+
 function removeTeam(id) {
 	$.ajax({
 		url: "repos/removeTeam.php",
@@ -173,7 +199,7 @@ function makeTeamCard(team, users) {
 	if (users != null) {
 		users.forEach(function(user) {
 		row += "<p class='card-text'><button type='button' class='btn btn-danger' onclick='removeUserFromTeam(";
-		row += user['id'] + ", " + team['id'] + ")'><span class='glyphicon glyphicon-minus-sign'></span></button>&nbsp;";
+		row += user['userid'] + ", " + team['id'] + ")'><span class='glyphicon glyphicon-minus-sign'></span></button>&nbsp;";
 		row += user['first_name'] + " " + user['last_name'];
 		row += "</p>";
 		});
