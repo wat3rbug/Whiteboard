@@ -86,6 +86,15 @@ class Project {
 		return $output;
 	}
 	
+	function getAllProjectsAndTeams() {
+		$sql = "SELECT * FROM projects LEFT JOIN teams on teams.project = projects.id WHERE projects.deleted = 0";
+		$statement = $this->conn->prepare($sql);
+		while ($row = $statement->fetch()) {
+			$output[] = $row;				
+		}
+		return $output;
+	}
+	
 	function getAllProjectsWithTeam() {
 		$sql = "SELECT projects.name, start_date, end_date, team_names.name AS team FROM projects LEFT JOIN teams ON teams.project = projects.id LEFT JOIN team_names ON teams.team_name = team_names.id WHERE projects.deleted = 0";
 		$statement = $this->conn->query($sql);

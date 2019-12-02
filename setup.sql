@@ -40,7 +40,7 @@ create table teams (
 	id int auto_increment primary key,
 	project int not null,
 	foreign key fk_teams_project(project) references projects(id),
-	name int not null,
+	name varchar(40) not null,
 	deleted tinyint(1) not null default 0
 );
 

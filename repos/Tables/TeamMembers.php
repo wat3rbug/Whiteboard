@@ -1,5 +1,5 @@
 <?php
-class Team {
+class TeamMember {
 	
 	private $conn;
 	
@@ -23,31 +23,25 @@ class Team {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
-	
-	function removeTeam($id) {
+	function removeTeamMembersByTeam($id) {
 		if (isset($id) && $id > 0) {
-			$sql = "UPDATE teams SET deleted = 1 WHERE id = ?";
+			$sql = "UPDATE team_members SET deleted = 1 WHERE team = ?";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
 		}
 	}
 	
-	function getAllTeams() {
-		$sql = "SELECT * FROM teams WHERE deleted = 0";
-		$statement = $this->conn->query($sql);
-		while ($row = $statement->fetch()) {
-			$output[] = $row;				
-		}
-		return $output;
-	}
-	function addTeam($name, $project) {
-		if (isset($name) && isset($project) && $project > 0) {
-			$sql = "INSERT INTO teams (name, project) VALUES (?, ?)";
+	function getMembersForTeam($team) {
+		if (isset($team) && $team > 0) {
+			$sql = "SELECT team_members.id, team_members.team, users.first_name, users.last_name from team_members LEFT JOIN users ON team_members.team_mate = users.id WHERE team = ? AND (team_members.deleted = 0 OR users.deleted = 0)";
 			$statement = $this->conn->prepare($sql);
-			$statement->bindParam(1, $name);
-			$statement->bindParam(2, $project);
+			$statement->bindParam(1, $team);
 			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;				
+			}
+			return $output;
 		}
 	}
 }

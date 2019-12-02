@@ -23,10 +23,9 @@ class User {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
-	
-	function getUserIdFromLogin($email, $password) {
+	function getUserFromLoginCreds($email, $password) {
 		if (isset($email) && isset($password)) {
-			$sql = "SELECT id FROM users where email = ? AND password = ?";
+			$sql = "SELECT * FROM users where email = ? AND password = ? LIMIT 1";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $email);
 			$statement->bindParam(2, $password);
@@ -34,7 +33,21 @@ class User {
 			while ($row = $statement->fetch()) {
 				$output[] = $row;				
 			}
-			return $output[0]['id'];
+			return $output;
+		}
+	}
+	
+	function getUserIdFromLogin($email, $password) {
+		if (isset($email) && isset($password)) {
+			$sql = "SELECT id FROM users where email = ? AND password = ? LIMIT 1";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $email);
+			$statement->bindParam(2, $password);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;				
+			}
+			return $output;
 		}
 	}
 	
@@ -52,7 +65,7 @@ class User {
 	
 	function verifyUser($email, $password) {
 		if (isset($email) && isset($password)) {
-			$sql = "SELECT id from users WHERE (email = ? AND password = ?)";
+			$sql = "SELECT id from users WHERE (email = ? AND password = ?) LIMIT 1";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $email);
 			$statement->bindParam(2, $password);
