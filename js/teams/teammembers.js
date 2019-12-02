@@ -23,6 +23,41 @@ $(document).ready(function() {
 	});
 });
 
+function addUser(id) {
+	$.ajax({
+		url: "repos/getTeamById.php",
+		type: "post",
+		dataType: "json",
+		data: {
+			"id": id
+		},
+		success: function(results) {
+			if (results != null) {
+				var team = results[0];
+				$.ajax({
+					url: "repos/getAllUnassignedUsers.php",
+					dataType: "json",
+					type: "post",
+					data: {
+						"team": id
+					},
+					success: function(results2){
+						if (results2 != null) {
+							$('#addUserSelector').empty();
+							$('#addUserModal').modal('show');
+							$('#addUserTeamHdn').val(id);
+							$('#addUserTeamName').val(team['name']);
+							results2.forEach(function(user) {
+								$('#addUserSelector').append($('<option>').text(user['first_name'] + " " + user['last_name']).val(user['id']));
+							});		
+						}
+					}
+				});
+			}
+		}
+	});
+}
+
 function buildTeamTable() {
 
 	$.ajax({
@@ -137,16 +172,34 @@ function makeTeamCard(team, users) {
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Users:</h6>";
 	if (users != null) {
 		users.forEach(function(user) {
-		row += "<p class='card-text'><button type='button' class='btn btn-danger' onclick='removeuserFromTeam(";
+		row += "<p class='card-text'><button type='button' class='btn btn-danger' onclick='removeUserFromTeam(";
 		row += user['id'] + ", " + team['id'] + ")'><span class='glyphicon glyphicon-minus-sign'></span></button>&nbsp;";
 		row += user['first_name'] + " " + user['last_name'];
 		row += "</p>";
 		});
 	}
-	row += "<p class='card-text'><button type='button' class='btn btn-success' onclick='addUserModal(";
-	row += team.id + ")'><span class='glyphicon glyphicon-plus'></span>&nbsp;Add User</button></p>";
-	row += "</div></div>";
+	row += "<p class='card-text'><button type='button' class='btn btn-success' onclick='addUser(";
+	row += team.id + ")'><span class='glyphicon glyphicon-plus'></span>&nbsp;";
+	row += "Add User</button></p></div></div>";
 	return row;
+}
+
+function removeUserFromTeam(user, team) {
+	$.ajax({
+		url: "repos/removeUserFromTeam.php",
+		type: "post",
+		data: {
+			"user": user,
+			"team": team
+		},
+		success: function() {
+			buildTeamTable();
+		}
+	})
+}
+
+function addUserModal(id) {
+	
 }
 
 function clearAddTeamModal() {

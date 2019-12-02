@@ -59,7 +59,7 @@
 	
 		<div class="row">&nbsp;</div>
 		<div class="row">
-			<div class="col-lg-4">
+			<div class="col-lg-5">
 				<table class="table" id="projectTable">
 					<thead>
 						<tr>
@@ -70,7 +70,7 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-4">
 				<button type="button" class="btn btn-success" id="addTeamBtn">
 					<span class="glyphicon glyphicon-plus"></span>
 					Add Team
@@ -192,6 +192,53 @@
 					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Edit Team
 				</button>&nbsp;
 				<button type="button" class="btn btn-outline-secondary" id="cancelEditTeamBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add User Modal Section -->
+
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Add User</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+									<input type="hidden" id="addUserTeamHdn">
+				<div class="row">
+
+					<div class="col-sm-6 text-right"><b>Team Name</b></div>
+					<div class="col-sm-6"><div id="addUserTeamName"></div></div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">User</div>
+					<div class="col-sm-6">
+						<select class="browser-default custom-select" id="addUserSelector">				
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" id="pushAddTeamUserToDB">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Team Member
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelAddTeamUserBtn" data-dismiss="modal">
 					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
 				</button>
 			</div>

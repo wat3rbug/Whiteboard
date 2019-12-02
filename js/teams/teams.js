@@ -25,13 +25,6 @@ function addTeamToDB() {
 	});
 }
 
-
-
-
-
-
-
-
 function getAllTeamNames() {
 	$.ajax({
 		url: "repos/getAllTeamNames.php",
@@ -86,8 +79,6 @@ function verifyUser() {
 		}
 	})
 }
-
-
 
 function makeCardFromTeam(team, users) {
 	var row = "<div class='card'><div class='card-body'>";
