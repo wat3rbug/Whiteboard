@@ -12,9 +12,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 	
-	<script src="js/signup.js"></script>
+	<script src="js/login.js"></script>
 	<script src="js/dateFunctions.js"></script>
-	<script src="js/getUser.js"></script>
+	<script src="js/preferences/preferences.js"></script>
 	
 	<div class="col-sm-12">
 		<div class="jumbotron info">
@@ -49,46 +49,76 @@
 				</li>
 			</ul>		
 		</div>
-	</div>
+	</div> <!-- end topMenu div -->
 	
 	<!-- End Top Menu portion -->
 	
 	<div class="row">&nbsp;</div>
-	
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col-lg-5 text-center">
+				<div class='card'>
+					<div class='card-body'>		
+						<h5 class='card-title'>User Information</h5>
+						<input type="hidden" id="oldEmail">
+						<p class='card-text'>
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<div class="col-lg-6 text-right">First Name</div>
+								<div class="col-lg-6 text-left"><input type="input" id="editFirstName"></div>
+							</div>
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<div class="col-lg-6 text-right">Last Name</div>
+								<div class="col-lg-6 text-left"><input type="input" id="editLastName"></div>
+							</div>
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<div class="col-lg-6 text-right">Email</div>
+								<div class="col-lg-6 text-left"><input type="input" id="editEmail"></div>
+							</div>
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<div class="col-lg-12 text-center">
+									<button type="button" class="btn btn-success" id="changePasswordBtn">
+										<span class="glyphicon glyphicon-link"></span>&nbsp;Change Password
+									</button>&nbsp;
+									<button type="button" class="btn btn-outline-warning" id="updateUserBtn">
+										<span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Preferences
+									</button>
+								</div>
+							</div>
+						</p>
+					</div>
+				</div>
+			</div>
 
-	<div class="col-sm-10">
-		<button type="button" class="btn btn-success" id="addTaskBtn">
-			<span class="glyphicon glyphicon-plus"></span>
-			Add Task
-		</button>
+			<div class="col-lg-5 text-center">
+				<div class='card'>
+					<div class='card-body'>		
+						<h5 class='card-title'>User Performance</h5>
+						<p class='card-text'>
+							Reserved for future use
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="row">&nbsp;</div>
-	<div class="col-lg-10">
-		<table class="table" id="tasksTable">
-			<thead>
-				<tr>
-					<th scope="col">Tasks</th>
-					<th scope="col">Action</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-	</div>
-</div>
 </body>
 
+</html>
 
-<!-- Add Task Modal Section -->
-
-<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog">
+<!-- Update Password Modal Section -->
+	
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header d-block alert-success">
 				<div class="row">
 					<div class="col-lg-2">&nbsp;</div>
 					<div class="col-lg-8">
-						<h5 class="modal-title text-center">Add Task</h5>
+						<h5 class="modal-title text-center">Change Password</h5>
 					</div>
 					<div class="col-lg-2">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -100,80 +130,46 @@
 			<div class="modal-body">
 				
 				<div class="row">
-					<div class="col-sm-6 text-right">Project</div>
-					<div class="col-sm-6">
-						<select class="browser-default custom-select" id="addProjSelector">
-						</select>
-					</div>
-				</div>
-				<div class="row">&nbsp;</div>
-				<div class="row">
-					<div class="col-sm-6 text-right">Difficulty</div>
-					<div class="col-sm-2">
-						<select class="browser-default custom-select" id="addDiffSelector">
-							<option values="1">1</option>
-							<option values="2">2</option>
-							<option values="3">3</option>
-							<option values="5">5</option>
-							<option values="8">8</option>
-							<option values="13">13</option>
-							<option values="21">21</option>
-						</select>
-					</div>
-				</div>
-				<div class="row">&nbsp;</div>
-				<div class="row">
-					<div class="col-sm-6 text-right">Type</div>
-					<div class="col-sm-3">
-						<select class="browser-default custom-select" id="addTaskTypeSelector">
-							<option value="0">Story</option>
-							<option value="1">Task</option>
-							<option value="2">Bug</option>
-						</select>
-					</div>
-				</div>
-				<div class="row">&nbsp;</div>
-				<div class="row">
-					<div class="col-sm-3 text-right">Subject</div>
-					<div class="col-sm-8">
+					<div class="col-lg-6 text-right">New Password</div>
+					<div class="col-lg-4">
 						<div class="form-group">
-							<textarea class="form-control" rows="1" id="addSubject"></textarea>
+							<input type="password" class="form-control" id="password">
 						</div>
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-3 text-right">Description</div>
-					<div class="col-sm-8">
+					<div class="col-lg-6 text-right">Retype Password</div>
+					<div class="col-lg-4">
 						<div class="form-group">
-							<textarea class="form-control" rows="4" id="addDescription"></textarea>
+							<input type="password" class="form-control" id="password2">
 						</div>
 					</div>
 				</div>
+				<div class="row">&nbsp;</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" id="pushTaskToDB">
-					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Task
+				<button type="button" class="btn btn-success" id="updatePassword">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Update Password
 				</button>&nbsp;
-				<button type="button" class="btn btn-outline-secondary" id="cancelAddTaskBtn" data-dismiss="modal">
-					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Close
 				</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-
-<!-- Edit Task Modal Section -->
-
-<div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog">
+<!-- Update Password Successful Modal Section -->
+	
+<div class="modal fade" id="updateSuccessfulModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header d-block alert-warning">
+			<div class="modal-header d-block alert-success">
 				<div class="row">
 					<div class="col-lg-2">&nbsp;</div>
 					<div class="col-lg-8">
-						<h5 class="modal-title text-center">Edit Task</h5>
+						<h5 class="modal-title text-center">Password Changed</h5>
 					</div>
 					<div class="col-lg-2">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -185,70 +181,90 @@
 			<div class="modal-body">
 				
 				<div class="row">
-					<input type="hidden" id="taskIdHdn">
-					<div class="col-sm-6 text-right">Project</div>
-					<div class="col-sm-6">
-						<select class="browser-default custom-select" id="editProjSelector">
-						</select>
+					<div class="col-md-12 text-center">
+						Your password has been changed
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
-				<div class="row">
-					<div class="col-sm-6 text-right">Difficulty</div>
-					<div class="col-sm-2">
-						<select class="browser-default custom-select" id="editDiffSelector">
-							<option values="1">1</option>
-							<option values="2">2</option>
-							<option values="3">3</option>
-							<option values="5">5</option>
-							<option values="8">8</option>
-							<option values="13">13</option>
-							<option values="21">21</option>
-						</select>
-					</div>
-				</div>
-				<div class="row">&nbsp;</div>
-				<div class="row">
-					<div class="col-sm-6 text-right">Type</div>
-					<div class="col-sm-3">
-						<select class="browser-default custom-select" id="editTaskTypeSelector">
-							<option value="0">Story</option>
-							<option value="1">Task</option>
-							<option value="2">Bug</option>
-						</select>
-					</div>
-				</div>
-				<div class="row">&nbsp;</div>
-				<div class="row">
-					<div class="col-sm-3 text-right">Subject</div>
-					<div class="col-sm-8">
-						<div class="form-group">
-							<textarea class="form-control" rows="1" id="editSubject"></textarea>
-						</div>
-					</div>
-				</div>
-				<div class="row">&nbsp;</div>
-				<div class="row">
-					<div class="col-sm-3 text-right">Description</div>
-					<div class="col-sm-8">
-						<div class="form-group">
-							<textarea class="form-control" rows="4" id="editDescription"></textarea>
-						</div>
-					</div>
-				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-warning" id="pushEditTaskToDB">
-					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Edit Task
-				</button>&nbsp;
-				<button type="button" class="btn btn-outline-secondary" id="cancelEditTaskBtn" data-dismiss="modal">
-					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				<button type="button" class="btn btn-success" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
 				</button>
 			</div>
 		</div>
 	</div>
 </div>
-</html>
+
+<!-- Retry Password Modal Section -->
+	
+<div class="modal fade" id="retryPasswordModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-danger">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Password Not Changed</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row text-center">
+					<div class="col-md-12 text-center">
+						Your password has not been changed.  Be sure that both passwords match and are new.
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" id="closeRetryBtn">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<!-- Preferences Updated Modal section -->
+
+<div class="modal fade" id="updateSuccessModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Preferences Updated</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+
+				<div class="row">
+					<div class="col-lg-12 text-center">You have updated your preferences</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 

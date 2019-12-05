@@ -29,10 +29,11 @@ function loginUser() {
 			"password": password
 		},
 		success: function(result) {
-			if (isNumber(result[0]['id'])){
+			var user = result[0];
+			if (isNumber(user['id'])){
 				sessionStorage['email'] = email;
 				sessionStorage['password'] = password;
-				window.location.replace("projects.html");
+				window.location.replace("preferences.html");
 			} else {
 				$('#accountModalFail').modal('show');
 			}

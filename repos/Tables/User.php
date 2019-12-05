@@ -23,6 +23,30 @@ class User {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	
+	function updatePasswordForUser($email, $old, $new) {
+		if (isset($email) && isset($old) && isset($new)) {
+			$sql = "UPDATE users SET password = ? WHERE email = ? AND password = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $newpassword);
+			$statement->bindParam(2, $email);
+			$statement->bindParam(3, $password);
+			$statement->execute();
+		}
+	}
+	
+	function updateUserById($id, $first, $last, $email) {
+		if (isset($id) && $id > 0 && isset($email)) {
+			$sql = "UPDATE users SET email = ?, first_name = ?, last_name = ? WHERE id = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $email);
+			$statement->bindParam(2, $first);
+			$statement->bindParam(3, $last);
+			$statement->bindParam(4, $id);
+			$statement->execute();
+		}	
+	}
+	
 	function getUserFromLoginCreds($email, $password) {
 		if (isset($email) && isset($password)) {
 			$sql = "SELECT * FROM users where email = ? AND password = ? LIMIT 1";

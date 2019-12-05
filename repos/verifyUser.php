@@ -1,9 +1,7 @@
 <?php
 require "Tables/User.php";
-// $email = $_POST['email'];
-// $password = $_POST['password'];
-$email = "doug.gardiner@gmail.com";
-$password = "saxpuz-Junfu5-jegbem";
+$email = $_POST['email'];
+$password = $_POST['password'];
 
 if (isset($email) && isset($password)) {
 	$db = new User();

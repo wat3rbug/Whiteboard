@@ -15,6 +15,22 @@ $(document).ready(function (){
 			} else {
 				sessionStorage['email'] = email;
 				sessionStorage['password'] = password;
+				$.ajax({
+					url: "repos/getUser.php",
+					type: "post",
+					data: {
+						"email": email,
+						"password": password
+					},
+					success: function(results) {
+						if (results != null) {
+							var user = results[0];
+							$('#user-tab').append(" - " + user['first_name'] + " " + user['last_name']);
+						} else {
+							window.location.href("index.html");
+						}
+					}
+				})
 			}
 		}
 	})
