@@ -1,5 +1,5 @@
 <?php
-require "Tables/User.php";
+require "Tables/UserRepository.php";
 $firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
 $email = $_POST['email'];

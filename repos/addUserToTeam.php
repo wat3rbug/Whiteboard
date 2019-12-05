@@ -1,5 +1,5 @@
 <?php
-require "Tables/TeamMembers.php";
+require "Tables/TeamMemberRepository.php";
 $user = $_POST['user'];
 $team = $_POST['team'];
 

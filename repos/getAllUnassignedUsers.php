@@ -1,5 +1,5 @@
 <?php
-require "Tables/TeamMembers.php";
+require "Tables/TeamMemberRepository.php";
 $team = $_POST['team'];
 
 if (isset($team) && $team > 0) {

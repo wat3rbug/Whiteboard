@@ -1,5 +1,5 @@
 <?php
-require "Tables/Task.php";
+require "Tables/TaskRepository.php";
 $id = $_POST['id'];
 
 if (isset($id) && $id > 0) {

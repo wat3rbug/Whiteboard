@@ -1,5 +1,5 @@
 <?php
-require "Tables/User.php";
+require "Tables/UserRepository.php";
 $email = $_POST['email'];
 $password = $_POST['old'];
 $newpassword = $_POST['new'];

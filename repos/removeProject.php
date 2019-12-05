@@ -1,5 +1,5 @@
 <?php
-require "Tables/Project.php";
+require "Tables/ProjectRepository.php";
 $id = $_POST['id'];
 
 if (isset($id) && $id > 0) {

@@ -1,11 +1,7 @@
 <?php
-require "Tables/User.php";
+require "Tables/UserRepository.php";
 $email = $_POST['email'];
 $password = $_POST['password'];
-
-$email = "doug.gardiner@gmail.com";
-$password = "jojhyv-duvqaq-Mebza5";
-
 
 if (isset($email) && isset($password)) {
 	$db = new User();

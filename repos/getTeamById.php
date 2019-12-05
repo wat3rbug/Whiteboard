@@ -1,5 +1,5 @@
 <?php
-require "Tables/Team.php";
+require "Tables/TeamRepository.php";
 $id = $_POST['id'];
 
 if (isset($id) && $id > 0) {

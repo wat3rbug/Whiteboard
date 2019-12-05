@@ -1,5 +1,5 @@
 <?php
-require "Tables/Task.php";
+require "Tables/TaskRepository.php";
 $project = $_POST['project'];
 $user = $_POST['user'];
 $subject = $_POST['subject'];

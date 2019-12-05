@@ -1,6 +1,6 @@
 <?php
-require "Tables/TeamMembers.php";
-require "Tables/Team.php";
+require "Tables/TeamMemberRepository.php";
+require "Tables/TeamRepository.php";
 
 $id = $_POST['id'];
 
