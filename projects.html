@@ -5,6 +5,7 @@
 	<title>The Whiteboard</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/scrolls.css">
 </head>
 <body>
 	<script src="jquery-3.3.1.min.js"></script>
@@ -61,16 +62,18 @@
 	</div>			
 	<div class="row">&nbsp;</div>
 	<div class="col-lg-8">
-		<table class="table" id="projectTable">
-			<thead>
-				<tr>
-					<th scope="col">Projects</th>
-					<th scope="col">Action</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+		<div class="project-scrollbar table-wrapper-scroll-y">
+			<table class="table table-striped" id="projectTable">
+				<thead>
+					<tr>
+						<th scope="col">Projects</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 	</div>		
 </body>
 

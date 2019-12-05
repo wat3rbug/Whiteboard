@@ -5,6 +5,7 @@
 	<title>The Whiteboard</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/scrolls.css">
 </head>
 <body>
 	<script src="jquery-3.3.1.min.js"></script>
@@ -58,15 +59,17 @@
 		<div class="row">&nbsp;</div>
 		<div class="row">
 			<div class="col-lg-5">
-				<table class="table" id="projectTable">
-					<thead>
-						<tr>
-							<th scope="col">Projects</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				<div class="project-scrollbar table-wrapper-scroll-y">
+					<table class="table table-striped" id="projectTable">
+						<thead>
+							<tr>
+								<th scope="col">Projects</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="col-lg-4">
 				<button type="button" class="btn btn-success" id="addTeamBtn">
@@ -74,27 +77,31 @@
 					Add Team
 				</button>
 				<div class="row">&nbsp;</div>
-				<table class="table" id="teamTable">
-					<thead>
-						<tr>
-							<th scope="col">Teams</th>
-							<th scope="col">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				<div class="project-scrollbar table-wrapper-scroll-y">
+					<table class="table table-striped" id="teamTable">
+						<thead>
+							<tr>
+								<th scope="col">Teams</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="col-lg-3">
-				<table class="table" id="usersTable">
-					<thead>
-						<tr>
-							<th scope="col">Users</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				<div class="project-scrollbar table-wrapper-scroll-y">
+					<table class="table table-striped" id="usersTable">
+						<thead>
+							<tr>
+								<th scope="col">Users</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
 					
 		</div>
