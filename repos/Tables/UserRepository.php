@@ -1,5 +1,5 @@
 <?php
-class User {
+class UserRepository {
 	
 	private $conn;
 	
@@ -49,7 +49,7 @@ class User {
 	
 	function getUserFromLoginCreds($email, $password) {
 		if (isset($email) && isset($password)) {
-			$sql = "SELECT * FROM users where email = ? AND password = ? LIMIT 1";
+			$sql = "SELECT * FROM users WHERE email = ? AND password = ? LIMIT 1";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $email);
 			$statement->bindParam(2, $password);
@@ -63,7 +63,7 @@ class User {
 	
 	function getUserIdFromLogin($email, $password) {
 		if (isset($email) && isset($password)) {
-			$sql = "SELECT id FROM users where email = ? AND password = ? LIMIT 1";
+			$sql = "SELECT id,first_name FROM users WHERE email = ? AND password = ? LIMIT 1";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $email);
 			$statement->bindParam(2, $password);

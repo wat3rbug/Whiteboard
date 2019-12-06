@@ -6,7 +6,7 @@ $start = $_POST['start'];
 $end = $_POST['end'];
 
 if (isset($name) && isset($start) && isset($end)) {
-	$db = new Project();
+	$db = new ProjectRepository();
 	$db->addProject($name, $description, $start, $end);
 }
 ?>

@@ -5,6 +5,7 @@
 	<title>The Whiteboard</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/scrolls.css">
 </head>
 <body>
 	<script src="jquery-3.3.1.min.js"></script>
@@ -14,8 +15,8 @@
 	
 	<script src="js/login.js"></script>
 	<script src="js/dateFunctions.js"></script>
-	<script src="js/preferences/preferences.js"></script>
 	<script src="js/nav.js"></script>
+	<script src="js/sprints/sprints.js"></script>
 	
 	<div class="col-sm-12">
 		<div class="jumbotron info">
@@ -41,6 +42,9 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" id="sprint-tab" data-toggle="tab" role="tab" aria-controls="sprint" href="sprints.html">Sprints</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="activity-tab" data-toggle="tab" role="tab" aria-controls="activity" href="activity.html">Sprint Activity</a>
 				</li>		
 				<li class="nav-item">
 					<a class="nav-link" id="performance-tab" data-toggle="tab" role="tab" aria-controls="performance" href="performance.html">Performance</a>
@@ -58,11 +62,37 @@
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="col-lg-6 text-center">
-
+				<h4>Future Sprint</h4>
+				<table class="table table-striped" id="newSprintTable">
+					<thead>
+						<tr>
+							<th scope="col" style="min-width: 65px">Action</th>
+							<th scope="col">Task</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="2">No data</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 
 			<div class="col-lg-6 text-center">
-
+				<h4>Backlog</h4>
+				<table class="table table-striped" id="remainingTasksTable">
+					<thead>
+						<tr>
+							<th scope="col">Action</th>
+							<th scope="col">Task</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="2">No data</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

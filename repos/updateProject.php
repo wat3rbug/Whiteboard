@@ -7,7 +7,7 @@ $start = $_POST['start'];
 $end = $_POST['end'];
 
 if (isset($id) && $id > 0 && isset($name) && isset($start) && isset($end)) {
-	$db = new Project();
+	$db = new ProjectRepository();
 	$db->updateProject($id, $name, $desc, $start, $end);
 }
 ?>

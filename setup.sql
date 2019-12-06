@@ -54,10 +54,8 @@ create table milestones (
 
 create table sprints (
 	id int auto_increment primary key,
-	project int not null,
 	start_date date not null,
 	end_date date not null,
-	foreign key fk_sprints_project(project) references projects(id),
 	deleted tinyint(1) not null default 0
 );
 
@@ -71,6 +69,9 @@ create table tasks (
 	description varchar(1000),
 	difficulty int not null,
 	sprint int null ,
+	starttime datetime,
+	endtime datetime,
+	hours float not null default 0.0,
 	state tinyint(4) not null default 0,
 	foreign key fk_task_sprint(sprint) references sprints(id),
 	completed date,

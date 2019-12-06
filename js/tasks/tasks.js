@@ -102,7 +102,7 @@ function addTaskToDB() {
 		},
 		success: function(result) {
 			if (result != null) {
-				var user = result[0]['id'];
+				var user = result;
 				$.ajax({
 					url: "repos/addTask.php",
 					type: "post",

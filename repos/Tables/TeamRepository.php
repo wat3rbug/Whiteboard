@@ -1,5 +1,5 @@
 <?php
-class Team {
+class TeamRepository {
 	
 	private $conn;
 	

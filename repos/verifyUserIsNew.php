@@ -6,7 +6,7 @@ $email = $_POST['email'];
 
 
 if (isset($firstName) && isset($lastName) && isset($email)) {
-	$db = new User();
+	$db = new UserRepository();
 	$count = $db->getNameAndEmailCount($firstName, $lastName, $email);
 	echo $count;
 }

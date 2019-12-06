@@ -1,5 +1,5 @@
 <?php
-class Project {
+class ProjectRepository {
 	
 	private $conn;
 	

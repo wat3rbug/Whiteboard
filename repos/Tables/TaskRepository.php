@@ -1,5 +1,5 @@
 <?php
-class Task {
+class TaskRepository {
 	
 	private $conn;
 	
@@ -22,6 +22,16 @@ class Task {
 		} catch (\PDOException $e) {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
+	}
+	
+	function getAllIncompleteTasks() {
+		$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name FROM tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint IS NULL ORDER BY tasks.id DESC";
+		$statement = $this->conn->prepare($sql);
+		$statement->execute();
+		while ($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
 	}
 	
 	function updateTask($id, $subject, $description, $diff, $project,  $type) {

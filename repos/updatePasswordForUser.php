@@ -5,7 +5,7 @@ $password = $_POST['old'];
 $newpassword = $_POST['new'];
 
 if (isset($email) && isset($old) && isset($new)) {
-	$db = new User();
+	$db = new UserRepository();
 	$db->updatePasswordForUser($email, $old, $new);
 }
 ?>

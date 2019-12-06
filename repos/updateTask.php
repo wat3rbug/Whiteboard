@@ -8,7 +8,7 @@ $project = $_POST['project'];
 $type = $_POST['type'];
 
 if (isset($id) && isset($subject) && isset($diff) && isset($project) && $id > 0  && $project > 0 && isset($type)) {
-	$db = new Task();
+	$db = new TaskRepository();
 	$db->updateTask($id, $subject, $description, $diff, $project, $type);
 }
 ?>
