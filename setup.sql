@@ -55,7 +55,7 @@ create table milestones (
 create table sprints (
 	id int auto_increment primary key,
 	start_date date not null,
-	end_date date not null,
+	end_date date,
 	deleted tinyint(1) not null default 0
 );
 
@@ -89,4 +89,6 @@ create table comments (
 	comment_date date not null,
 	deleted tinyint(1) not null default 0	
 );
+
+
 

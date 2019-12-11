@@ -24,6 +24,50 @@ class TaskRepository {
 		}
 	}
 	
+	function getDiffCountForSprint($sprint) {
+		if (isset($sprint) && $sprint > 0) {
+			$sql = "SELECT SUM(difficulty) as count FROM tasks WHERE sprint = ?";
+			$statement =$this->conn->prepare($sql);
+			$statement->bindParam(1, $sprint);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	function removeTaskFromSprint($id) {
+		if (isset($id) && $id > 0 )	{
+			$sql = "UPDATE tasks set sprint= NULL where id = ?";
+			$statement =$this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+		}
+	}
+	
+	function getSprintTasks($sprint) {
+		if (isset($sprint) && $sprint > 0) {
+			$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint = ? AND tasks.completed IS NULL ORDER BY tasks.id DESC";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $sprint);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+		}	
+		return $output;
+	}
+	
+	function addTaskToSprint($id, $sprint) {
+		if (isset($id) && isset($sprint) && $id > 0 && $sprint > 0) {
+			$sql = "UPDATE tasks SET sprint = ? WHERE id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $sprint);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+		}
+	}
+	
 	function getAllIncompleteTasks() {
 		$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name FROM tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint IS NULL ORDER BY tasks.id DESC";
 		$statement = $this->conn->prepare($sql);
