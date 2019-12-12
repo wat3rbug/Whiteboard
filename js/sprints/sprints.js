@@ -2,8 +2,22 @@ $(document).ready(function () {
 	
 	getSprintStats();
 	buildBacklogTable();
+	
+	$('#startSprintBtn').on("click", function(){
+		startNextSprint();	
+	});
 
 });
+
+function startNextSprint() {
+	$.ajax({
+		url: "repos/StartNewSprint.php",
+		success: function() {
+			buildBacklogTable();
+			getSprintStats();
+		}
+	});
+}
 
 function removeTask(id) {
 	$.ajax({

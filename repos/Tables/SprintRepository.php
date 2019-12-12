@@ -24,6 +24,20 @@ class SprintRepository {
 		}
 	}
 	
+	function createNewSprint() {
+		$sql = "INSERT INTO sprints (start_date) VALUES (current_date())";
+		$statement = $this->conn->prepare($sql);
+		$statement->execute();
+	}
+	
+	function completeSprint($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "UPDATE sprints SET end_date = current_date() WHERE id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+		}
+	}
 	
 	function getLatestSprint() {
 		$sql = "SELECT * FROM sprints WHERE end_date IS NULL ORDER BY id DESC LIMIT 1";
@@ -34,8 +48,5 @@ class SprintRepository {
 		}
 		return $output;
 	}
-
-	
-
 }
 ?>
