@@ -24,6 +24,19 @@ class TaskRepository {
 		}
 	}
 	
+	function getCompletedDiffForSprint($sprint) {
+		if (isset($sprint) && $sprint > 0) {
+			$sql = "SELECT SUM(difficulty) AS count FROM tasks where sprint = ? AND completed IS NOT NULL";
+			$statement =$this->conn->prepare($sql);
+			$statement->bindParam(1, $sprint);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
 	function updateUnfinishedTasksToNewSprint($oldid, $newid) {
 		if (isset($newid) && isset($oldid) && $newid > 0 && $oldid > 0) {
 			$sql = "UPDATE tasks SET sprint = ? WHERE sprint = ? AND completed IS NULL";
