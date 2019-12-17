@@ -31,3 +31,12 @@ function getDateFromDBString(currentDate) {
 	result = new Date(year, month, day);
 	return result;
 }
+function getWebDateFromDBString(currentDate) {
+	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var sections = currentDate.split("-");
+	var year = parseInt(sections[0]);
+	var monthIndex = parseInt(sections[1]) - 1;
+	var month = months[monthIndex];
+	var day = parseInt(sections[2]);
+	return day + " " + month + " " + year;
+}

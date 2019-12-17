@@ -17,6 +17,7 @@
 	<script src="js/dateFunctions.js"></script>
 	<script src="js/nav.js"></script>
 	<script src="js/activity/activity.js"></script>
+	<script src="js/activity/comments.js"></script>
 
 	
 	<div class="col-sm-12">
@@ -79,7 +80,7 @@
 	<div class="row">&nbsp;</div>
 	<input type='hidden' id="SprintIdHdn">
 
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<h5 class="text-center">Sprint Activity</h5>
 		<table class="table table-striped" id="sprintTable">
 			<thead>
@@ -99,17 +100,17 @@
 </body>
 
 </html>
-	
-<!-- Open Sprint Modal Section -->
 
-<div class="modal fade" id="openSprintExistsModal" tabindex="-1" role="dialog">
+<!-- Task Details Modal Section -->
+
+<div class="modal fade" id="taskDetailsModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header d-block alert-danger">
+			<div class="modal-header d-block alert-info">
 				<div class="row">
 					<div class="col-lg-2">&nbsp;</div>
 					<div class="col-lg-8">
-						<h5 class="modal-title text-center">Open Sprint Exists</h5>
+						<h5 class="modal-title text-center">Task Details</h5>
 					</div>
 					<div class="col-lg-2">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -119,14 +120,40 @@
 				</div>
 			</div>
 			<div class="modal-body">
-
+				
 				<div class="row">
-					<div class="col-lg-12 text-center">You need to finish the current sprint before starting another one</div>
+					<input type="hidden" id="taskIdHdn">
+					<div class="col-sm-6 text-right">Project</div>
+					<div class="col-sm-6" id="detailProject">
+					</div>
 				</div>
 				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">Difficulty</div>
+					<div class="col-sm-6" id="detailDifficulty">					
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">Type</div>
+					<div class="col-sm-6" id="detailType">						
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Subject</div>
+					<div class="col-sm-8" id="detailSubject">
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Description</div>
+					<div class="col-sm-8" id="detailDescription">					
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">
+				<button type="button" class="btn btn-info" data-dismiss="modal">
 					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
 				</button>
 			</div>
@@ -134,16 +161,16 @@
 	</div>
 </div>
 
-<!-- Closed Sprint Modal Section -->
+<!-- Add Comment Modal Section -->
 
-<div class="modal fade" id="endSprintModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header d-block alert-success">
 				<div class="row">
 					<div class="col-lg-2">&nbsp;</div>
 					<div class="col-lg-8">
-						<h5 class="modal-title text-center">Sprint Closed</h5>
+						<h5 class="modal-title text-center">Task Comment</h5>
 					</div>
 					<div class="col-lg-2">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -153,15 +180,51 @@
 				</div>
 			</div>
 			<div class="modal-body">
-
+				
 				<div class="row">
-					<div class="col-lg-12 text-center">Sprint has now ended</div>
+					<div class="col-sm-3 text-right"><b>User</b><input type="hidden" id="commentUserIdHdn"></div>
+					<div class="col-sm-8" id="commentUser">						
+					</div>
 				</div>
 				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right"><b>Task</b><input type="hidden" id="commentTaskIdHdn"></div>
+					<div class="col-sm-8" id="commentTask">
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right"><b>Comment</b></div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea id="comment" class="form-control" rows="5"></textarea>	
+						</div>				
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="col-lg-12">
+					<div class="comment-scrollbar table-wrapper-scroll-y">
+						<h5 class="text-center">Prior Comments</h5>
+						<table class="table table-striped" id="commentTable">
+							<thead>
+								<tr>
+									<th scope="col">User</th>
+									<th scope="col">Date</th>
+									<th scope="col">Comment</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" data-dismiss="modal">
-					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				<button type="button" class="btn btn-success" id="addCommentBtn">
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;Add Comment
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
 				</button>
 			</div>
 		</div>

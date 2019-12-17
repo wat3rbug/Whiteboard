@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 function startNextSprint() {
 	$.ajax({
-		url: "repos/StartNewSprint.php",
+		url: "repos/startNewSprint.php",
 		success: function() {
 			buildBacklogTable();
 			getSprintStats();

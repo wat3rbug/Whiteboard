@@ -23,6 +23,84 @@ class TaskRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	function changeStateForTask($id, $state) {
+		if (isset($id) && isset($state) && $id > 0) {
+			$sql = "UPDATE tasks SET state = ? WHERE id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $state);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+		}	
+	}
+	
+	function getTaskDetailsById($id) {
+		if (isset($id) && $id > 0){
+			$sql = "SELECT projects.name, subject, tasks.description, difficulty, state FROM tasks JOIN projects ON tasks.project = projects.id WHERE tasks.id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}			
+	}
+	
+	function getOrderedTasksForUser($id, $sprint) {
+		if (isset($id) && isset($sprint) && $id > 0 && $sprint > 0) {
+			$sql = "SELECT tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state FROM tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint = ? AND tasks.user = ? "; //ORDER BY tasks.state ASC, tasks.id DESC";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $sprint);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
+	function getDiffCountForSprintForUser($id, $sprint) {
+		if (isset($sprint) && isset($id) && $id > 0 && $sprint > 0) {
+			$sql = "SELECT SUM(difficulty) as count FROM tasks WHERE sprint = ? AND user = ?";
+			$statement =$this->conn->prepare($sql);
+			$statement->bindParam(1, $sprint);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
+	function getCompletedDiffForSprintForUser($id, $sprint) {
+		if (isset($sprint) && isset($id) && $id > 0 && $sprint > 0) {
+			$sql = "SELECT SUM(difficulty) AS count FROM tasks where sprint = ? AND completed IS NOT NULL AND user = ?";
+			$statement =$this->conn->prepare($sql);
+			$statement->bindParam(1, $sprint);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
+	function getTaskForSprintByUserId($id, $sprint) {
+		if (isset($id) && isset($sprint) && $id > 0 && $sprint > 0) {
+			$sql = "SELECT * FROM tasks JOIN projects ON tasks.project = project.id WHERE user = ? AND sprint = ?";
+			$statement =$this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->bindParam(2, $sprint);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
 	
 	function getCompletedDiffForSprint($sprint) {
 		if (isset($sprint) && $sprint > 0) {
