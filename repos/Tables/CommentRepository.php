@@ -23,9 +23,10 @@ class CommentRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	
 	function viewPriorComments($task) {
 		if (isset($task) && $task > 0) {
-			$sql = "SELECT comments.id, comment, comment_date, first_name, last_name, email FROM comments JOIN users ON comments.user = users.id WHERE comments.deleted = 0";
+			$sql = "SELECT comments.id, comment, comment_date, first_name, last_name, email FROM comments JOIN users ON comments.user = users.id WHERE comments.task_id = ? AND comments.deleted = 0";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $task);
 			$statement->execute();

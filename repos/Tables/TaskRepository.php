@@ -23,6 +23,82 @@ class TaskRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	function completeTask($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "UPDATE tasks SET state = 4, completed = 1 WHERE id= ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+		}
+	}
+	function changeState($id, $state) {
+		if (isset($id) && $id > 0) {
+			$sql = "UPDATE tasks SET state = ? WHERE id = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(2, $id);
+			$statement->bindParam(1, $state);
+			$statement->execute();
+		}
+	}
+	
+	function updateEndAndCalcTime($id, $state) {
+		if (isset($id) && $id > 0) {
+			$sql = "UPDATE tasks SET endtime = NOW() WHERE id = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->bindParam(2, $state);
+			$statement->execute();
+			$sql = "UPDATE tasks SET hours = timediff(endtime, starttime) WHERE id =? AND endtime IS NOT NULL AND starttime IS NOT NULL AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			if ($state == 4) {
+				$sql = "UPDATE tasks SET completed = 1 WHERE id = ? AND deleted = 0";
+				$statement = $this->conn->prepare($sql);
+				$statement->bindParam(1, $id);
+				$statement->execute();
+			}
+		}
+	}
+	
+	function getStateForTask($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "SELECT state FROM tasks WHERE id = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	function updateEnd($id, $state) {
+		if (isset($id) && isset($state) && $id > 0) {
+			$sql = "UPDATE tasks SET endtime = NOW(), state = ? WHERE id= ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $state);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+			if ($state == 4) {
+				$sql = "UPDATE tasks SET completed = 1 WHERE id = ? AND deleted = 0";
+				$statement = $this->conn->prepare($sql);
+				$statement->bindParam(1, $id);
+				$statement->execute();
+			}
+		}
+	}
+	
+	function updateStart($id, $state) {
+		if (isset($id) && isset($state) && $id > 0) {
+			$sql = "UPDATE tasks SET starttime = NOW(), state = ? WHERE id = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $state);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+		}	
+	}
+	
 	function changeStateForTask($id, $state) {
 		if (isset($id) && isset($state) && $id > 0) {
 			$sql = "UPDATE tasks SET state = ? WHERE id = ?";

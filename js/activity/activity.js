@@ -12,23 +12,22 @@ $(document).ready(function() {
 	buildTaskTable();
 });
 
-function changeStateForTask(selector) {
+function changeStateForTask(id) {
 	
-	// alert('got here');
-	// var state  = $('#stage_' + id).val();
-	// alert('id:' + id +'\tstate: ' + state);
-	// $.ajax({
-// 		url: "repos/changeStateForTask.php",
-// 		type: "post",
-// 		data: {
-// 			"id": id,
-// 			"state": state
-// 		},
-// 		success: function() {
-// 			getStats();
-// 			buildTaskTable();
-// 		}
-// 	});
+	var state  = $('#changer_' + id).val();
+	$.ajax({
+		url: "repos/changeTaskState.php",
+		type: "post",
+		data: {
+			"id": id,
+			"state": state
+		},
+		success: function() {
+			getStats();
+			buildTaskTable();
+		}
+	})
+
 }
 
 function buildTaskTable() {
@@ -58,33 +57,39 @@ function buildTaskTable() {
 
 function fillTableWithTasks(tasks, max) {
 	
-	var complete, testing, staged, wip, todo = 0;
+	var complete = 0;
+	var testing = 0;
+	var staged = 0;
+	var wip = 0;
+	var todo = 0;
 	for (i = 0; i < tasks.length; i++) {
 		switch (tasks[i]['state']) {
 		case TODO :
 			$('#td_' + todo + "_0").html(makeTaskCard(tasks[i]));
+			$('#changer' + tasks[i]['id']).val("0");
 			todo++;
 			break;
 		case WIP:
-			$('#td_' + todo + "_1").html(makeTaskCard(tasks[i]));
+			$('#td_' + wip + "_1").html(makeTaskCard(tasks[i]));
+			$('#changer_' + tasks[i]['id']).val("1");
 			wip++;
 			break;
 		case STAGED:
-			$('#td_' + todo + "_2").html(makeTaskCard(tasks[i]));
+			$('#td_' + staged + "_2").html(makeTaskCard(tasks[i]));
+			$('#changer_' + tasks[i]['id']).val("2");
 			staged++;
 			break;
 		case TESTING:
-			$('#td_' + todo + "_3").html(makeTaskCard(tasks[i]));
+			$('#td_' + testing + "_3").html(makeTaskCard(tasks[i]));
+			$('#changer_' + tasks[i]['id']).val("3");
 			testing++;
 			break;
 		case COMPLETE:
-			$('#td_' + todo + "_4").html(makeTaskCard(tasks[i]));
+			$('#td_' + complete + "_4").html(makeTaskCard(tasks[i]));
+			$('#changer_' + tasks[i]['id']).val("4");
 			complete++;
 			break;
 		}
-		var ider = "#stage_" + tasks[i]['id'];
-		var id = tasks[i]['id'];
-		$(ider).bind("change", changeStateForTask(id));
 	}
 }
 
@@ -135,6 +140,7 @@ function getStats() {
 				row += "<td>" + pointsCompleted + "</td>";
 				row += "<td>" + results['points_left'] + "</td>";
 				row += "<td>" + getDaysLeft(results['start_date']) + "</td></tr>";
+				$('#sprintStatsTable').find('tbody tr').remove();
 				$('#sprintStatsTable').append(row);
 			}
 		}
@@ -153,26 +159,27 @@ function getDaysLeft(startDate) {
 }
 
 function makeTaskCard(task) {
-	var row = "<div class='card'><div class='card-body>";
-	row += "<h5 class='card-title'>" + task['subject'] + "</h5>";
-	row += "<h6 class='card-subtitle'>" + task['name'] +" </h6>";
-	row += "<p class='card-text'>" + task['difficulty'] + makeOptionListForCard(task['id']) + "</p>";
+	var row = "<div class='card'><div class='card-body'>";
+	row += "<h5 class='card-title'>" + task['difficulty'] + " - "+ task['subject'] + "</h5>";
+	row += "<h6 class='card-subtitle mb-2 text-muted'>" + task['name'] +" </h6>";
+	row += "<p class='card-text'>" + makeOptionListForCard(task['id']) + "</p>";
 	row += "<p class='card-text'><button type='button' ";
-	row += "onclick='getDetails(" + task['id'] + ")' class='btn btn-link'>Details";
-	row += "</button>&nbsp;<button type='button' class='btn btn-outline-primary' onClick='commentTask(" + task['id'];
-	row += ")'><span class='glyphicon glyphicon-plus'></span>&nbsp;Add Comment</button></p>";
+	row += "onclick='getDetails(" + task['id'] + ")' class='btn btn-link'>Details</button>&nbsp;";
+	row += "<button type='button' class='btn btn-outline-primary' onClick='commentTask(" + task['id'] + ")'>";
+	row += "<span class='glyphicon glyphicon-plus'></span>&nbsp;Add Comment</button></p>";
 	row += "</div></div>";
 	return row;
 }
 
-function makeOptionListForCard(id) {
-	var row = "<div style='max-width:150px'><select class='browser-default custom-select' id='stage_" + id + "'>";
+function makeOptionListForCard(id, state) {
+	var row = "<select class='browser-default custom-select' ";
+	row += "onchange='changeStateForTask(" + id + ")' id='changer_" + id + "'>";
 	var options = ["To Do", "Work In Progress", "Staged", "Testing", "Completed"];
 	var count = 0;
 	options.forEach(function(option) {
 		row += "<option value='" + count++ +"'>" + option + "</option>";
 	});
-	row += "</select></div>";
+	row += "</select>";
 	return row;
 }
 
@@ -186,13 +193,14 @@ function getDetails(id) {
 		},
 		success: function(results) {
 			if (results != null) {
+				var task = results[0];
 				$('#taskDetailsModal').modal('show');
-				$('#detailProject').text(results['name']);
-				$('#detailDifficulty').text(results['difficulty']);			
-				$('#detailSubject').text(results['subject']);
-				$('#detailDescription').text(results['description']);
+				$('#detailProject').text(task['name']);
+				$('#detailDifficulty').text(task['difficulty']);			
+				$('#detailSubject').text(task['subject']);
+				$('#detailDescription').text(task['description']);
 				var type = null;
-				switch (results['type']) {
+				switch (task['state']) {
 					case "0": type = "Story";
 					break;
 					case "1": type = "Bug";
@@ -200,7 +208,20 @@ function getDetails(id) {
 					case "2": type ="Task";
 					break;
 				}
-				$('#detailType').val(type);
+				$('#detailType').text(type);
+				$.ajax({
+					url: "repos/viewPriorComments.php",
+					type: "post",
+					dataType: "json",
+					data: {
+						"id": id
+					},
+					success: function(results2) {
+						if (results2 != null) {
+							viewPriorComments($('#viewCommentTable'), results2);					
+						}
+					}
+				})
 			}
 		}	
 	});

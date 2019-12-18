@@ -3,10 +3,20 @@
 	height: 600px;
 	overflow: auto;
 }
+.backlog-scrollbar {
+	position: relative;
+	height: 600px;
+	overflow: auto;
+}
 
+.sprint-scrollbar {
+	position: relative;
+	height: 425px;
+	overflow: auto;
+}
 .comment-scrollbar {
 	position: relative;
-	height: 400px;
+	height: 250px;
 	overflow: auto;
 }
 .comment-modal-row {

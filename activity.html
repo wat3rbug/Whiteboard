@@ -79,23 +79,23 @@
 	</div>
 	<div class="row">&nbsp;</div>
 	<input type='hidden' id="SprintIdHdn">
-
 	<div class="col-sm-12">
-		<h5 class="text-center">Sprint Activity</h5>
-		<table class="table table-striped" id="sprintTable">
-			<thead>
-				<tr>
-					<th scope="col">To Do</th>
-					<th scope="col">Work In Progress</th>
-					<th scope="col">Staged</th>
-					<th scope="col">Testing</th>
-					<th scope="col">Complete</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-
+		<h5 class="text-center text-muted">Sprint Activity</h5>
+		<div class="project-scroller table-wrapper-scroll-y">
+			<table class="table table-striped sprint-scrollbar table-wrapper-scroll-y" id="sprintTable">
+				<thead>
+					<tr>
+						<th scope="col">To Do</th>
+						<th scope="col">Work In Progress</th>
+						<th scope="col">Staged</th>
+						<th scope="col">Testing</th>
+						<th scope="col">Complete</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </body>
 
@@ -123,32 +123,49 @@
 				
 				<div class="row">
 					<input type="hidden" id="taskIdHdn">
-					<div class="col-sm-6 text-right">Project</div>
+					<div class="col-sm-6 text-right"><b>Project</b></div>
 					<div class="col-sm-6" id="detailProject">
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-6 text-right">Difficulty</div>
+					<div class="col-sm-6 text-right"><b>Difficulty</b></div>
 					<div class="col-sm-6" id="detailDifficulty">					
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-6 text-right">Type</div>
+					<div class="col-sm-6 text-right"><b>Type</b></div>
 					<div class="col-sm-6" id="detailType">						
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-3 text-right">Subject</div>
+					<div class="col-sm-3 text-right"><b>Subject</b></div>
 					<div class="col-sm-8" id="detailSubject">
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-3 text-right">Description</div>
+					<div class="col-sm-3 text-right"><b>Description</b></div>
 					<div class="col-sm-8" id="detailDescription">					
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="col-lg-12">
+					<div class="comment-scrollbar table-wrapper-scroll-y">
+						<h5 class="text-center">Prior Comments</h5>
+						<table class="table table-striped" id="viewCommentTable">
+							<thead>
+								<tr>
+									<th scope="col">User</th>
+									<th scope="col">Date</th>
+									<th scope="col">Comment</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

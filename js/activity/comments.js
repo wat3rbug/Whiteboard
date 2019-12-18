@@ -40,12 +40,14 @@ function commentTask(id) {
 								type: "post",
 								dataType: "json",
 								data: {
-									"id": task['id']
+									"id": id
 								},
 								success: function(results3) {
 									if (results3 != null) {
-										viewPriorComments(results3);
-									} 
+										viewPriorComments($('#commentTable'), results3);
+									} else {
+										emptyPriorComments($('#commentTable'));
+									}
 									$('#addCommentModal').modal('show');
 								} 
 							});					
@@ -57,13 +59,20 @@ function commentTask(id) {
 	});
 }
 
-function viewPriorComments(comments) {
-	$('#commentTable').find('tbody tr').remove();
+function emptyPriorComments(table) {
+	table.find('tbody tr').remove();
+	var row = "<tr><td colspan='3' class='text-center'>No Comments</td></tr>";
+	table.append(row);
+}
+
+function viewPriorComments(table, comments) {
+	table.find('tbody tr').remove();
 	comments.forEach(function(comment) {
-		var row = "<tr class='comment-modal-row'><td>" + comment['first_name'] + " " + comment['last_name'] + "</td>";
+		var row = "<tr class='comment-modal-row'><td><a href='mailto:" + comment['email'] + "'>";
+		row += comment['first_name'] + " " + comment['last_name'] + "</a></td>";
 		row += "<td>" + getWebDateFromDBString(comment['comment_date']) + "</td>";
 		row += "<td>" + comment['comment'] + "</td></tr>";
-		$("#commentTable").append(row);
+		table.append(row);
 	});
 }
 
@@ -81,6 +90,9 @@ function addComment() {
 		}, 
 		success: function() {
 			$('#addCommentModal').modal('hide');
+			$('#commentTaskIdHdn').val('');
+			$('#commentUserIdHdn').val('');
+			$('#comment').val('');
 		}
 	})
 }

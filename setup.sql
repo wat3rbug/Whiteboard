@@ -74,7 +74,7 @@ create table tasks (
 	hours float not null default 0.0,
 	state tinyint(4) not null default 0,
 	foreign key fk_task_sprint(sprint) references sprints(id),
-	completed date,
+	completed int,
 	type int not null default 0,
 	deleted tinyint(1) not null default 0
 );
