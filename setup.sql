@@ -90,5 +90,10 @@ create table comments (
 	deleted tinyint(1) not null default 0	
 );
 
+create view v_comment_count_by_task as
+	select tasks.id, count(comments.id) as comment_count from tasks
+	left join comments on comments.task_id = tasks.id 
+	group by tasks.id;
+
 
 

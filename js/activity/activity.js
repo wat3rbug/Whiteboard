@@ -98,7 +98,7 @@ function buildEmptyTable(max) {
 	for (i =0; i < max; i++) {
 		var row = "<tr>";
 		for (j = 0; j <= MAX_STATE; j++) {
-			row += "<td id='td_" + i + "_" + j +"'>&nbsp;</td>";
+			row += "<td style='max-width: 20%' id='td_" + i + "_" + j +"'>&nbsp;</td>";
 		}
 		row += "</tr>";
 		$('#sprintTable').append(row);
@@ -164,9 +164,13 @@ function makeTaskCard(task) {
 	row += "<h6 class='card-subtitle mb-2 text-muted'>" + task['name'] +" </h6>";
 	row += "<p class='card-text'>" + makeOptionListForCard(task['id']) + "</p>";
 	row += "<p class='card-text'><button type='button' ";
-	row += "onclick='getDetails(" + task['id'] + ")' class='btn btn-link'>Details</button>&nbsp;";
-	row += "<button type='button' class='btn btn-outline-primary' onClick='commentTask(" + task['id'] + ")'>";
-	row += "<span class='glyphicon glyphicon-plus'></span>&nbsp;Add Comment</button></p>";
+	row += "onclick='getDetails(" + task['id'] + ")' class='btn btn-outline-primary'>";
+	row += "<span class='glyphicon glyphicon-list-alt'></span>&nbsp;Details</button>&nbsp;";
+	row += "<button type='button' class='btn btn-primary' onClick='commentTask(" + task['id'] + ")'>";
+	row += "<span class='glyphicon glyphicon-plus'></span>&nbsp;Add Comment</button>&nbsp;";
+	if (task['comment_count'] == 1) row += "1 comment";
+	else row += task['comment_count'] + " comments";
+	row += "</p>";
 	row += "</div></div>";
 	return row;
 }
@@ -199,6 +203,7 @@ function getDetails(id) {
 				$('#detailDifficulty').text(task['difficulty']);			
 				$('#detailSubject').text(task['subject']);
 				$('#detailDescription').text(task['description']);
+				emptyPriorComments($('#viewCommentTable'));
 				var type = null;
 				switch (task['state']) {
 					case "0": type = "Story";
@@ -216,10 +221,10 @@ function getDetails(id) {
 					data: {
 						"id": id
 					},
-					success: function(results2) {
-						if (results2 != null) {
-							viewPriorComments($('#viewCommentTable'), results2);					
-						}
+					success: function(comments) {
+						if (comments != null) {
+							viewPriorComments($('#viewCommentTable'), comments);					
+						} 
 					}
 				})
 			}

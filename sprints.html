@@ -103,7 +103,16 @@
 			</div>
 
 			<div class="col-lg-6 text-center">
-				<h4>Backlog</h4>
+				<div class="row">
+					<div class="col-md-5 text-right">
+						<h4>Backlog</h4>
+					</div>
+					<div class="col-md-7">
+						<span class='glyphicon glyphicon-filter'></span>&nbsp;
+						<select class='selectpicker' id="filterBy">
+						</select>
+					</div>
+				</div>
 				<table class="table table-striped backlog-scrollbar table-wrapper-scroll-y" id="remainingTasksTable">
 					<thead>
 						<tr>
@@ -188,6 +197,42 @@
 		</div>
 	</div>
 </div>
+
+<!-- Start Next Sprint Modal Section -->
+
+<div class="modal fade" id="nextSprintModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Sprint Completed</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+
+				<div class="row">
+					<div class="col-lg-12 text-center">Click To Start Next Sprint</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="closeBtn">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="sessionTimed"></div>
+
 
 
 

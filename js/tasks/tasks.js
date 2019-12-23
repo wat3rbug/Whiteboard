@@ -3,6 +3,7 @@ $(document).ready(function() {
 	
 	$("#addTaskBtn").on("click", function() {
 		$('#addTaskModal').modal('show');
+		clearAddTaskModal();
 		getProjectsForTask($('#addProjSelector'));	
 	});
 	
@@ -23,7 +24,14 @@ $(document).ready(function() {
 	$('#pushEditTaskToDB').on("click", function() {
 		pushEditToDB();
 	});
+	
+
 });
+
+function clearAddTaskModal() {
+	$('#addSubject').val('');
+	$('#addDescription').val('');
+}
 
 function pushEditToDB() {
 	var id = $('#taskIdHdn').val();

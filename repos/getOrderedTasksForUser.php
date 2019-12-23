@@ -25,7 +25,7 @@ if (isset($email) && isset($password)) {
 	
 	$db = new TaskRepository();
 	$data = $db->getOrderedTasksForUser($userid, $sprintid);
-	// var_dump($data);
+
 	header('Content-type: application/json');
 	echo json_encode($data);
 }

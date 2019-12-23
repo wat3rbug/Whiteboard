@@ -124,7 +124,7 @@ class TaskRepository {
 	
 	function getOrderedTasksForUser($id, $sprint) {
 		if (isset($id) && isset($sprint) && $id > 0 && $sprint > 0) {
-			$sql = "SELECT tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state FROM tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint = ? AND tasks.user = ? "; //ORDER BY tasks.state ASC, tasks.id DESC";
+			$sql = "SELECT tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, v_comment_count_by_task.comment_count FROM tasks JOIN projects ON tasks.project = projects.id LEFT JOIN v_comment_count_by_task ON tasks.id = v_comment_count_by_task.id WHERE tasks.sprint = ? AND tasks.user = ? "; //ORDER BY tasks.state ASC, tasks.id DESC";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $sprint);
 			$statement->bindParam(2, $id);
@@ -242,6 +242,19 @@ class TaskRepository {
 			$statement->bindParam(1, $sprint);
 			$statement->bindParam(2, $id);
 			$statement->execute();
+		}
+	}
+	
+	function getFilteredIncompleteTasks($id) {
+		if (isset($id)) {
+			$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name FROM tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint IS NULL AND projects.id = ? ORDER BY tasks.id DESC";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
 		}
 	}
 	

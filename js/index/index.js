@@ -22,17 +22,15 @@ function loginUser() {
 	var email = $("#LoginEmail").val();
 	var password = $("#LoginPassword").val();
 	$.ajax({
-		url: "repos/getUserId.php",
+		url: "repos/getUser.php",
 		type: "post",
+		dataType: "json",
 		data: {
-			"email:": email,
+			"email": email,
 			"password": password
 		},
-		error: function(result, status, error) {
-			alert('got here' + error);	
-		},
 		success: function(result) {
-			var userid = result;
+			var userid = result[0]['id'];
 			if (isNumber(userid)){
 				sessionStorage['email'] = email;
 				sessionStorage['password'] = password;

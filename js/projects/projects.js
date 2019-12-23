@@ -85,7 +85,7 @@ function pushProjectToDB() {
 function pushEditToDB() {
 	var id = $('#editProjIdHdn').val();
 	var name = $('#editProjName').val();
-	var description = $('#editDescription').val();
+	var description = $('#editProjDescription').val();
 	var start = getDBDateFromJSDate($('#editProjStart').datepicker('getDate'));
 	var end =   getDBDateFromJSDate($('#editProjEnd').datepicker('getDate'));
 	$.ajax({

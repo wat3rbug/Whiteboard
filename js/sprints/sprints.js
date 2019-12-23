@@ -2,12 +2,60 @@ $(document).ready(function () {
 	
 	getSprintStats();
 	buildBacklogTable();
+	buildFilter();
 	
 	$('#startSprintBtn').on("click", function(){
-		startNextSprint();	
+		$('#nextSprintModal').modal('show');
 	});
+	
+	$('#filterBy').change(function() {
+		buildFilteredBacklogTable();	
+	});
+	
+	$('#closeBtn').on("click", function() {
+		startNextSprint();
+	})
 
 });
+
+function buildFilteredBacklogTable() {
+	var id = $('#filterBy').val();
+	$.ajax({
+		url: "repos/getFilteredIncompleteTasks.php",
+		type: "post",
+		dataType: "json",
+		data: {
+			"id": id
+		},
+		success: function(results) {
+			$('#remainingTasksTable').find('tbody tr').remove();
+			if (results != null) {
+				results.forEach(function(task) {
+					var row = makeRowForTask(task);
+					$('#remainingTasksTable').append(row);
+				});
+			} else {
+				$('#remainingTasksTable').append("<tr><td colspan='2'>No data</td></tr>");
+			}
+		}
+	})
+}
+
+function buildFilter() {
+	$.ajax({
+		url: "repos/getAllProjects.php",
+		dataType: "json",
+		success: function(results) {
+			$('#filterBy').empty();
+			$('#filterBy').append($('<option>').text(' -- All projects --').val("0"));
+			if (results != null) {
+				results.forEach(function(project) {
+					$('#filterBy').append($('<option>').text(project['name']).val(project['id']));
+				});		
+			}
+		}
+	});
+}
 
 function startNextSprint() {
 	$.ajax({

@@ -57,14 +57,24 @@
 	</div> <!-- end topMenu div -->
 	
 	<div class="row">&nbsp;</div>
-	
-
-	<div class="col-sm-10">
-		<button type="button" class="btn btn-success" id="addTaskBtn">
-			<span class="glyphicon glyphicon-plus"></span>
-			Add Task
-		</button>
+	<div class="col-lg-9">
+		<div class="row">
+			<div class="col-md-6">
+			<button type="button" class="btn btn-success" id="addTaskBtn">
+				<span class="glyphicon glyphicon-plus"></span>
+				Add Task
+			</button>
+		</div>
+		<div class="col-md-6 text-right">
+			<span class="glyphicon glyphicon-filter"><span>&nbsp;
+			<select class='selectpicker' id="filterBy">
+			</select>
+		</div>
 	</div>
+	</div>
+
+
+
 	<div class="row">&nbsp;</div>
 	<div class="col-lg-10">
 		<div class="project-scrollbar table-wrapper-scroll-y">
@@ -251,6 +261,7 @@
 		</div>
 	</div>
 </div>
+<div id="sessionTimed"></div>
 </html>
 
 
