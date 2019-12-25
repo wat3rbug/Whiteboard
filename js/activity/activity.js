@@ -10,6 +10,11 @@ $(document).ready(function() {
 		
 	getStats();
 	buildTaskTable();
+	
+	$('#filterBy').change(function() {
+		sessionStorage['filter'] = $('#filterBy').val();
+		buildTaskTable();
+	})
 });
 
 function changeStateForTask(id) {
@@ -31,6 +36,10 @@ function changeStateForTask(id) {
 }
 
 function buildTaskTable() {
+	var filter = sessionStorage['filter'];
+	if (filter == null) {
+		filter = 0;
+	}
 	var email = sessionStorage['email'];
 	var password = sessionStorage['password'];
 	$.ajax({
@@ -39,18 +48,20 @@ function buildTaskTable() {
 		dataType: "json",
 		data: {
 			"email": email,
-			"password": password
+			"password": password,
+			"filter": filter
 		},
 		success: function(results) {
+			$('#sprintTable').find('tbody tr').remove();
 			if (results != null) {
 				var max = getBiggestRowCount(results);
 				buildEmptyTable(max);
-				fillTableWithTasks(results, max);
-				
+				fillTableWithTasks(results, max);		
 			} else {
 				var row = "<tr><td colspan='5'>No Data</td></tr>";
 				$('#sprintTable').append(row);
 			}
+			getProjectsForTask();
 		}	
 	});
 }
@@ -230,4 +241,23 @@ function getDetails(id) {
 			}
 		}	
 	});
+}
+
+function getProjectsForTask() {
+	$.ajax({
+		url: "repos/getProjectNameAndIds.php",
+		dataType: "json",
+		success: function(results) {
+			$('#filterBy').empty();
+			if (results != null) {
+				$('#filterBy').append($('<option>').text(' -- All Projects --').val('0'));
+				results.forEach(function(project) {
+					$('#filterBy').append($('<option>').text(project.name).val(project.id));	
+				});
+				if (sessionStorage['filter'] != null) {
+					$('#filterBy').val(sessionStorage['filter']);
+				}
+			}
+		}
+	})
 }

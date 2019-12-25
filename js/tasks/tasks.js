@@ -25,7 +25,10 @@ $(document).ready(function() {
 		pushEditToDB();
 	});
 	
-
+	$('#filterBy').change(function() {
+		sessionStorage['filter'] = $('#filterBy').val();
+		buildTaskTable();
+	});
 });
 
 function clearAddTaskModal() {
@@ -139,17 +142,29 @@ function getProjectsForTask(selector) {
 		success: function(results) {
 			selector.empty();
 			if (results != null) {
+				selector.append($('<option>').text(' -- All Projects --').val('0'));
 				results.forEach(function(project){
 					selector.append($('<option>').text(project.name).val(project.id));
 				});
+				if (sessionStorage['filter'] != null) {
+					selector.val(sessionStorage['filter']);
+				}
 			}
 		}
 	});
 }
 
 function buildTaskTable() {
+	var filter = sessionStorage['filter'];
+	if (filter == null) {
+		filter = 0;
+	}
 	$.ajax({
 		url: "repos/getAllTasks.php",
+		type: "post",
+		data: {
+			"filter": filter
+		},
 		dataType: "json",
 		success: function(tasks) {
 			$('#tasksTable').find('tbody tr').remove();
@@ -165,6 +180,7 @@ function buildTaskTable() {
 					$('#tasksTable').append(row);	
 				});
 			}
+			getProjectsForTask($('#filterBy'));
 		}	
 	});
 }

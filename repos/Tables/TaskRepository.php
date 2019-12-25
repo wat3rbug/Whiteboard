@@ -122,9 +122,24 @@ class TaskRepository {
 		}			
 	}
 	
+	function getFilteredOrderedTasksForUser($id, $sprint, $filter) {
+		if (isset($id) && isset($sprint) && isset($filter) && $id > 0 && $sprint > 0 && $filter > 0) {
+			$sql = "SELECT tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, v_comment_count_by_task.comment_count FROM tasks JOIN projects ON tasks.project = projects.id LEFT JOIN v_comment_count_by_task ON tasks.id = v_comment_count_by_task.id WHERE tasks.sprint = ? AND tasks.user = ? AND projects.id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $sprint);
+			$statement->bindParam(2, $id);
+			$statement->bindParam(3, $filter);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
 	function getOrderedTasksForUser($id, $sprint) {
 		if (isset($id) && isset($sprint) && $id > 0 && $sprint > 0) {
-			$sql = "SELECT tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, v_comment_count_by_task.comment_count FROM tasks JOIN projects ON tasks.project = projects.id LEFT JOIN v_comment_count_by_task ON tasks.id = v_comment_count_by_task.id WHERE tasks.sprint = ? AND tasks.user = ? "; //ORDER BY tasks.state ASC, tasks.id DESC";
+			$sql = "SELECT tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, v_comment_count_by_task.comment_count FROM tasks JOIN projects ON tasks.project = projects.id LEFT JOIN v_comment_count_by_task ON tasks.id = v_comment_count_by_task.id WHERE tasks.sprint = ? AND tasks.user = ? "; 
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $sprint);
 			$statement->bindParam(2, $id);
@@ -301,6 +316,19 @@ class TaskRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+		}
+	}
+	
+	function getFilteredTasks($filter) {
+		if (isset($filter) && $filter > 0) {
+			$sql = "SELECT tasks.difficulty, tasks.id, projects.name, projects.start_date, projects.end_date, tasks.difficulty, tasks.type, projects.description, tasks.subject, tasks.description, tasks.state, tasks.sprint from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.deleted = 0 AND projects.id = ? ORDER BY tasks.id DESC";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $filter);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;				
+			}
+			return $output;
 		}
 	}
 	
