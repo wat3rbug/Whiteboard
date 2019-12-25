@@ -13,6 +13,7 @@ $(document).ready(function () {
 	});
 	
 	$('#closeBtn').on("click", function() {
+		$('#nextSprintModal').modal('hide');
 		startNextSprint();
 	})
 
