@@ -95,5 +95,28 @@ create view v_comment_count_by_task as
 	left join comments on comments.task_id = tasks.id 
 	group by tasks.id;
 
+create view v_tasks_for_sprint as
+	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, v_comment_count_by_task.comment_count from tasks
+	join projects on tasks.project = projects.id
+	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id;
+	
+create view v_filtered_tasks_for_sprint as
+	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, v_comment_count_by_task.comment_count, projects.id as project_id from tasks
+	join projects on tasks.project = projects.id
+	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id;	
+	
+create view v_incomplete_tasks as
+	select tasks.id, tasks.difficulty, tasks.subject, projects.name, projects.id as project_id from tasks
+	join projects on tasks.project = projects.id
+	where tasks.sprint is null order by tasks.id desc;
+	
+create view v_tasks as
+	select tasks.difficulty, tasks.id, projects.name, projects.start_date, projects.end_date, tasks.type, 
+	projects.description as project_description, tasks.subject, tasks.description, tasks.state, 
+	projects.id as project_id, tasks.sprint from tasks
+	join projects on tasks.project = projects.id
+	where tasks.deleted = 0 and tasks.completed is null order by tasks.id desc;
+		
+	
 
 

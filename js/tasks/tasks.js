@@ -104,7 +104,7 @@ function addTaskToDB() {
 	var difficulty = $('#addDiffSelector').val();
 	var type = $('#addTaskTypeSelector').val();
 	$.ajax({
-		url: "repos/getUserId.php",
+		url: "repos/getUser.php",
 		type: "post",
 		dataType: "json",
 		data: {
@@ -113,7 +113,7 @@ function addTaskToDB() {
 		},
 		success: function(result) {
 			if (result != null) {
-				var user = result;
+				var user = result[0]['id'];
 				$.ajax({
 					url: "repos/addTask.php",
 					type: "post",
