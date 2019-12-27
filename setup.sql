@@ -1,5 +1,10 @@
 create database whiteboard;
 use whiteboard;
+drop view if exists `v_comment_count_by_task`;
+drop view if exists `v_tasks_for_sprint`;
+drop view if exists `v_filtered_tasks_for_sprint`;
+drop view if exists `v_incomplete_tasks`;
+drop view if exists `v_tasks`;
 drop table if exists `comments`;
 drop table if exists `tasks`;
 drop table if exists `milestones`;
@@ -8,6 +13,20 @@ drop table if exists `teams`;
 drop table if exists `sprints`;
 drop table if exists `projects`;
 drop table if exists `users`;
+
+create table languages (
+	id int auto_increment primary key,
+	language varchar(40) not null
+) engine = InnoDB;
+
+create table project_languages (
+	id int auto_increment primary key,
+	project int not null,
+	language int not null,
+	deleted tinyint(1)not null default 0,
+	foreign key fk_proj_lang_project(project) references projects(id),
+	foreign key fk_proj_lang_language(language) references languages(id)
+) engine = InnoDB;
 	
 create table users (
 	id int auto_increment primary key,
@@ -118,5 +137,5 @@ create view v_tasks as
 	where tasks.deleted = 0 and tasks.completed is null order by tasks.id desc;
 		
 	
-
+	
 
