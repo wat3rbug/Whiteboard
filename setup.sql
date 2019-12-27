@@ -35,7 +35,7 @@ create table users (
 	email varchar(40) not null,
 	password varchar(40) not null,
 	deleted tinyint(1) not null default 0
-);
+) engine = InnoDB;
 
 create table projects (
 	id int auto_increment primary key,
@@ -44,7 +44,7 @@ create table projects (
 	end_date date,
 	description varchar(1000),
 	deleted tinyint(1) not null default 0
-);
+) engine = InnoDB;
 
 create table team_members (
 	id int auto_increment primary key,
@@ -53,7 +53,7 @@ create table team_members (
 	team_mate int not null,
 	foreign key fl_team_members_mate(team_mate) references users(id),
 	deleted tinyint(1) not null default 0
-);
+) engine = InnoDB;
 
 create table teams (
 	id int auto_increment primary key,
@@ -61,7 +61,7 @@ create table teams (
 	foreign key fk_teams_project(project) references projects(id),
 	name varchar(40) not null,
 	deleted tinyint(1) not null default 0
-);
+) engine = InnoDB;
 
 create table milestones (
 	id int auto_increment primary key,
@@ -69,14 +69,14 @@ create table milestones (
 	project int not null,
 	foreign key fk_project(project) references projects(id),
 	deleted tinyint(1) not null default 0
-);
+) engine = InnoDB;
 
 create table sprints (
 	id int auto_increment primary key,
 	start_date date not null,
 	end_date date,
 	deleted tinyint(1) not null default 0
-);
+) engine = InnoDB;
 
 create table tasks (
 	id int auto_increment primary key,
@@ -96,7 +96,7 @@ create table tasks (
 	completed int,
 	type int not null default 0,
 	deleted tinyint(1) not null default 0
-);
+) engine = InnoDB;
 
 create table comments (
 	id int auto_increment primary key,
@@ -107,7 +107,7 @@ create table comments (
 	comment varchar(1000) not null,
 	comment_date date not null,
 	deleted tinyint(1) not null default 0	
-);
+) engine = InnoDB;
 
 create view v_comment_count_by_task as
 	select tasks.id, count(comments.id) as comment_count from tasks

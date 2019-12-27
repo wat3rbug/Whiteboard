@@ -93,6 +93,7 @@ function addComment() {
 			$('#commentTaskIdHdn').val('');
 			$('#commentUserIdHdn').val('');
 			$('#comment').val('');
+			buildTaskTable();
 		}
-	})
+	});
 }
