@@ -17,6 +17,7 @@
 	<script src="js/projects/projects.js"></script>
 	<script src="js/dateFunctions.js"></script>
 	<script src="js/nav.js"></script>
+	<script src="js/projects/languages.js"></script>
 	
 	<div class="col-sm-12">
 		<div class="jumbotron info">
@@ -157,6 +158,61 @@
 	</div>
 </div>
 
+<!-- Edit Languages Modal Section -->
+
+<div class="modal fade" id="editLanguagesModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-warning">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Edit Languages / API</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<input type="hidden" id="editProjIdForLangHdn">
+					<div class="col-sm-6 text-right">Languages / APIs</div>
+					<div class="col-sm-5">
+						<select class="browser-default custom-select" id="langSelector" multiple>
+						</select>
+					</div>
+					<div class="col-sm-1">&nbsp;</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-4 text-right">New Language / API</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<input type="input" class="form-control" id="newLangInput">
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<button type="button" class="btn btn-success" id="addLangBtn">
+							<span class="glyphicon glyphicon-plus"></span>&nbsp;Add Language / API
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" id="pushEditLanguageToDB">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Update Project
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelEditLanguageBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- Edit Project Modal Section -->
 
 <div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog">
@@ -225,6 +281,9 @@
 				</div>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-primary" id='editLangsBtn'>
+					<span class="glyphicon glyphicon-list-alt"></span>&nbsp;Edit Languages / API
+				</button>&nbsp;
 				<button type="button" class="btn btn-warning" id="pushEditProjectToDB">
 					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Update Project
 				</button>&nbsp;
