@@ -23,6 +23,15 @@ class TaskRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	
+	function incompleteTask($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "UPDATE tasks SET completed = null WHERE id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+		}
+	}
 	function completeTask($id) {
 		if (isset($id) && $id > 0) {
 			$sql = "UPDATE tasks SET state = 4, completed = 1 WHERE id= ?";

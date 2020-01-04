@@ -31,7 +31,7 @@
 		<div class="col-lg-12" role="navigation">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" href="home.html">Home</a>
+					<a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" href="home.html">Home</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="project-tab" data-toggle="tab" role="tab" aria-controls="project" href="projects.html">Projects</a>
@@ -46,7 +46,7 @@
 					<a class="nav-link" id="sprint-tab" data-toggle="tab" role="tab" aria-controls="sprint" href="sprints.html">Sprints</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" id="activity-tab" data-toggle="tab" role="tab" aria-controls="activity" href="activity.html">Sprint Activity</a>
+					<a class="nav-link" id="activity-tab" data-toggle="tab" role="tab" aria-controls="activity" href="activity.html">Sprint Activity</a>
 				</li>		
 				<li class="nav-item">
 					<a class="nav-link" id="performance-tab" data-toggle="tab" role="tab" aria-controls="performance" href="performance.html">Performance</a>
@@ -61,51 +61,24 @@
 	<!-- End Top Menu portion -->
 	
 	<div class="row">&nbsp;</div>
-	<div class="col-lg-6">
-		<h5 class="text-muted text-center">Sprint Statistics</h5>
-		<table class="table table-striped table-bordered" id="sprintStatsTable">
-			<thead>
-				<tr>
-					<th scope="col">Sprint</th>
-					<th scope="col">Total Points</th>
-					<th scope="col">Points Completed</th>
-					<th scope="col">Points Left</th>
-					<th scope="col">Days Left</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+	<div class="col-md-12">This is the list of recent comments as to the projects and task they relate to at the moment. Click <a href="#Introduction">here</a> to see an introduction to the application and how to use it.
+	</div>
+	<div class="row">&nbsp;</div> 
+	<div class="col-md-12" id="commentSection">
 	</div>
 	<div class="row">&nbsp;</div>
-	<input type='hidden' id="SprintIdHdn">
-	<div class="col-sm-12">
-		<div class="row">
-			<div class="col-sm-6">
-				<h5 class="text-right text-muted">Sprint Activity</h5>
-			</div>
-			<div class="col-sm-6 text-right">
-				<span class="glyphicon glyphicon-filter"><span>&nbsp;
-				<select class='selectpicker' id="filterBy">
-				</select>
-			</div>
-		</div>
-		<div class="row">&nbsp;</div>
-		<div class="project-scroller table-wrapper-scroll-y">
-			<table class="table table-striped sprint-scrollbar table-wrapper-scroll-y" id="sprintTable">
-				<thead>
-					<tr>
-						<th scope="col">To Do</th>
-						<th scope="col">Work In Progress</th>
-						<th scope="col">Staged</th>
-						<th scope="col">Testing</th>
-						<th scope="col">Complete</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		</div>
+	<div class="col-md-12">
+		This is the <a>Introduction</a> to the process flow for the application.  Other items, such as user preferences and performance characteristics for various projects and developers on those projects are not covered here as they are more advanced topics.
+		<p>1.  Create a new <a href="#project">project</a>. </p>
+		<p>2.  Add <a href=#tasks">tasks</a> to your new project.</p>
+		<p>3.  Add a <a href="#team">team</a>.  While not essential to add members it gives those folks some accountability for the tasks given and the outcome of the project.</p>
+		<p>4.  Add tasks from your project to the <a href="#sprint">sprint</a> so that people can see and work on that particular task.</p>
+		<p>5.  You the sprint <a href="#activity">activity</a> page.  This keeps track of what 'stage' a task is in during development.  You can add questions or comments, which will show up on the home page for the other users.</p>
+		<p><a name="project"><iframe width="640" height="480" src="https://www.youtube.com/embed/QL_mdLTiAC8?controls=1"></iframe></a></p>
+		<p><a name="tasks"><iframe width="640" height="480" src="https://www.youtube.com/embed/ZRNgRPjoJ0w?controls=1"></iframe></a></p>
+		<p><a name="team"><iframe width="640" height="480" src="https://www.youtube.com/embed/rAKiivRbB2s?controls=1"></iframe></a></p>
+		<p><a name="sprint"><iframe width="640" height="480" src="https://www.youtube.com/embed/LJNNWkw6Ajc?controls=1"></iframe></a></p>
+		<p><a name="activity"><iframe width="640" height="480" src="https://www.youtube.com/embed/1apjUb7cMko?controls=1"></iframe></a></p>
 	</div>
 </body>
 

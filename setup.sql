@@ -106,6 +106,7 @@ create table comments (
 	foreign key fk_comment_user(user) references users(id),
 	comment varchar(1000) not null,
 	comment_date date not null,
+	viewed tinyint(1) not null default 0,
 	deleted tinyint(1) not null default 0	
 ) engine = InnoDB;
 

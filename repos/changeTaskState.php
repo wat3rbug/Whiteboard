@@ -14,5 +14,6 @@ if (isset($id) && isset($state) && $id > 0) {
 	else if ($prevState == 2 && $state == 3) $db->updateStart($id, $state);
 	else if ($prevState == 2 || $prevState == 3 && $state == 4) $db->updateEndAndCalcTime($id, $state);
 	if ($state == 4) $db->completeTask($id);
+	else $db->incompleteTask($id);
 }
 ?>

@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#addTaskBtn").on("click", function() {
 		$('#addTaskModal').modal('show');
 		clearAddTaskModal();
-		getProjectsForTask($('#addProjSelector'));	
+		getProjectsForAddTask();	
 	});
 	
 	$('#cancelAddTaskBtn').on("click", function() {
@@ -129,6 +129,20 @@ function addTaskToDB() {
 						buildTaskTable();
 						$('#addTaskModal').modal('hide');
 					}	
+				});
+			}
+		}
+	});
+}
+function getProjectsForAddTask() {
+	$.ajax({
+		url: "repos/getProjectNameAndIds.php",
+		dataType: "json",
+		success: function(results) {
+			$('#addProjSelector').empty();
+			if (results != null) {
+				results.forEach(function(project){
+					$('#addProjSelector').append($('<option>').text(project.name).val(project.id));
 				});
 			}
 		}
