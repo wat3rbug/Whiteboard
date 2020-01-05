@@ -174,6 +174,14 @@ function makeTaskCard(task) {
 	row += "<h5 class='card-title'>" + task['difficulty'] + " - "+ task['subject'] + "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>" + task['name'] +" </h6>";
 	row += "<p class='card-text'>" + makeOptionListForCard(task['id']) + "</p>";
+	if (task['state'] == 4) {
+		if (task['milestone'] == null) {
+			row += "<p class='card-text'><button type='button' class='btn btn-outline-success' onclick='makeMileStone(";
+			row += task['id'] + ")'><span class='glyphicon glyphicon-flag'></span>&nbsp;Make Milestone</button></p>";
+		} else {
+			row += "<p class='card-text'><b>Milestone:</b> " + task['milestone'] + "</p>";
+		}
+	}
 	row += "<p class='card-text'><button type='button' ";
 	row += "onclick='getDetails(" + task['id'] + ")' class='btn btn-outline-primary'>";
 	row += "<span class='glyphicon glyphicon-list-alt'></span>&nbsp;Details</button>&nbsp;";
@@ -181,7 +189,7 @@ function makeTaskCard(task) {
 	row += "<span class='glyphicon glyphicon-plus'></span>&nbsp;Add Comment</button>&nbsp;";
 	if (task['comment_count'] == 1) row += "1 comment";
 	else row += task['comment_count'] + " comments";
-	row += "</p>";
+	row += "</p>";	
 	row += "</div></div>";
 	return row;
 }

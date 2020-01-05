@@ -23,6 +23,18 @@ class TaskRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	function getProjectByTask($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "SELECT projects.* FROM tasks JOIN projects ON tasks.project = projects.id WHERE tasks.id = ? AND tasks.deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
 	
 	function incompleteTask($id) {
 		if (isset($id) && $id > 0) {

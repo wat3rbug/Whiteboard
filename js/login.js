@@ -10,6 +10,19 @@ $(document).ready(function (){
 		}
 	});
 			
+	$('#logoutBtn').on("click", function() {
+		$('#logoutModal').modal('show');
+		sessionStorage['password'] = null;
+		sessionStorage['email'] = null;
+		$('#logoutBtnClose').on("click", function() {
+			window.location.replace("index.html");	
+		});
+
+		$('#logoutModal').on("hidden.bs.modal", function() {
+			window.location.replace("index.html");
+		});
+	});
+	
 	
 
 });

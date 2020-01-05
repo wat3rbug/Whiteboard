@@ -67,6 +67,8 @@ create table milestones (
 	id int auto_increment primary key,
 	name varchar(40) not null,
 	project int not null,
+	task int not null,
+	foreign key fk_task(task) references tasks(id),
 	foreign key fk_project(project) references projects(id),
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
@@ -116,14 +118,18 @@ create view v_comment_count_by_task as
 	group by tasks.id;
 
 create view v_tasks_for_sprint as
-	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, v_comment_count_by_task.comment_count from tasks
+	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, 
+	v_comment_count_by_task.comment_count, milestones.name as milestone from tasks
 	join projects on tasks.project = projects.id
-	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id;
+	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id
+	left join milestones on tasks.id = milestones.task;
 	
 create view v_filtered_tasks_for_sprint as
-	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, v_comment_count_by_task.comment_count, projects.id as project_id from tasks
+	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, 
+	v_comment_count_by_task.comment_count, projects.id as project_id, milestones.name as milestone from tasks
 	join projects on tasks.project = projects.id
-	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id;	
+	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id
+	left join milestones on tasks.id = milestones.task;	
 	
 create view v_incomplete_tasks as
 	select tasks.id, tasks.difficulty, tasks.subject, projects.name, projects.id as project_id from tasks
