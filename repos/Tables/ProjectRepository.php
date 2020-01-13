@@ -23,6 +23,35 @@ class ProjectRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	
+	function getProjectByDetails($name, $desc, $start, $end) {
+		if (isset($name) && isset($start) && isset($end)) {
+			if (isset($desc)) {
+				$sql = "SELECT * FROM projects WHERE name = ? AND description = ? AND start_date = ? AND end_date = ? AND deleted = 0 ORDER BY id DESC LIMIT 1";
+				$statement = $this->conn->prepare($sql);
+				$statement->bindParam(1, $name);
+				$statement->bindParam(2, $desc);
+				$statement->bindParam(3, $start);
+				$statement->bindParam(4, $end);
+				$statement->execute();
+				while ($row = $statement->fetch()) {
+					$output[] = $row;
+				}
+			} else {
+				$sql = "SELECT * FROM projects WHERE name = ? AND start_date = ? AND end_date = ? AND deleted = 0 ORDER BY id DESC LIMIT 1";
+				$statement = $this->conn->prepare($sql);
+				$statement->bindParam(1, $name);
+				$statement->bindParam(2, $start);
+				$statement->bindParam(3, $end);
+				$statement->execute();
+				while ($row = $statement->fetch()) {
+					$output[] = $row;
+				}
+			}
+			return $output;
+		}
+	}
+	
 	function updateProject($id, $name, $desc, $start, $end) {
 		if (isset($id) && $id > 0 && isset($name) && isset($start) && isset($end)) {
 			$sql = "UPDATE projects SET name = ?, description = ?, start_date =?, end_date = ? WHERE id = ? AND deleted = 0";

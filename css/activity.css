@@ -9,6 +9,17 @@
 	table-layout:fixed;
 }
 
+.project-scroll tbody {
+	display: block;
+	position: relative;
+	height: 600px;
+	overflow-y: scroll;
+}
+
+.project-scroll thead, tbody tr {
+	display: table;
+	width:100%;
+}
 .comment-scroll thead, tbody tr {
 	display:table;
 	width:100%;

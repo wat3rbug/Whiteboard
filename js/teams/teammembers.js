@@ -97,7 +97,7 @@ function buildTeamTable() {
 						success: function(results) {
 							var users = results;
 							var row = "<tr><td>" + makeTeamCard(team, users) + "</td>";
-							row += "<td>" + makeButtonsForTeam(team) + "</td></tr>";
+							row += "<td style='width:85px'>" + makeButtonsForTeam(team) + "</td></tr>";
 							$('#teamTable').append(row);
 						}
 					})
@@ -109,10 +109,10 @@ function buildTeamTable() {
 }
 
 function makeButtonsForTeam(team) {
-	var row = "<div style='min-width:65px'><button type='button' class='btn btn-outline-warning'";
+	var row = "<button type='button' class='btn btn-outline-warning'";
 	row += " onclick='editTeam(" + team['id'] + ")'><span class='glyphicon glyphicon-pencil'></span></button>";
 	row += "&nbsp;<button type='button' class='btn btn-outline-danger' onclick='removeTeam(" + team['id'] + ")'>";
-	row += "<span class='glyphicon glyphicon-remove'></span></button></div>";
+	row += "<span class='glyphicon glyphicon-remove'></span></button>";
 	return row;
 }
 

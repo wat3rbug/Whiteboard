@@ -134,7 +134,7 @@ create view v_filtered_tasks_for_sprint as
 create view v_incomplete_tasks as
 	select tasks.id, tasks.difficulty, tasks.subject, projects.name, projects.id as project_id from tasks
 	join projects on tasks.project = projects.id
-	where tasks.sprint is null order by tasks.id desc;
+	where tasks.sprint is null and tasks.deleted = 0 order by tasks.id desc;
 	
 create view v_tasks as
 	select tasks.difficulty, tasks.id, projects.name, projects.start_date, projects.end_date, tasks.type, 

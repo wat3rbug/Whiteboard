@@ -1,0 +1,15 @@
+
+.project-scroll tbody {
+	display: block;
+	max-height: 600px;
+	overflow-y: scroll;
+}
+
+.project-scroll thead, tbody tr {
+	display: table;
+	width:100%;
+	table-layout:fixed;
+}
+
+
+

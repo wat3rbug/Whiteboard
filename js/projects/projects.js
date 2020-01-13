@@ -78,6 +78,24 @@ function pushProjectToDB() {
 		success: function() {
 			$('#addProjectModal').modal('hide');
 			buildProjectTable();
+			$.ajax({
+				url: "repos/getProjectByDetails.php",
+				type: "post",
+				dataType: "json",
+				data: {
+					"start": start,
+					"end": end,
+					"name" : name,
+					"description": description
+				},
+				success: function(result) {
+					if (result != null) {
+						var project = result[0];
+						$('#addProjIdForLangHdn').val(project['id']);
+						$('#addLanguagesModal').modal('show');
+					}				
+				}
+			});
 		}
 	});
 }
@@ -145,25 +163,33 @@ function removeProject(projectId) {
 
 function buildProjectTable() {
 	$.ajax({
-		url: "repos/getAllProjects.php",
+		url: "repos/getAllLanguagesForProjects.php",
 		dataType: "json",
-		success: function(results) {
-			$('#projectTable').find('tbody tr').remove();
-			if (results != null) {
-				results.forEach(function(project){
-					var row = "<tr><td>" + makeCardForProject(project) + "</td>";
-					row += "<td><div style='min-width: 65px'>";
-					row += "<button type='button' class='btn btn-outline-warning' onclick='editProject(";
-					row += project.id + ")'><span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
-					row += "<button type='button' class='btn btn-outline-danger' onclick='removeProject(";
-					row += project.id + ")'><span class='glyphicon glyphicon-remove'></span></button>";
-					row += "</div></td></tr>";
-					$('#projectTable').append(row);
-				});
-			}
-		}	
+		success:function(result) {
+			var langs = result;
+			$.ajax({
+				url: "repos/getAllProjects.php",
+				dataType: "json",
+				success: function(results) {
+					$('#projectTable').find('tbody tr').remove();
+					if (results != null) {
+						results.forEach(function(project){
+							var row = "<tr><td>" + makeCardForProject(project, langs) + "</td>";
+							row += "<td style='width:85px'>"; /* <div style='width: 65px'>"; */
+							row += "<button type='button' class='btn btn-outline-warning' onclick='editProject(";
+							row += project.id + ")'><span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
+							row += "<button type='button' class='btn btn-outline-danger' onclick='removeProject(";
+							row += project.id + ")'><span class='glyphicon glyphicon-remove'></span></button>";
+							row += "</td></tr>";
+							$('#projectTable').append(row);
+						});
+					}
+				}	
+			});
+		}
 	});
 }
+
 function getWebStrFromDB(currentDate) {
 	var sections = currentDate.split("-");
 	var year = sections[0];
@@ -174,11 +200,21 @@ function getWebStrFromDB(currentDate) {
 		
 }
 
-function makeCardForProject(project) {
+function makeCardForProject(project, langs) {
 	var row = "<div class='card'><div class='card-body'>";
 	row += "<h5 class='card-title'>" + project.name + "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Start Date: " + getWebStrFromDB(project.start_date) + "</h6>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>End Date: " + getWebStrFromDB(project.end_date) + "</h6>";
+	if (langs != null) {
+		let mylangs = langs.filter(a => a.project == project['id']);
+		if (mylangs.length != 0) {
+			row += "<h5 class='card-subtitle mb-2 text-muted'>Languages: ";	
+			mylangs.forEach(function(lang) {
+				row += lang.language + " ";
+			});
+			row += "</h5>";
+		}	
+	}	
 	if (project.description != null)
 		row += "<p class='card-text'>Description: " + project.description + "</p>";
 	row += "</div></div>";

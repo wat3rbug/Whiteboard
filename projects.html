@@ -5,7 +5,7 @@
 	<title>The Whiteboard</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/scrolls.css">
+	<!-- <link rel="stylesheet" href="css/project.css"> -->
 </head>
 <body>
 	<script src="jquery-3.3.1.min.js"></script>
@@ -74,13 +74,13 @@
 		</button>
 	</div>			
 	<div class="row">&nbsp;</div>
-	<div class="col-lg-8">
-		<div class="project-scrollbar table-wrapper-scroll-y">
+	<div class="col-lg-11">
+		<div class="project-scrollbar project-scroll">
 			<table class="table table-striped" id="projectTable">
 				<thead>
 					<tr>
 						<th scope="col">Projects</th>
-						<th scope="col">Action</th>
+						<th scope="col" style="width:65px">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -158,7 +158,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-success" id="pushProjectToDB">
-					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Project
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Project And Continue
 				</button>&nbsp;
 				<button type="button" class="btn btn-outline-secondary" id="cancelAddProjectBtn" data-dismiss="modal">
 					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
@@ -216,6 +216,61 @@
 					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Update Project
 				</button>&nbsp;
 				<button type="button" class="btn btn-outline-secondary" id="cancelEditLanguageBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add Languages Modal Section -->
+
+<div class="modal fade" id="addLanguagesModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Add Languages / API</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<input type="hidden" id="addProjIdForLangHdn">
+					<div class="col-sm-6 text-right">Languages / APIs</div>
+					<div class="col-sm-5">
+						<select class="browser-default custom-select" id="addLangSelector" multiple>
+						</select>
+					</div>
+					<div class="col-sm-1">&nbsp;</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-4 text-right">New Language / API</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<input type="input" class="form-control" id="addNewLangInput">
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<button type="button" class="btn btn-success" id="addLangBtn2">
+							<span class="glyphicon glyphicon-plus"></span>&nbsp;Add Language / API
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="pushAddLanguageToDB">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Language To Project
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelAddLanguageBtn" data-dismiss="modal">
 					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
 				</button>
 			</div>

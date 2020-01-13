@@ -126,9 +126,9 @@ function getSprintStats() {
 						if (result[0]['count'] != null) {
 							count = result[0]['count'];
 						} 
-						var row = "<tr><td>" + sprint['id'] + "</td><td>" + count;
-						row += "</td><td>" + daysLeft + "</td></tr>";
 						$('#sprintOverall').find('tbody tr').remove();
+						var row = "<tr><td>" + sprint['id'] + "</td><td>" + count;
+						row += "</td><td>" + daysLeft + "</td></tr>";					
 						$('#sprintOverall').append(row);
 						getSprintTable();
 					}	
@@ -198,7 +198,7 @@ function getDaysLeft(startDate) {
 
 
 function makeRowForSprintItem(task) {
-	var row = "<tr><td><button type='button' class='btn btn-danger' onclick='removeTask(" + task.id + ")'>";
+	var row = "<tr><td style='width:65px'><button type='button' class='btn btn-danger' onclick='removeTask(" + task.id + ")'>";
 	row += "<span class='glyphicon glyphicon-minus-sign'></span></button></td><td>";
 	row += "<div class='card'><div class='card-body'>";
 	row += "<h5 class='card-title text-left'>" + task.subject +"</h5>";
@@ -210,7 +210,7 @@ function makeRowForSprintItem(task) {
 }
 
 function makeRowForTask(task) {
-	var row = "<tr><td><button type='button' class='btn btn-success' onclick='addTask(" + task.id + ")'>";
+	var row = "<tr><td style='width:65px'><button type='button' class='btn btn-success' onclick='addTask(" + task.id + ")'>";
 	row += "<span class='glyphicon glyphicon-plus-sign'></span></button></td><td>";
 	row += "<div class='card'><div class='card-body'>";
 	row += "<h5 class='card-title text-left'>" + task.subject +"</h5>";

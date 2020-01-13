@@ -184,13 +184,13 @@ function buildTaskTable() {
 			$('#tasksTable').find('tbody tr').remove();
 			if (tasks != null) {
 				tasks.forEach(function(task) {
-					var row = "<tr><td class='" + task.name +"'> " + makeCardForTask(task) + "</td><td class='" + task.name + "'>";
-					row += "<div style='min-width:65px'>";
+					var row = "<tr><td class='" + task.name +"'> " + makeCardForTask(task) + "</td><td class='";
+					row += task.name + "' style='width:85px'>";
 					row += "<button type='button' class='btn btn-outline-warning' onclick='editTask(" + task.id + ")'>";
 					row += "<span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
 					row += "<button type='button' class='btn btn-outline-danger' onclick='removeTask(" + task.id + ")'>";
 					row += "<span class='glyphicon glyphicon-remove'></span></button>";
-					row +"</div></td></tr>";
+					row += "</td></tr>";
 					$('#tasksTable').append(row);	
 				});
 			}
