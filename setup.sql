@@ -6,26 +6,21 @@ drop view if exists `v_filtered_tasks_for_sprint`;
 drop view if exists `v_incomplete_tasks`;
 drop view if exists `v_tasks`;
 drop table if exists `comments`;
-drop table if exists `tasks`;
 drop table if exists `milestones`;
+drop table if exists `tasks`;
 drop table if exists `team_members`;
 drop table if exists `teams`;
-drop table if exists `sprints`;
+drop table if exists `project_languages`;
 drop table if exists `projects`;
+drop table if exists `user_specialties`;
+drop table if exists `languages`;
 drop table if exists `users`;
+drop table if exists `sprints`;
+
 
 create table languages (
 	id int auto_increment primary key,
 	language varchar(40) not null
-) engine = InnoDB;
-
-create table project_languages (
-	id int auto_increment primary key,
-	project int not null,
-	language int not null,
-	deleted tinyint(1)not null default 0,
-	foreign key fk_proj_lang_project(project) references projects(id),
-	foreign key fk_proj_lang_language(language) references languages(id)
 ) engine = InnoDB;
 	
 create table users (
@@ -46,13 +41,13 @@ create table projects (
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 
-create table team_members (
+create table project_languages (
 	id int auto_increment primary key,
-	team int not null,
-	foreign key fk_team_members_team(team) references teams(id),
-	team_mate int not null,
-	foreign key fl_team_members_mate(team_mate) references users(id),
-	deleted tinyint(1) not null default 0
+	project int not null,
+	language int not null,
+	deleted tinyint(1)not null default 0,
+	foreign key fk_proj_lang_project(project) references projects(id),
+	foreign key fk_proj_lang_language(language) references languages(id)
 ) engine = InnoDB;
 
 create table teams (
@@ -63,13 +58,12 @@ create table teams (
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 
-create table milestones (
+create table team_members (
 	id int auto_increment primary key,
-	name varchar(40) not null,
-	project int not null,
-	task int not null,
-	foreign key fk_task(task) references tasks(id),
-	foreign key fk_project(project) references projects(id),
+	team int not null,
+	foreign key fk_team_members_team(team) references teams(id),
+	team_mate int not null,
+	foreign key fl_team_members_mate(team_mate) references users(id),
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 
@@ -100,6 +94,16 @@ create table tasks (
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 
+create table milestones (
+	id int auto_increment primary key,
+	name varchar(40) not null,
+	project int not null,
+	task int not null,
+	foreign key fk_task(task) references tasks(id),
+	foreign key fk_project(project) references projects(id),
+	deleted tinyint(1) not null default 0
+) engine = InnoDB;
+
 create table comments (
 	id int auto_increment primary key,
 	task_id int not null,
@@ -110,6 +114,15 @@ create table comments (
 	comment_date date not null,
 	viewed tinyint(1) not null default 0,
 	deleted tinyint(1) not null default 0	
+) engine = InnoDB;
+
+create table user_specialties (
+	id int auto_increment primary key,
+	user int not null,
+	language int not null,
+	foreign key fk_spec_user(user) references users(id),
+	foreign key fk_spec_lang(language) references languages(id),
+	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 
 create view v_comment_count_by_task as
@@ -142,7 +155,3 @@ create view v_tasks as
 	projects.id as project_id, tasks.sprint from tasks
 	join projects on tasks.project = projects.id
 	where tasks.deleted = 0 and tasks.completed is null order by tasks.id desc;
-		
-	
-	
-
