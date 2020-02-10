@@ -182,7 +182,9 @@ function buildTaskTable() {
 		dataType: "json",
 		success: function(tasks) {
 			$('#tasksTable').find('tbody tr').remove();
-			if (tasks != null) {
+			if (tasks == null || tasks.length == 0) {
+				$('#tasksTable').append("<tr><td colspan='2' class='text-center'>No Data</td></tr>");
+			} else {
 				tasks.forEach(function(task) {
 					var row = "<tr><td class='" + task.name +"'> " + makeCardForTask(task) + "</td><td class='";
 					row += task.name + "' style='width:85px'>";
