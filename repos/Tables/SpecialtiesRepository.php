@@ -38,6 +38,7 @@ class SpecialtiesRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -48,6 +49,7 @@ class SpecialtiesRepository {
 		$sql = "SELECT user, languages.language FROM user_specialties LEFT JOIN languages ON user_specialties.language = languages.id WHERE user_specialties.deleted = 0";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;
 		}

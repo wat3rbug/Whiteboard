@@ -34,6 +34,7 @@ class ProjectRepository {
 				$statement->bindParam(3, $start);
 				$statement->bindParam(4, $end);
 				$statement->execute();
+				$output = array();
 				while ($row = $statement->fetch()) {
 					$output[] = $row;
 				}
@@ -44,6 +45,7 @@ class ProjectRepository {
 				$statement->bindParam(2, $start);
 				$statement->bindParam(3, $end);
 				$statement->execute();
+				$output = array();
 				while ($row = $statement->fetch()) {
 					$output[] = $row;
 				}
@@ -82,6 +84,7 @@ class ProjectRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+			$output = array();
 			while($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -101,6 +104,7 @@ class ProjectRepository {
 	function getAllProjects() {
 		$sql = "SELECT * FROM projects WHERE deleted = 0 ORDER BY id DESC";
 		$statement = $this->conn->query($sql);
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;				
 		}
@@ -109,6 +113,7 @@ class ProjectRepository {
 	function getProjectNameAndIds() {
 		$sql = "SELECT id, name FROM projects WHERE deleted = 0";
 		$statement = $this->conn->query($sql);
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;				
 		}
@@ -118,6 +123,7 @@ class ProjectRepository {
 	function getAllProjectsAndTeams() {
 		$sql = "SELECT * FROM projects LEFT JOIN teams on teams.project = projects.id WHERE projects.deleted = 0";
 		$statement = $this->conn->prepare($sql);
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;				
 		}
@@ -127,6 +133,7 @@ class ProjectRepository {
 	function getAllProjectsWithTeam() {
 		$sql = "SELECT projects.name, start_date, end_date, team_names.name AS team FROM projects LEFT JOIN teams ON teams.project = projects.id LEFT JOIN team_names ON teams.team_name = team_names.id WHERE projects.deleted = 0";
 		$statement = $this->conn->query($sql);
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;				
 		}

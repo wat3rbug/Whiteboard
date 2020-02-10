@@ -29,6 +29,7 @@ class TaskRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -88,6 +89,7 @@ class TaskRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -136,6 +138,7 @@ class TaskRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -151,6 +154,7 @@ class TaskRepository {
 			$statement->bindParam(2, $id);
 			$statement->bindParam(3, $filter);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -165,6 +169,7 @@ class TaskRepository {
 			$statement->bindParam(1, $sprint);
 			$statement->bindParam(2, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -179,6 +184,7 @@ class TaskRepository {
 			$statement->bindParam(1, $sprint);
 			$statement->bindParam(2, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -193,6 +199,7 @@ class TaskRepository {
 			$statement->bindParam(1, $sprint);
 			$statement->bindParam(2, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -207,6 +214,7 @@ class TaskRepository {
 			$statement->bindParam(1, $id);
 			$statement->bindParam(2, $sprint);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -220,6 +228,7 @@ class TaskRepository {
 			$statement =$this->conn->prepare($sql);
 			$statement->bindParam(1, $sprint);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -243,6 +252,7 @@ class TaskRepository {
 			$statement =$this->conn->prepare($sql);
 			$statement->bindParam(1, $sprint);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -264,6 +274,7 @@ class TaskRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $sprint);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -287,6 +298,7 @@ class TaskRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -298,6 +310,7 @@ class TaskRepository {
 		$sql = "SELECT * FROM v_incomplete_tasks";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;
 		}
@@ -324,6 +337,7 @@ class TaskRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -346,6 +360,7 @@ class TaskRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $filter);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;				
 			}
@@ -357,6 +372,7 @@ class TaskRepository {
 		$sql = "SELECT * FROM v_tasks";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;				
 		}

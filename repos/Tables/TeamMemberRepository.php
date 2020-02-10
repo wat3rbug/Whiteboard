@@ -50,6 +50,7 @@ class TeamMemberRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $team);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;				
 			}
@@ -72,6 +73,7 @@ class TeamMemberRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $team);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;				
 			}

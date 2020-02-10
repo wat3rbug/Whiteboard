@@ -40,6 +40,7 @@ class TeamRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;				
 			}
@@ -59,6 +60,7 @@ class TeamRepository {
 	function getAllTeams() {
 		$sql = "SELECT * FROM teams WHERE deleted = 0";
 		$statement = $this->conn->query($sql);
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;				
 		}

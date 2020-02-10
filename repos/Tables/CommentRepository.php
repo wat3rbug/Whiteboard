@@ -30,6 +30,7 @@ class CommentRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $task);
 			$statement->execute();
+			$output = array();
 			while($row = $statement->fetch()) {
 				$output[] = $row;
 			}

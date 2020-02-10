@@ -54,6 +54,7 @@ class UserRepository {
 			$statement->bindParam(1, $email);
 			$statement->bindParam(2, $password);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;				
 			}
@@ -68,6 +69,7 @@ class UserRepository {
 			$statement->bindParam(1, $email);
 			$statement->bindParam(2, $password);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;				
 			}
@@ -122,6 +124,7 @@ class UserRepository {
 		$sql = "SELECT * from users WHERE deleted = 0";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;
 		}

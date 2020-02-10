@@ -7,6 +7,6 @@ $password = $_POST['password'];
 
 if (isset($firstName) && isset($lastName) && isset($email) && isset($password)) {
 	$db = new UserRepository();
-	$count = $db->addNewUser($firstName, $lastName, $email, $password);
+	$db->addNewUser($firstName, $lastName, $email, $password);
 }
 ?>

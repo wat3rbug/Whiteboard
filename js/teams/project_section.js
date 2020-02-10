@@ -22,24 +22,30 @@ $(document).ready(function () {
 
 function buildProjectTable() {
 	$.ajax({
-		url: "repos/getAllTeams.php",
+		url: "repos/getAllSkills.php",
 		dataType: "json",
-		success: function(teams) { 
+		success: function(skills) {
 			$.ajax({
-				url: "repos/getAllProjects.php",
+				url: "repos/getAllTeams.php",
 				dataType: "json",
-				success: function(result) {
-					$('#projectTable').find('tbody tr').remove();
-					if (result != null) {
-						result.forEach(function(project) {
-							var row = "<tr><td>" + makeCardFromProject(project, teams) + "</td></tr>";
-							$('#projectTable').append(row);
-						});
-					}	
+				success: function(teams) { 
+					$.ajax({
+						url: "repos/getAllProjects.php",
+						dataType: "json",
+						success: function(result) {
+							$('#projectTable').find('tbody tr').remove();
+							if (result != null) {
+								result.forEach(function(project) {
+									var row = "<tr><td>" + makeCardFromProject(project, teams, skills) + "</td></tr>";
+									$('#projectTable').append(row);
+								});
+							}	
+						}	
+					});
 				}	
-			});
-		}	
-	});	
+			});	
+		}
+	});
 }
 
 function makeCardFromProject(project, teamNames) {

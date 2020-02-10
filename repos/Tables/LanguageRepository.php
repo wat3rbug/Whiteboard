@@ -27,6 +27,7 @@ class LanguageRepository {
 		$sql = "SELECT project, languages.language FROM project_languages JOIN languages ON project_languages.language = languages.id WHERE deleted = 0";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;
 		}
@@ -39,6 +40,7 @@ class LanguageRepository {
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $project);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -73,6 +75,7 @@ class LanguageRepository {
 			$statement->bindParam(1, $project);
 			$statement->bindParam(2, $language);
 			$statement->execute();
+			$output = array();
 			while ($row = $statement->fetch()) {
 				$output[] = $row;
 			}
@@ -93,6 +96,7 @@ class LanguageRepository {
 		$sql = "SELECT * FROM languages";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;
 		}

@@ -79,31 +79,36 @@ function addUser(id) {
 }
 
 function buildTeamTable() {
-
 	$.ajax({
-		url: "repos/getAllTeams.php",
+		url: "repos/getAllSkills.php",
 		dataType: "json",
-		success: function(result) {
-			$('#teamTable').find('tbody tr').remove();
-			if (result != null) {
-				result.forEach(function(team) {
-					// this is expensive, but traffic may be low enough to overlook it
-					$.ajax({
-						url: "repos/getMembersForTeam.php",
-						type: "post",
-						data: {
-							"id": team['id']
-						},
-						success: function(results) {
-							var users = results;
-							var row = "<tr><td>" + makeTeamCard(team, users) + "</td>";
-							row += "<td style='width:85px'>" + makeButtonsForTeam(team) + "</td></tr>";
-							$('#teamTable').append(row);
-						}
-					})
+		success: function(results) {
+			var skills = results;
+			$.ajax({
+				url: "repos/getAllTeams.php",
+				dataType: "json",
+				success: function(result) {
+					$('#teamTable').find('tbody tr').remove();
+					if (result != null) {
+						result.forEach(function(team) {
+							$.ajax({
+								url: "repos/getMembersForTeam.php",
+								type: "post",
+								data: {
+									"id": team['id']
+								},
+								success: function(results) {
+									var users = results;
+									var row = "<tr><td>" + makeTeamCard(team, users, skills) + "</td>";
+									row += "<td style='width:85px'>" + makeButtonsForTeam(team) + "</td></tr>";
+									$('#teamTable').append(row);
+								}
+							})
 					
-				});
-			}	
+						});
+					}	
+				}	
+			});
 		}	
 	});
 }
@@ -192,7 +197,7 @@ function removeTeam(id) {
 	})
 }
 
-function makeTeamCard(team, users) {
+function makeTeamCard(team, users, skills) {
 	row = "<div class='card'><div class='card-body'>";
 	row += "<h5 class='card-title'>" + team.name + "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Users:</h6>";

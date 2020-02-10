@@ -43,6 +43,7 @@ class SprintRepository {
 		$sql = "SELECT * FROM sprints WHERE end_date IS NULL ORDER BY id DESC LIMIT 1";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
+		$output = array();
 		while ($row = $statement->fetch()) {
 			$output[] = $row;
 		}

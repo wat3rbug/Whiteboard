@@ -109,7 +109,7 @@ function buildEmptyTable(max) {
 	for (i =0; i < max; i++) {
 		var row = "<tr>";
 		for (j = 0; j <= MAX_STATE; j++) {
-			row += "<td style='max-width: 20%' id='td_" + i + "_" + j +"'>&nbsp;</td>";
+			row += "<td style='width: 20%' id='td_" + i + "_" + j +"'>&nbsp;</td>";
 		}
 		row += "</tr>";
 		$('#sprintTable').append(row);

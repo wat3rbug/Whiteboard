@@ -183,6 +183,8 @@ function buildProjectTable() {
 							row += "</td></tr>";
 							$('#projectTable').append(row);
 						});
+					} else {
+						$('#projectTable').append("<tr><td colspan='2'>No Data</td></tr>");
 					}
 				}	
 			});

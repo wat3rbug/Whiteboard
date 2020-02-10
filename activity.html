@@ -5,7 +5,8 @@
 	<title>The Whiteboard</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/activity.css">
+	<link rel="stylesheet" href="css/scrolls.css">
+	<!-- <link rel="stylesheet" href="css/activity.css"> -->
 </head>
 <body>
 	<script src="jquery-3.3.1.min.js"></script>
@@ -102,21 +103,19 @@
 			</div>
 		</div>
 		<div class="row">&nbsp;</div>
-		<!-- <div class="project-scroller table-wrapper-scroll-y"> -->
-			<table class="table table-striped sprint-scroll" id="sprintTable">
-				<thead>
-					<tr>
-						<th scope="col">To Do</th>
-						<th scope="col">Work In Progress</th>
-						<th scope="col">Staged</th>
-						<th scope="col">Testing</th>
-						<th scope="col">Complete</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		<!-- </div> -->
+		<table class="table table-striped" id="sprintTable">
+			<thead>
+				<tr>
+					<th scope="col">To Do</th>
+					<th scope="col">Work In Progress</th>
+					<th scope="col">Staged</th>
+					<th scope="col">Testing</th>
+					<th scope="col">Complete</th>
+				</tr>
+			</thead>
+			<tbody style='max-height: 125px; overflow-y:scroll;'>
+			</tbody>
+		</table>
 	</div>
 </body>
 
