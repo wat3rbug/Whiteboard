@@ -63,7 +63,7 @@ function clearModals() {
 
 function pushProjectToDB() {
 	var name = $('#addProjName').val();
-	var description = $('#addDescription').val();
+	var description = $('#addProjDescription').val();
 	var start = getDBDateFromJSDate($('#addProjStart').datepicker('getDate'));
 	var end = getDBDateFromJSDate($('#addProjEnd').datepicker('getDate'));
 	$.ajax({
