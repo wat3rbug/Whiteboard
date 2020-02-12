@@ -40,3 +40,10 @@ function getWebDateFromDBString(currentDate) {
 	var day = parseInt(sections[2]);
 	return day + " " + month + " " + year;
 }
+function getStringDateForToday() {
+	var original = new Date();
+	var year = original.getFullYear();
+	var day = original.getDate();
+	var month = original.getMonth() + 1;
+	return year + "-" + month + "-" + day;
+}

@@ -111,29 +111,30 @@ function getSprintStats() {
 		url: "repos/getLatestSprint.php",
 		dataType: "json",
 		success: function(results) {
-			if (results != null) {
-				var sprint = results[0];
-				$('#SprintIdHdn').val(sprint['id']);
-				var daysLeft = getDaysLeft(sprint['start_date']);
-				$.ajax({
-					url: "repos/getSprintDiffCount.php",
-					type: "post",
-					data: {
-						"id": sprint['id']
-					},
-					success: function(result) {
-						var count = "0";
-						if (result[0]['count'] != null) {
-							count = result[0]['count'];
-						} 
-						$('#sprintOverall').find('tbody tr').remove();
-						var row = "<tr><td>" + sprint['id'] + "</td><td>" + count;
-						row += "</td><td>" + daysLeft + "</td></tr>";					
-						$('#sprintOverall').append(row);
-						getSprintTable();
-					}	
-				});
+			var sprint = {'id': "0", 'start_date': getStringDateForToday() };
+			if (results != null && results.length != 0) {
+				sprint = results[0];
 			}
+			$('#SprintIdHdn').val(sprint['id']);
+			var daysLeft = getDaysLeft(sprint['start_date']);
+			$.ajax({
+				url: "repos/getSprintDiffCount.php",
+				type: "post",
+				data: {
+					"id": sprint['id']
+				},
+				success: function(result) {
+					var count = "0";
+					if (result != null && result.length  > 0 && result[0]['count'] != null) {
+						count = result[0]['count'];
+					} 
+					$('#sprintOverall').find('tbody tr').remove();
+					var row = "<tr><td>" + sprint['id'] + "</td><td>" + count;
+					row += "</td><td>" + daysLeft + "</td></tr>";					
+					$('#sprintOverall').append(row);
+					getSprintTable();
+				}	
+			});
 		}
 	});
 }
