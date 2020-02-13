@@ -182,11 +182,10 @@ function makeTaskCard(task) {
 			row += "<p class='card-text'><b>Milestone:</b> " + task['milestone'] + "</p>";
 		}
 	}
-	row += "<p class='card-text'><button type='button' ";
-	row += "onclick='getDetails(" + task['id'] + ")' class='btn btn-outline-primary'>";
+	row += "<p class='card-text'><button type='button' class='btn btn-primary' onClick='commentTask(";
+	row += task['id'] + ")'><span class='glyphicon glyphicon-plus'></span>&nbsp;Add Comment</button>&nbsp;"
+	row += "<button onclick='getDetails(" + task['id'] + ")' class='btn btn-outline-primary'>";
 	row += "<span class='glyphicon glyphicon-list-alt'></span>&nbsp;Details</button>&nbsp;";
-	row += "<button type='button' class='btn btn-primary' onClick='commentTask(" + task['id'] + ")'>";
-	row += "<span class='glyphicon glyphicon-plus'></span>&nbsp;Add Comment</button>&nbsp;";
 	if (task['comment_count'] == 1) row += "1 comment";
 	else row += task['comment_count'] + " comments";
 	row += "</p>";	

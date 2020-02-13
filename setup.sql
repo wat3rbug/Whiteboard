@@ -1,10 +1,10 @@
 create database whiteboard;
 use whiteboard;
-drop view if exists `v_comment_count_by_task`;
-drop view if exists `v_tasks_for_sprint`;
-drop view if exists `v_filtered_tasks_for_sprint`;
-drop view if exists `v_incomplete_tasks`;
-drop view if exists `v_tasks`;
+drop table if exists `v_comment_count_by_task`;
+drop table if exists `v_tasks_for_sprint`;
+drop table if exists `v_filtered_tasks_for_sprint`;
+drop table if exists `v_incomplete_tasks`;
+drop table if exists `v_tasks`;
 drop table if exists `comments`;
 drop table if exists `milestones`;
 drop table if exists `tasks`;
