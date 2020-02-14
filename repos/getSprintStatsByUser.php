@@ -4,8 +4,7 @@ require "Tables/UserRepository.php";
 require "Tables/SprintRepository.php";
 $email = $_POST['email'];
 $password = $_POST['password'];
-$email = "doug.gardiner@gmail.com";
-$password = "jojhyv-duvqaq-Mebza5";
+
 
 if (isset($email) && isset($password)) {
 	
