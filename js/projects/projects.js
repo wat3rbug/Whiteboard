@@ -163,30 +163,36 @@ function removeProject(projectId) {
 
 function buildProjectTable() {
 	$.ajax({
-		url: "repos/getAllLanguagesForProjects.php",
+		url: "repos/getAllMilestones.php",
 		dataType: "json",
-		success:function(result) {
-			var langs = result;
+		success: function(milestones) {
 			$.ajax({
-				url: "repos/getAllProjects.php",
+				url: "repos/getAllLanguagesForProjects.php",
 				dataType: "json",
-				success: function(results) {
-					$('#projectTable').find('tbody tr').remove();
-					if (results != null) {
-						results.forEach(function(project){
-							var row = "<tr><td>" + makeCardForProject(project, langs) + "</td>";
-							row += "<td style='width:85px'>"; /* <div style='width: 65px'>"; */
-							row += "<button type='button' class='btn btn-outline-warning' onclick='editProject(";
-							row += project.id + ")'><span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
-							row += "<button type='button' class='btn btn-outline-danger' onclick='removeProject(";
-							row += project.id + ")'><span class='glyphicon glyphicon-remove'></span></button>";
-							row += "</td></tr>";
-							$('#projectTable').append(row);
-						});
-					} else {
-						$('#projectTable').append("<tr><td colspan='2'>No Data</td></tr>");
-					}
-				}	
+				success:function(result) {
+					var langs = result;
+					$.ajax({
+						url: "repos/getAllProjects.php",
+						dataType: "json",
+						success: function(results) {
+							$('#projectTable').find('tbody tr').remove();
+							if (results != null) {
+								results.forEach(function(project){
+									var row = "<tr><td>" + makeCardForProject(project, langs, milestones) + "</td>";
+									row += "<td style='width:85px'>"; /* <div style='width: 65px'>"; */
+									row += "<button type='button' class='btn btn-outline-warning' onclick='editProject(";
+									row += project.id + ")'><span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
+									row += "<button type='button' class='btn btn-outline-danger' onclick='removeProject(";
+									row += project.id + ")'><span class='glyphicon glyphicon-remove'></span></button>";
+									row += "</td></tr>";
+									$('#projectTable').append(row);
+								});
+							} else {
+								$('#projectTable').append("<tr><td colspan='2'>No Data</td></tr>");
+							}
+						}	
+					});
+				}
 			});
 		}
 	});
@@ -202,7 +208,7 @@ function getWebStrFromDB(currentDate) {
 		
 }
 
-function makeCardForProject(project, langs) {
+function makeCardForProject(project, langs, milestones) {
 	var row = "<div class='card'><div class='card-body'>";
 	row += "<h5 class='card-title'>" + project.name + "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Start Date: " + getWebStrFromDB(project.start_date) + "</h6>";
@@ -219,6 +225,19 @@ function makeCardForProject(project, langs) {
 	}	
 	if (project.description != null)
 		row += "<p class='card-text'>Description: " + project.description + "</p>";
+	if (milestones != null) {
+		let mymilestones = milestones.filter(a => a.project == project['id']);
+		if (mymilestones.length != 0) {
+			mymilestones.forEach(function(milestone) {
+				row += "<p class='card-text text-muted'>Milestone: " + milestone['name'] + " ";
+				row += "<button type='button' class='btn btn-outline-warning' onclick='editMilestone(" + milestone['id'];
+				row += ")'><span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
+				row += "<button type='button' class='btn btn-outline-danger' onClick='removeMilestone(" + milestone['id'];
+				row += ")'><span class='glyphicon glyphicon-remove'></span></button>";
+				row += "</p>";
+			});
+		}
+	}
 	row += "</div></div>";
 	return row; 
 }

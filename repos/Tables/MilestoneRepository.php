@@ -23,6 +23,19 @@ class MilestoneRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	function getMilestoneById($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "SELECT * FROM milestones WHERE id = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			$output = array();
+			while($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
 	
 	function addMilestone($project, $task, $name) {
 		if (isset($name) && isset($project) && isset($task) && $project > 0 && $task > 0) {
@@ -33,6 +46,36 @@ class MilestoneRepository {
 			$statement->bindParam(3, $task);
 			$statement->execute();
 		}
+	}
+	
+	function editMilestone($id, $name) {
+		if (isset($id) && isset($name) && $id > 0) {
+			$sql = "UPDATE milestones SET name = ? WHERE id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $name);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+		}
+	}
+	
+	function removeMilestone($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "UPDATE milestones SET deleted = 1 WHERE id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+		}
+	}
+	
+	function getAllMilestones() {
+		$sql = "SELECT * FROM milestones WHERE deleted = 0";
+		$statement = $this->conn->query($sql);
+		$statement->execute();
+		$output = array();
+		while($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
 	}
 }
 ?>

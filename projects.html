@@ -19,6 +19,7 @@
 	<script src="js/dateFunctions.js"></script>
 	<script src="js/nav.js"></script>
 	<script src="js/projects/languages.js"></script>
+	<script src="js/projects/milestones.js"></script>
 	
 	<div class="col-sm-12">
 		<div class="jumbotron info">
@@ -272,6 +273,47 @@
 					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Language To Project
 				</button>&nbsp;
 				<button type="button" class="btn btn-outline-secondary" id="cancelAddLanguageBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit Milestone Modal Section -->
+
+<div class="modal fade" id="editMilestoneModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-warning">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Edit Milestone</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<input type="hidden" id="editMilestoneHdn">
+					<div class="col-sm-6 text-right">Milestone</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<input id="editMilestoneName" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" id="pushEditMilestoneToDB">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Update Milestone
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelEditMilestoneBtn" data-dismiss="modal">
 					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
 				</button>
 			</div>
