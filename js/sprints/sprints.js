@@ -12,6 +12,10 @@ $(document).ready(function () {
 		buildFilteredBacklogTable();	
 	});
 	
+	$('#filterTasksBy').change(function() {
+		getFilteredSprintTable();	
+	});
+	
 	$('#closeBtn').on("click", function() {
 		$('#nextSprintModal').modal('hide');
 		startNextSprint();
@@ -48,10 +52,13 @@ function buildFilter() {
 		dataType: "json",
 		success: function(results) {
 			$('#filterBy').empty();
+			$('#filterTasksBy').empty();
 			$('#filterBy').append($('<option>').text(' -- All projects --').val("0"));
+			$('#filterTasksBy').append($('<option>').text(' -- All projects --').val("0"));
 			if (results != null) {
 				results.forEach(function(project) {
 					$('#filterBy').append($('<option>').text(project['name']).val(project['id']));
+					$('#filterTasksBy').append($('<option>').text(project['name']).val(project['id']));
 				});		
 			}
 		}
@@ -75,10 +82,6 @@ function removeTask(id) {
 		data: {
 			"id": id
 		},
-		error: function(blah, blah2, blah3) {
-			// not sure why adding this caused the routine to succeed
-			alert(blah, blah2, blah3);	
-		},
 		success: function() {
 			buildBacklogTable();
 			getSprintStats();
@@ -94,10 +97,6 @@ function addTask(id) {
 		data: {
 			"id": id,
 			"sprint": sprint
-		},
-		error: function(blah, blah2, blah3) {
-			// not sure why adding this caused the routine to succeed
-			alert(blah, blah2, blah3);	
 		},
 		success: function() {
 			buildBacklogTable();
@@ -137,6 +136,31 @@ function getSprintStats() {
 			});
 		}
 	});
+}
+
+function getFilteredSprintTable() {
+	var filter = $('#filterTasksBy').val();
+	var id = $('#SprintIdHdn').val();
+	$.ajax({
+		url: "repos/getFilteredSprintTasks.php",
+		dataType: "json",
+		type: "post",
+		data: {
+			"sprint": id,
+			"filter": filter
+		},
+		success: function(results) {
+			$('#newSprintTable').find('tbody tr').remove();
+			if (results != null) {				
+				results.forEach(function(task) {
+					var row = makeRowForSprintItem(task);
+					$('#newSprintTable').append(row);
+				});
+			} else {
+				$('#newSprintTable').append("<tr><td colspan='2'>No data</td></tr>");
+			}
+		}
+	})
 }
 
 function getSprintTable() {

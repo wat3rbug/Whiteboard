@@ -134,15 +134,17 @@ create view v_tasks_for_sprint as
 	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, 
 	v_comment_count_by_task.comment_count, milestones.name as milestone from tasks
 	join projects on tasks.project = projects.id
-	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id
-	left join milestones on tasks.id = milestones.task;
+	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id 
+	left join milestones on tasks.id = milestones.task and milestones.deleted = 0;
+
+
 	
 create view v_filtered_tasks_for_sprint as
 	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, 
 	v_comment_count_by_task.comment_count, projects.id as project_id, milestones.name as milestone from tasks
 	join projects on tasks.project = projects.id
 	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id
-	left join milestones on tasks.id = milestones.task;	
+	left join milestones on tasks.id = milestones.task and milestones.deleted = 0;	
 	
 create view v_incomplete_tasks as
 	select tasks.id, tasks.difficulty, tasks.subject, projects.name, projects.id as project_id from tasks

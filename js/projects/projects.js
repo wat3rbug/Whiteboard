@@ -49,6 +49,11 @@ $(document).ready(function () {
 	});
 });
 
+function getProjectDetails(id) {
+	$('#projectDetailsModal').modal('show');
+	displayProjectDetails(id);
+}
+
 function clearModals() {
 	$('#addProjName').val('');
 	$('#addProjDescription').val('');
@@ -179,11 +184,15 @@ function buildProjectTable() {
 							if (results != null) {
 								results.forEach(function(project){
 									var row = "<tr><td>" + makeCardForProject(project, langs, milestones) + "</td>";
-									row += "<td style='width:85px'>"; /* <div style='width: 65px'>"; */
-									row += "<button type='button' class='btn btn-outline-warning' onclick='editProject(";
-									row += project.id + ")'><span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
-									row += "<button type='button' class='btn btn-outline-danger' onclick='removeProject(";
-									row += project.id + ")'><span class='glyphicon glyphicon-remove'></span></button>";
+									row += "<td style='width:110px'>"; /* <div style='width: 65px'>"; */
+									row += "<button type='button' class='btn btn-outline-warning' onClick='editProject(";
+									row += project.id + ")' data-toggle='tooltip' title='Edit Project'>";
+									row += "<span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
+									row += "<button type='button' class='btn btn-outline-danger' onClick='removeProject(";
+									row += project.id + ")' data-toggle='tooltip' title='Delete Project'>";
+									row += "<span class='glyphicon glyphicon-remove'></span></button>&nbsp;";
+									row += "<button type='button' class='btn btn-outline-info' onClick='getProjectDetails(";
+									row += project.id + ")' data-toggle='tooltip' title='Project Details'><span class='glyphicon glyphicon-list-alt'></span></button>";
 									row += "</td></tr>";
 									$('#projectTable').append(row);
 								});

@@ -23,6 +23,21 @@ class MilestoneRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	
+	function getMilestonesForProject($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "SELECT * from milestones WHERE project = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			$output = array();
+			while($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}	
+	}
+	
 	function getMilestoneById($id) {
 		if (isset($id) && $id > 0) {
 			$sql = "SELECT * FROM milestones WHERE id = ? AND deleted = 0";

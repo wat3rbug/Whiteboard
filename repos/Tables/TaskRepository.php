@@ -23,6 +23,21 @@ class TaskRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	
+	function getTasksForProject($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "SELECT * FROM tasks WHERE project = ? AND deleted = 0";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->execute();
+			$output = array();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
 	function getProjectByTask($id) {
 		if (isset($id) && $id > 0) {
 			$sql = "SELECT projects.* FROM tasks JOIN projects ON tasks.project = projects.id WHERE tasks.id = ? AND tasks.deleted = 0";
@@ -265,6 +280,25 @@ class TaskRepository {
 			$statement =$this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
 			$statement->execute();
+		}
+	}
+	
+	function getFilteredSprintTasks($sprint, $filter) {
+		if (isset($sprint) && $sprint > 0) {
+			if (isset($filter) && $filter > 0) {
+				$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint = ? AND tasks.completed IS NULL AND projects.id = ? ORDER BY tasks.id DESC";
+				$statement = $this->conn->prepare($sql);
+				$statement->bindParam(1, $sprint);
+				$statement->bindParam(2, $filter);
+				$statement->execute();
+				$output = array();
+				while ($row = $statement->fetch()) {
+					$output[] = $row;
+				}
+				return $output;
+			} else {
+				return $this->getSprintTasks($sprint);
+			}
 		}
 	}
 	
