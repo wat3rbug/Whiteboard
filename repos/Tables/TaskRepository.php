@@ -24,6 +24,20 @@ class TaskRepository {
 		}
 	}
 	
+	function getCompletedTaskTimesForUser($user) {
+		if (isset($user) && $user > 0) {
+			$sql = "SELECT hours, difficulty FROM tasks WHERE user = ? AND completed IS NOT NULL ORDER BY difficulty ASC, hours DESC";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $user);
+			$statement->execute();
+			$output = array();
+			while($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
 	function getTasksForProject($id) {
 		if (isset($id) && $id > 0) {
 			$sql = "SELECT * FROM tasks WHERE project = ? AND deleted = 0";
@@ -83,7 +97,6 @@ class TaskRepository {
 			$sql = "UPDATE tasks SET endtime = NOW() WHERE id = ? AND deleted = 0";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
-			$statement->bindParam(2, $state);
 			$statement->execute();
 			$sql = "UPDATE tasks SET hours = timediff(endtime, starttime) WHERE id =? AND endtime IS NOT NULL AND starttime IS NOT NULL AND deleted = 0";
 			$statement = $this->conn->prepare($sql);

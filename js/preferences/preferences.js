@@ -35,7 +35,7 @@ function removeSkill(skillId) {
 			"id": skillId
 		},
 		success: function() {
-			buidlUserSkillTable();
+			buildUserSkillTable();
 		}
 	});
 }
@@ -55,7 +55,7 @@ function addSkill(skillId) {
 			if (results != null) {
 				var user = results[0]['id'];
 				$.ajax({
-					url: "repos/addSkillForUser.php",
+					url: "repos/addSkillsForUser.php",
 					type: "post",
 					data: {
 						"skill": skillId,
