@@ -24,6 +24,18 @@ class TaskRepository {
 		}
 	}
 	
+	function getAllSprintProjectSummary() {
+		
+		$sql = "SELECT sprint, sum(difficulty) as sumdiff, projects.name FROM tasks JOIN projects ON projects.id = tasks.project WHERE sprint IS NOT NULL GROUP BY sprint, project";
+		$statement = $this->conn->prepare($sql);
+		$statement->execute();
+		$output = array();
+		while($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
+	}
+	
 	function getCompletedTaskTimesForUser($user) {
 		if (isset($user) && $user > 0) {
 			$sql = "SELECT hours, difficulty FROM tasks WHERE user = ? AND completed IS NOT NULL ORDER BY difficulty ASC, hours DESC";

@@ -5,11 +5,24 @@
 	overflow-y: scroll;
 }
 
-.project-scroll thead, tbody tr {
+/*.project-scroll thead, tbody tr {
 	display: table;
 	width:100%;
 	table-layout:fixed;
+}*/
+
+.project-scrollbar {
+	position: relative;
+	height: 600px;
+	overflow: auto;
 }
 
+.details-scrollbar {
+	position: relative;
+	height: 200px;
+	overflow: auto;
+}
 
-
+.table-wrapper-scroll-y {
+	display: block;
+}

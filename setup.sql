@@ -5,6 +5,7 @@ drop table if exists `v_tasks_for_sprint`;
 drop table if exists `v_filtered_tasks_for_sprint`;
 drop table if exists `v_incomplete_tasks`;
 drop table if exists `v_tasks`;
+drop table if exists `viewed_comments`;
 drop table if exists `comments`;
 drop table if exists `milestones`;
 drop table if exists `tasks`;
@@ -125,6 +126,19 @@ create table user_specialties (
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 
+create table viewed_comments (
+	id int auto_increment primary key,
+	comment int not null,
+	foreign key fk_viewed_comment(comment) references comments(id),
+	viewer int not null,
+	foreign key fk_viewed_viewer(viewer) references users(id),
+	unread tinyint(1) not null default 0,
+	deleted tinyint(1) not null default 0
+) engine = InnoDB;
+
+create trigger ins_views after insert on viewed_comments
+	for each row  
+
 create view v_comment_count_by_task as
 	select tasks.id, count(comments.id) as comment_count from tasks
 	left join comments on comments.task_id = tasks.id 
@@ -137,7 +151,13 @@ create view v_tasks_for_sprint as
 	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id 
 	left join milestones on tasks.id = milestones.task and milestones.deleted = 0;
 
-
+create view v_performance_overall as
+	select count(*) as count from sprints
+	union
+	select sum(difficulty) from tasks
+	union select sum(difficulty) from tasks 
+	where sprint is not null and completed is not null;
+		
 	
 create view v_filtered_tasks_for_sprint as
 	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, 

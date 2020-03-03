@@ -24,6 +24,17 @@ class SprintRepository {
 		}
 	}
 	
+	function getTotalCount() {
+		$sql = "SELECT * FROM v_performance_overall";
+		$statement = $this->conn->prepare($sql);
+		$statement->execute();
+		$output = array();
+		while ($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
+	}
+	
 	function createNewSprint() {
 		$sql = "INSERT INTO sprints (start_date) VALUES (current_date())";
 		$statement = $this->conn->prepare($sql);
