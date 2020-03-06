@@ -1,10 +1,11 @@
 create database whiteboard;
 use whiteboard;
-drop table if exists `v_comment_count_by_task`;
-drop table if exists `v_tasks_for_sprint`;
-drop table if exists `v_filtered_tasks_for_sprint`;
-drop table if exists `v_incomplete_tasks`;
-drop table if exists `v_tasks`;
+drop view if exists `v_comment_home_page`;
+drop view if exists `v_comment_count_by_task`;
+drop view if exists `v_tasks_for_sprint`;
+drop view if exists `v_filtered_tasks_for_sprint`;
+drop view if exists `v_incomplete_tasks`;
+drop view if exists `v_tasks`;
 drop table if exists `viewed_comments`;
 drop table if exists `comments`;
 drop table if exists `milestones`;
@@ -136,8 +137,16 @@ create table viewed_comments (
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 
-create trigger ins_views after insert on viewed_comments
-	for each row  
+create view v_comment_home_page as
+	select viewed_comments.id, users.first_name, users.last_name, users.email, tasks.difficulty, 
+	tasks.subject, comments.comment, viewed_comments.unread, viewed_comments.viewer, comments.comment_date,
+	projects.name
+	from viewed_comments
+	join comments on viewed_comments.comment = comments.id
+	join  tasks on comments.task_id = tasks.id
+	join projects on tasks.project = projects.id
+	join users on tasks.user = users.id
+	where viewed_comments.deleted = 0 or comments.deleted = 0;
 
 create view v_comment_count_by_task as
 	select tasks.id, count(comments.id) as comment_count from tasks

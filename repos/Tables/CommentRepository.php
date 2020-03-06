@@ -22,6 +22,29 @@ class CommentRepository {
 		} catch (\PDOException $e) {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
+	}	
+	
+	function hasReadComment($id) {
+		if (isset($id) && $id > 0) {
+			$sql = "UPDATE viewed_comments SET unread =(SELECT unread FROM viewed_comments WHERE id = ?) XOR 1 where id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $id);
+			$statement->bindParam(2, $id);
+			$statement->execute();
+		}
+	}
+	
+	function getCommentSummary($date) {
+		// need a date check here
+		$sql = "SELECT * FROM v_comment_home_page WHERE comment >= ?";
+		$statement = $this->conn->prepare($sql);
+		$statement->bindParam(1, $date);
+		$statement->execute();
+		$output = array();
+		while($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
 	}
 	
 	function viewPriorComments($task) {
