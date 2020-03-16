@@ -24,9 +24,20 @@ class TaskRepository {
 		}
 	}
 	
+	function getAllMilestonesForSprints() {
+		$sql = "SELECT milestones.name, tasks.sprint, projects.name AS project FROM milestones JOIN projects ON milestones.project = projects.id JOIN tasks ON milestones.task = tasks.id";
+		$statement = $this->conn->prepare($sql);
+		$statement->execute();
+		$output = array();
+		while($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
+	}
+	
 	function getAllSprintProjectSummary() {
 		
-		$sql = "SELECT sprint, sum(difficulty) as sumdiff, projects.name FROM tasks JOIN projects ON projects.id = tasks.project WHERE sprint IS NOT NULL GROUP BY sprint, project";
+		$sql = "SELECT sprint, sum(difficulty) as sumdiff, projects.name as project, teams.name as team,projects.id as project_id, teams.id as team_id FROM tasks JOIN projects ON projects.id = tasks.project LEFT JOIN teams ON projects.id = teams.project WHERE sprint IS NOT NULL GROUP BY sprint, tasks.project";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
 		$output = array();

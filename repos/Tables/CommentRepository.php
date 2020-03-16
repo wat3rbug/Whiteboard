@@ -69,33 +69,6 @@ class CommentRepository {
 			$statement->bindParam(2, $user);
 			$statement->bindParam(3, $comment);
 			$statement->execute();
-			// get comment id
-			$sql = "SELECT id FROM comments ORDER BY id DESC LIMIT 1";
-			$statement = $this->conn->prepare($sql);
-			$statement->execute();
-			$id = array();
-			while($row = $statement->fetch()) {
-				$id[] = $row;
-			}
-			//user a list of userids
-			$sql = "SELECT id FROM users WHERE id != ?";
-			$statement = $this->conn->prepare($sql);
-			$statement->bindParam(1, $user);
-			$statement->execute();
-			$users = array();
-			while($row = $statement->fetch()) {
-				$users[] = $row;
-			}
-			// insert into viewed_comments a row for each user that is not original user
-			for ($i = 0; $i < count($users); $i++) {
-				$sql = "INSERT INTO viewed_comments (comment, viewer) VALUES (?, ?)";
-				$statement = $this->conn->prepare($sql);
-				$statement->bindParam(1, $id[0]['id']);
-				$statement->bindParam(2, $users[$i]['id']);
-				$statement->execute();
-			}
-			
-			
 		}
 	}
 }

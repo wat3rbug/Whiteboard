@@ -186,3 +186,26 @@ create view v_tasks as
 	projects.id as project_id, tasks.sprint from tasks
 	join projects on tasks.project = projects.id
 	where tasks.deleted = 0 and tasks.completed is null order by tasks.id desc;
+	
+drop trigger if exists `ins_views`;
+delimiter |
+create trigger ins_views after insert on comments 
+for each row 
+	begin
+	 DECLARE finished INT DEFAULT 0;
+	 DECLARE viewerid INT DEFAULT 0;	 
+	 DECLARE currentId CURSOR FOR SELECT id FROM users WHERE id != NEW.user; 
+	 DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;	 
+	 OPEN currentId; 
+	 update_views_loop: LOOP
+	 	FETCH currentId INTO viewerid;
+	 	IF finished = 1 THEN LEAVE update_views_loop; END IF;
+	
+		INSERT INTO viewed_comments (comment, viewer) VALUES (NEW.id, viewerid);
+	
+	 END LOOP update_views_loop;
+	 CLOSE currentId; 
+	END;
+|
+
+delimiter ;

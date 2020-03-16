@@ -41,7 +41,7 @@ function buildPerformanceTable() {
 							row += "<td><div class='progress'>";
 							row += getProgressByQuarter(results[lowerIndex], maxTime, "blue");
 							row += getProgressByQuarter(results[medianIndex], maxTime, "green");
-							row += getProgressByQuarter(results[upperIndex], maxTime, "info");
+							row += getProgressByQuarter(results[upperIndex], maxTime, "yellow");
 							row += "</div></td></tr>";
 							// row += "<td>" + results[lowerIndex]['hours'] + "</td>";
 // 							row += "<td>" + results[medianIndex]['hours'] + "</td>";
@@ -75,7 +75,7 @@ function getProgressByQuarter(number, maxRaw, style) {
 	if (style =='green') {
 		row += " bg-success'";
 	} else if (style == 'info') {
-		row += " bg-info'";
+		row += " bg-warning'";
 	} if (style == "blue") {
 		row += "' ";
 	}
