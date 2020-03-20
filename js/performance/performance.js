@@ -87,6 +87,32 @@ function getProjectSummary(sprint, project) {
 	});
 }
 
+function getTaskComments(task) {
+	$.ajax({
+		url: "repos/viewPriorComments.php",
+		dataType: "json",
+		type: "post",
+		data: {
+			"id": task
+		},
+		success: function(results) {
+			$('#taskCommentModal').modal('show');
+			$('#commentSummary').find('tbody tr').remove();
+			if (results != null && results.length > 0) {
+				results.forEach(function(commentRow) {
+					var row = "<tr><td>" + commentRow['comment_date'] + "</td>";
+					row += "<td>" + commentRow['comment'] + "</td>";
+					row += "<td><a href='mailto:" + commentRow['email'] + "'>" + commentRow['first_name'];
+					row += " " + commentRow['last_name'] + "</a></td></tr>";
+					$('#commentSummary').append(row);	
+				});
+			} else {
+				$('#commentSummary').append("<tr><td colspan='3' class='text-center'>No Comments</td></tr>");
+			}
+		}
+	})
+}
+
 function getTeamMembers(team) {
 	$.ajax({
 		url: "repos/getTeamMembersForTeam.php",

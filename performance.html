@@ -429,6 +429,50 @@
 	</div>
 </div>
 
+<!-- Task Comment Summary Modal Section -->
+
+<div class="modal fade" id="taskCommentModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-info">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center" id="projectDetailsTitle">Comments For Task</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped" id="commentSummary">
+					<thead>
+						<tr>
+							<th scope="col">Date</th>
+							<th scope="col">Comment</th>
+							<th scope="col">Person</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<div class="row">&nbsp;</div>
+			</div>
+			
+			
+			<div class="modal-footer">
+				<button type="button" class='btn btn-info' id='closeProjectSummaryBtn' data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <div id="sessionTimed"></div>
 
 
