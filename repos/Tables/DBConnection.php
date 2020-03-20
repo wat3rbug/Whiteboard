@@ -10,8 +10,8 @@ class DBConnection {
 	function __construct() {
 		$this->password = "1990BMW325!";
 		$this->database = "whiteboard";
-		// $this->hostname = "db-server1";
-		$this->hostname = "localhost";
+		$this->hostname = "db-server1";
+		//$this->hostname = "localhost";
 		$this->username = "whiteboarduser";
 	}
 }

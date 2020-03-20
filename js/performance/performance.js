@@ -18,15 +18,21 @@ $(document).ready(function() {
 		success: function(milestoneResults) {
 			$.ajax({
 				url: "repos/getAllSprintProjectSummary.php",
+				type: "post",
 				dataType: "json",
 				success: function(results) {
 					if (results != null && results.length > 0) {
 						$('#sprintTable').find('tbody tr').remove();
 						results.forEach(function(sprintProjSum) {
-							var row = "<tr><td>" + sprintProjSum['sprint'] + "</td><td>";
-							row += "<button type='button' class='btn btn-link'  onClick='getProjectDetails(";
+							var row = "<tr><td>" + sprintProjSum['sprint'] + "</td>";
+							
+							row += "<td><button type='button' class='btn btn-link'  onClick='getProjectDetails(";
 							row +=  sprintProjSum['project_id'] + ")'>" + sprintProjSum['project'] + "</button></td>";
-							row += "<td>" + sprintProjSum['sumdiff'] + "</td>";
+							
+							row += "<td><button type='button' class='btn btn-link' onClick='getProjectSummary(";
+							row += sprintProjSum['sprint'] + ", " + sprintProjSum['project_id'] + ")'>";
+							row += sprintProjSum['sumdiff'] + "</button></td>";
+							
 							row += "<td><button type='button' class='btn btn-link' onClick='getTeamMembers(";
 							row += sprintProjSum['sprint'] + ")'>" + sprintProjSum['team'] + "</td><td>";
 							// this is horrible hackiness, i should be able to filter by sprint, but it is not working
@@ -47,6 +53,64 @@ $(document).ready(function() {
 		}
 	});
 });
+
+var MIN = 100;
+var HOUR = 10000;
+var DAY = 240000;
+
+function getProjectSummary(sprint, project) {
+	$.ajax({
+		url: "repos/getSprintPointsForProject.php",
+		type: "post",
+		dataType: "json",
+		data: {
+			"project": project,
+			"sprint": sprint
+		},
+		success: function(results) {
+			$('#projectSummaryModal').modal('show');
+			$('#projectSummary').find('tbody tr').remove();
+			if (results != null && results.length > 0) {
+				results.forEach(function(summary) {
+					var row = "<tr><td>" + summary['difficulty'] + "</td>";
+					row += "<td>" + longToHours(summary['hours']) + "</td>";
+					row += "<td>" + summary['subject'] + "</td>";
+					row += "<td><button type='button' class='btn btn-link' onClick='getTaskComments(";
+					row += summary['id'] + ")'>Comments</button></td></tr>";
+					$('#projectSummary').append(row);	
+				});
+			} else {
+				var row = "<tr><td colspan='4' class='text-center'>No Data</td></tr>";
+				$('#projectSummary').append(row);
+			}
+		}	
+	});
+}
+
+function getTeamMembers(team) {
+	$.ajax({
+		url: "repos/getTeamMembersForTeam.php",
+		type: "post",
+		dataType: "json",
+		data: {
+			"team": team
+		},
+		success: function(results) {
+			
+			$('#teamDetailsModal').modal('show');
+			
+		}
+	});
+}
+
+function longToHours(original) {
+	var days = Math.floor(original / DAY);
+	var daysamount = days * DAY;
+	var hours = Math.floor((original - daysamount) / HOUR);
+	var hoursamount = hours * HOUR;
+	var mins = Math.floor((original - (daysamount + hoursamount)) / MIN);
+	return  days + " D " + hours + ":" + mins + " Hrs";
+}
 
 function getProjectDetails(id) {
 	$('#projectDetailsModal').modal('show');

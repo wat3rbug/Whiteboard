@@ -24,6 +24,20 @@ class TeamMemberRepository {
 		}
 	}
 	
+	function getTeamMembers($team) {
+		if (isset($team)) {
+			$sql = "SELECT users.id, first_name, last_name, email, teams.name FROM users JOIN team_members ON users.id = team_members.team_mate JOIN teams ON teams.id = team_members.team WHERE teams.name = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $team);
+			$statement->execute();
+			$output = array();
+			while($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
 	function addUserToTeam($user, $team) {
 		if (isset($user) && isset($team) && $user > 0 && $team > 0) {
 			$sql = "INSERT INTO team_members (team_mate, team) VALUES (?, ?)";

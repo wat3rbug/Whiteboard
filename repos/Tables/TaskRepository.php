@@ -24,6 +24,21 @@ class TaskRepository {
 		}
 	}
 	
+	function getSprintPointsForProject($project, $sprint) {
+		if (isset($project) && $project > 0 && isset($sprint) && $sprint > 0) {
+			$sql = "SELECT * FROM tasks WHERE project = ? AND sprint = ? AND deleted = 0 ORDER BY difficulty DESC";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $project);
+			$statement->bindParam(2, $sprint);
+			$statement->execute();
+			$output = array();
+			while($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}
+	}
+	
 	function getAllMilestonesForSprints() {
 		$sql = "SELECT milestones.name, tasks.sprint, projects.name AS project FROM milestones JOIN projects ON milestones.project = projects.id JOIN tasks ON milestones.task = tasks.id";
 		$statement = $this->conn->prepare($sql);
