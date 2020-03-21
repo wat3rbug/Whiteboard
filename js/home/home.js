@@ -60,7 +60,7 @@ function makeReadCommentCard(summary) {
 	row += summary['subject'] + "</h5>";
 	row += "<h6 class='card-subtitle text-muted'><a href='mailto:" + summary['email'] + "'>";
 	row += summary['first_name'] + " " + summary['last_name'] + "</a>";
-	row += " - " + summary['comment_date'] + "</h6>"; 
+	row += " - " + getWebDateFromDBString(summary['comment_date']) + "</h6>"; 
 	row += "<p class='card-text text-muted'>" + summary['comment'] + "</p>";
 	row += "</div></div>";
 	return row;
@@ -72,7 +72,7 @@ function makeUnreadCommentCard(summary) {
 	row += summary['subject'] + "</h5>";
 	row += "<h6 class='card-subtitle'><a href='mailto:" + summary['email'] + "'>";
 	row += summary['first_name'] + " " + summary['last_name'] + "</a>";
-	row += " - " + summary['comment_date'] + "</h6>"; 
+	row += " - " + getWebDateFromDBString(summary['comment_date']) + "</h6>"; 
 	row += "<p class='card-text'>" + summary['comment'] + "</p>";
 	row += "</div></div>";
 	return row;

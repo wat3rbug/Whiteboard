@@ -36,7 +36,7 @@ class CommentRepository {
 	
 	function getCommentSummary($date) {
 		// need a date check here
-		$sql = "SELECT * FROM v_comment_home_page WHERE comment >= ? GROUP BY subject";
+		$sql = "SELECT * FROM v_comment_home_page WHERE comment >= ? GROUP BY subject ORDER BY comment_date DESC";
 		$statement = $this->conn->prepare($sql);
 		$statement->bindParam(1, $date);
 		$statement->execute();

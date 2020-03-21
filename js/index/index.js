@@ -34,7 +34,7 @@ function loginUser() {
 			if (isNumber(userid)){
 				sessionStorage['email'] = email;
 				sessionStorage['password'] = password;
-				window.location.replace("preferences.html");
+				window.location.replace("home.html");
 			} else {
 				$('#accountModalFail').modal('show');
 			}
