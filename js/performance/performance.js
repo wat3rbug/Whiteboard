@@ -115,7 +115,7 @@ function getTaskComments(task) {
 
 function getTeamMembers(team) {
 	$.ajax({
-		url: "repos/getTeamMembersForTeam.php",
+		url: "repos/getMembersForTeam.php",
 		type: "post",
 		dataType: "json",
 		data: {

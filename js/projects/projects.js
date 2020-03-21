@@ -6,6 +6,11 @@ $(document).ready(function () {
 		clearModals();
 	});
 	
+	$('#filterBy').on("change", function() {
+		sessionStorage['project_active'] = $('#filterBy').val();
+		buildProjectTable();
+	});
+	
 	$('#addProjStart').datepicker({
 		format: 'd-M-yyyy', 
 		autoclose: true,
@@ -176,15 +181,21 @@ function buildProjectTable() {
 				dataType: "json",
 				success:function(result) {
 					var langs = result;
+					var active = sessionStorage['project_active'];
+					if (active == null) active = 0;
 					$.ajax({
-						url: "repos/getAllProjects.php",
+						url: "repos/getProjectsByFilter.php",
 						dataType: "json",
+						type: "post",
+						data: {
+							"active": active	
+						},
 						success: function(results) {
 							$('#projectTable').find('tbody tr').remove();
 							if (results != null) {
 								results.forEach(function(project){
 									var row = "<tr><td>" + makeCardForProject(project, langs, milestones) + "</td>";
-									row += "<td style='width:110px'>"; /* <div style='width: 65px'>"; */
+									row += "<td style='width:140px'>"; /* <div style='width: 65px'>"; */
 									row += "<button type='button' class='btn btn-outline-warning' onClick='editProject(";
 									row += project.id + ")' data-toggle='tooltip' title='Edit Project'>";
 									row += "<span class='glyphicon glyphicon-pencil'></span></button>&nbsp;";
@@ -192,7 +203,16 @@ function buildProjectTable() {
 									row += project.id + ")' data-toggle='tooltip' title='Delete Project'>";
 									row += "<span class='glyphicon glyphicon-remove'></span></button>&nbsp;";
 									row += "<button type='button' class='btn btn-outline-info' onClick='getProjectDetails(";
-									row += project.id + ")' data-toggle='tooltip' title='Project Details'><span class='glyphicon glyphicon-list-alt'></span></button>";
+									row += project.id + ")' data-toggle='tooltip' title='Project Details'>";
+									row += "<span class='glyphicon glyphicon-list-alt'></span></button>";
+									row += "&nbsp;<button type='button' class='btn btn-outline-primary' onClick='toggleProjectActive(";
+									row += project.id + ")' data-toggle='tooltip' title='";
+									if (project.inactive == 0) row += "Make project inactive";
+									else row += "Make project active";
+									row += "'><span class='glyphicon glyphicon-star";
+									if (project.inactive == 0) row += "'>";
+									else row += "-empty'>";
+									row += "</span></button>";
 									row += "</td></tr>";
 									$('#projectTable').append(row);
 								});
@@ -203,6 +223,19 @@ function buildProjectTable() {
 					});
 				}
 			});
+		}
+	});
+}
+
+function toggleProjectActive(project) {
+	$.ajax({
+		url: "repos/toggleProjectActive.php",
+		type: "post",
+		data: {
+			"project": project
+		},
+		success: function() {
+			buildProjectTable();
 		}
 	});
 }

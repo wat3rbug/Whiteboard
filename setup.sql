@@ -40,6 +40,7 @@ create table projects (
 	start_date date not null,
 	end_date date,
 	description varchar(1000),
+	inactive tinyint(1) not null default 0,
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 

@@ -70,11 +70,22 @@
 	</div> <!-- end topMenu div -->
 
 	<div class="row">&nbsp;</div>
-	<div class="col-lg-4">
-		<button type="button" class="btn btn-success" id="addProjectBtn">
-			<span class="glyphicon glyphicon-plus"></span>&nbsp;Add Project
-		</button>
-	</div>			
+	<div class="col-lg-11">
+		<div class="row">
+			<div class="col-lg-6">
+				<button type="button" class="btn btn-success" id="addProjectBtn">
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;Add Project
+				</button>
+			</div>		
+			<div class="col-lg-6 text-right">
+				<span class="glyphicon glyphicon-filter"></span>&nbsp;
+				<select class='selectpicker' id="filterBy">
+					<option value="0">All Projects</option>
+					<option value="1">Active Projects Only</option>
+				</select>
+			</div>
+		</div>
+	</div>	
 	<div class="row">&nbsp;</div>
 	<div class="col-lg-11">
 		<div class="project-scrollbar">

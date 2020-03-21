@@ -23,6 +23,31 @@ class ProjectRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	function getProjectsByFilter($active) {
+		if (isset($active) && ($active =="0" || $active == "1")) {
+			if ($active == "0") {
+				$sql = "SELECT * FROM projects WHERE deleted = 0 ORDER BY id DESC";
+			} else {
+				$sql = "SELECT * FROM projects WHERE deleted = 0 AND inactive = 0 ORDER BY id DESC";
+			}		
+			$statement = $this->conn->prepare($sql);
+			$statement->execute();
+			$output = array();
+			while ($row = $statement->fetch()) {
+				$output[] = $row;
+			}
+			return $output;
+		}	
+	}
+	
+	function toggleProjectActive($project) {
+		if (isset($project) && $project > 0) {
+			$sql = "UPDATE projects SET inactive = inactive XOR 1 WHERE id = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $project);
+			$statement->execute();
+		}
+	}
 	
 	function getProjectByDetails($name, $desc, $start, $end) {
 		if (isset($name) && isset($start) && isset($end)) {
