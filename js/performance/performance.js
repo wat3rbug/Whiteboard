@@ -121,12 +121,39 @@ function getTeamMembers(team) {
 		data: {
 			"team": team
 		},
-		success: function(results) {
-			
-			$('#teamDetailsModal').modal('show');
-			
+		success: function(teamResults) {
+			$.ajax({
+				url: "repos/getSpecialtyForUsers.php",
+				dataType: "json",
+				success: function(skillResults) {
+					if (skillResults != null && skillResults.length > 0) {
+						$('#teamDetailsModal').modal('show');
+						$('#userList ul').empty();
+						teamResults.forEach(function(teamMember) {
+							var row = makeUserSkillCard(teamMember, skillResults);
+							$('#userList').append(row);
+						});
+					}
+				}
+			});
 		}
 	});
+}
+
+function makeUserSkillCard(user, skills) {
+	var row = "<div class='card'><div class='card-header'>" + user.first_name + " " + user.last_name;
+	row += "</div><div class='card-body'>";
+	row += "<p class='card-title text-muted'>Languages / APIs</p>";
+	let mySkills = skills.filter(x => x.user == user['userid']);
+	if (mySkills.length == 0) {
+		row += "None<br>";
+	} else {
+		mySkills.forEach(function(skill) {
+			row += skill.language + "<br>";
+		});
+	}
+	row += "</div></div><br>";
+	return row;
 }
 
 function longToHours(original) {

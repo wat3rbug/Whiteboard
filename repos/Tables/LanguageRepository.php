@@ -23,6 +23,18 @@ class LanguageRepository {
 			throw new \PDOException($e->getMessage(), (int)$e->getCode());
 		}
 	}
+	
+	function getSpecialtyForUsers() {
+		$sql = "SELECT languages.language, user_specialties.user FROM user_specialties JOIN languages ON languages.id = user_specialties.language WHERE deleted = 0";
+		$statement = $this->conn->prepare($sql);
+		$statement->execute();
+		$output = array();
+		while ($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
+	}
+	
 	function getAllLanguagesForProjects() {
 		$sql = "SELECT project, languages.language FROM project_languages JOIN languages ON project_languages.language = languages.id WHERE deleted = 0";
 		$statement = $this->conn->prepare($sql);
