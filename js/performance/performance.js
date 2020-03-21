@@ -1,17 +1,19 @@
 $(document).ready(function() {
 
-	$.ajax({
-		url: "repos/getTotalSprintCount.php",
-		dataType: "json",
-		success: function(results) {
-			if (results.length == 3 && results != null) {
-				$('#sprints').text(results[0]['count']);
-				$('#totals').text(results[1]['count']);
-				$('#totalComplete').text(results[2]['count']);
-			}
-		}
+	getTotalSprintCount();
+	getMilestonesForSprints();
+	
+	$('#taskCommentModal').on("hidden.bs.modal", function() {
+		$('#projectSummaryModal').modal('show');
 	});
 	
+});
+
+var MIN = 100;
+var HOUR = 10000;
+var DAY = 240000;
+
+function getMilestonesForSprints() {
 	$.ajax({
 		url: "repos/getAllMilestonesForSprints.php",
 		dataType: "json",
@@ -52,11 +54,22 @@ $(document).ready(function() {
 			});
 		}
 	});
-});
+}
 
-var MIN = 100;
-var HOUR = 10000;
-var DAY = 240000;
+function getTotalSprintCount() {
+	
+	$.ajax({
+		url: "repos/getTotalSprintCount.php",
+		dataType: "json",
+		success: function(results) {
+			if (results.length == 3 && results != null) {
+				$('#sprints').text(results[0]['count']);
+				$('#totals').text(results[1]['count']);
+				$('#totalComplete').text(results[2]['count']);
+			}
+		}
+	});
+}
 
 function getProjectSummary(sprint, project) {
 	$.ajax({
@@ -88,6 +101,7 @@ function getProjectSummary(sprint, project) {
 }
 
 function getTaskComments(task) {
+	$('#projectSummaryModal').modal('hide');
 	$.ajax({
 		url: "repos/viewPriorComments.php",
 		dataType: "json",
