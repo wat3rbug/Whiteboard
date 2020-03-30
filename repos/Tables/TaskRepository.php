@@ -52,7 +52,7 @@ class TaskRepository {
 	
 	function getAllSprintProjectSummary() {
 		
-		$sql = "SELECT sprint, sum(difficulty) as sumdiff, projects.name as project, teams.name as team,projects.id as project_id, teams.id as team_id FROM tasks JOIN projects ON projects.id = tasks.project LEFT JOIN teams ON projects.id = teams.project WHERE sprint IS NOT NULL GROUP BY sprint, tasks.project";
+		$sql = "SELECT sprint, sum(difficulty) as sumdiff, projects.name as project, teams.name as team,projects.id as project_id, teams.id as team_id FROM tasks JOIN projects ON projects.id = tasks.project LEFT JOIN teams ON projects.id = teams.project WHERE sprint IS NOT NULL GROUP BY sprint, tasks.project ORDER BY sprint DESC";
 		$statement = $this->conn->prepare($sql);
 		$statement->execute();
 		$output = array();
@@ -64,9 +64,11 @@ class TaskRepository {
 	
 	function getCompletedTaskTimesForUser($user) {
 		if (isset($user) && $user > 0) {
-			$sql = "SELECT hours, difficulty FROM tasks WHERE user = ? AND completed IS NOT NULL ORDER BY difficulty ASC, hours DESC";
+			$lastmonth = date('Y-m-d', strtotime('-30 days'));			
+			$sql = "SELECT hours, difficulty FROM tasks WHERE user = ? AND completed IS NOT NULL AND endtime >= ? ORDER BY difficulty ASC, hours DESC";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $user);
+			$statement->bindParam(2, $lastmonth);
 			$statement->execute();
 			$output = array();
 			while($row = $statement->fetch()) {

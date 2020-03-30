@@ -26,10 +26,9 @@ class CommentRepository {
 	
 	function hasReadComment($id) {
 		if (isset($id) && $id > 0) {
-			$sql = "UPDATE viewed_comments SET unread =(SELECT unread FROM viewed_comments WHERE id = ?) XOR 1 where id = ?";
+			$sql = "UPDATE viewed_comments SET unread = !unread where id = ?";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $id);
-			$statement->bindParam(2, $id);
 			$statement->execute();
 		}
 	}

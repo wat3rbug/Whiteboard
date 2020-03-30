@@ -1,7 +1,7 @@
 <?php
 require "Tables/TeamMemberRepository.php";
-//$team = $_POST['id'];
-$team = 2;
+$team = $_POST['id'];
+
 if (isset($team) && $team > 0) {
 	$db = new TeamMemberRepository();
 	$data =$db->getMembersForTeam($team);

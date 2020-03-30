@@ -82,23 +82,21 @@ function buildTeamTable() {
 	$.ajax({
 		url: "repos/getAllSkills.php",
 		dataType: "json",
-		success: function(results) {
-			var skills = results;
+		success: function(skills) {
 			$.ajax({
 				url: "repos/getAllTeams.php",
 				dataType: "json",
-				success: function(result) {
+				success: function(teams) {
 					$('#teamTable').find('tbody tr').remove();
-					if (result != null) {
-						result.forEach(function(team) {
+					if (teams != null) {
+						teams.forEach(function(team) {
 							$.ajax({
 								url: "repos/getMembersForTeam.php",
 								type: "post",
 								data: {
 									"id": team['id']
 								},
-								success: function(results) {
-									var users = results;
+								success: function(users) {
 									var row = "<tr><td>" + makeTeamCard(team, users, skills) + "</td>";
 									row += "<td style='width:85px'>" + makeButtonsForTeam(team) + "</td></tr>";
 									$('#teamTable').append(row);

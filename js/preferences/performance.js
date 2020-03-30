@@ -69,8 +69,6 @@ function getMaxTime(results) {
 }
 
 function getProgressByQuarter(number, maxRaw, style) {
-	var percent = Math.floor((parseInt(number['hours']) / maxRaw) * 100);
-	var time = longToHours(parseInt(number['hours']));
 	var row = "<div class='progress-bar"; 
 	if (style =='green') {
 		row += " bg-success'";
@@ -78,6 +76,12 @@ function getProgressByQuarter(number, maxRaw, style) {
 		row += " bg-warning'";
 	} if (style == "blue") {
 		row += "' ";
+	}
+	var percent = 0;
+	var time = 0;
+	if (number != null) {
+		var percent = Math.floor((parseInt(number['hours']) / maxRaw) * 100);
+		var time = longToHours(parseInt(number['hours']));
 	}
 	row += " role='progressbar' style='width:" + percent + "%'";
 	row += " aria-valuenow='" + percent + "' aria-valuemin='0' aria-valuemax='100'>" + time + " mins</div>";
