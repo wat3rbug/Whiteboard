@@ -24,6 +24,33 @@ class CommentRepository {
 		}
 	}	
 	
+	function getCommentSummaryCount($date) {
+		$sql = "SELECT COUNT(*) AS count FROM v_comment_home_page WHERE comment_date >= ?";
+		$statement = $this->conn->prepare($sql);
+		$statement->bindParam(1, $date);
+		$statement->execute();
+		$output = array();
+		while($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
+	}
+	
+	function getCommentSummaryByPage($date, $page, $count) {
+		$offset = $count * $page;
+		// this is horrible hackery because I need to keep the variables isolated but limit and offset wont allow it.
+		$sql = "SELECT * FROM v_comment_home_page WHERE comment_date >= ? GROUP BY subject ORDER BY comment_date DESC LIMIT " . $count . " OFFSET " . $offset;
+		
+		$statement = $this->conn->prepare($sql);
+		$statement->bindParam(1, $date);
+		$statement->execute();
+		$output = array();
+		while($row = $statement->fetch()) {
+			$output[] = $row;
+		}
+		return $output;
+	}
+	
 	function hasReadComment($id) {
 		if (isset($id) && $id > 0) {
 			$sql = "UPDATE viewed_comments SET unread = !unread where id = ?";
@@ -35,7 +62,7 @@ class CommentRepository {
 	
 	function getCommentSummary($date) {
 		// need a date check here
-		$sql = "SELECT * FROM v_comment_home_page WHERE comment >= ? GROUP BY subject ORDER BY comment_date DESC";
+		$sql = "SELECT * FROM v_comment_home_page WHERE comment_date >= ? GROUP BY subject ORDER BY comment_date DESC";
 		$statement = $this->conn->prepare($sql);
 		$statement->bindParam(1, $date);
 		$statement->execute();

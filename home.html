@@ -17,6 +17,7 @@
 	<script src="js/dateFunctions.js"></script>
 	<script src="js/nav.js"></script>
 	<script src="js/home/home.js"></script>
+	<script src="js/home/pagination.js"></script>
 
 	
 	<div class="col-sm-12">
@@ -58,7 +59,7 @@
 					</ul>
 				</div>
 				<div class="col-lg-2">
-					<button type="button" class=" btn btn-outline-danger" id="logoutBtn">
+					<button type="button" class="btn btn-outline-danger" id="logoutBtn">
 						<span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout
 					</button>
 				</div>
@@ -71,7 +72,35 @@
 	<div class="row">&nbsp;</div>
 	<div class="col-md-11">This is the list of recent comments as to the projects and task they relate to at the moment. Click <a href="#Introduction">here</a> to see an introduction to the application and how to use it.
 	</div>
+	
 	<div class="row">&nbsp;</div> 
+	<!-- Pagination section -->
+	<div class="col-lg-2">
+		<nav arialabel="...">
+			<ul class="pagination">
+				<!-- <li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1">Previous</a>
+				</li> -->
+				<!-- <li class="page-item active">
+					<a class="page-link" href="#">1</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">2</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">3</a>
+				</li> -->
+				<!-- <li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li> -->
+			</ul>
+		</nav>
+	</div>
+	<!-- End Pagination section -->
+	<div class="col-lg-2 text-center">
+		<div id="resultsSection"></div>
+	</div>
+	<div class="row">&nbsp;</div>
 	<div class="col-md-11" id="commentSection">
 		<table class="table table-striped" id="commentTable">
 			<thead>
@@ -92,6 +121,7 @@
 		<p>3.  Add a <a href="#team">team</a>.  While not essential to add members it gives those folks some accountability for the tasks given and the outcome of the project.</p>
 		<p>4.  Add tasks from your project to the <a href="#sprint">sprint</a> so that people can see and work on that particular task.</p>
 		<p>5.  You the sprint <a href="#activity">activity</a> page.  This keeps track of what 'stage' a task is in during development.  You can add questions or comments, which will show up on the home page for the other users.</p>
+		
 		<!-- <p><a name="project"><iframe width="640" height="480" src="https://www.youtube.com/embed/QL_mdLTiAC8?controls=1"></iframe></a></p>
 		<p><a name="tasks"><iframe width="640" height="480" src="https://www.youtube.com/embed/ZRNgRPjoJ0w?controls=1"></iframe></a></p>
 		<p><a name="team"><iframe width="640" height="480" src="https://www.youtube.com/embed/rAKiivRbB2s?controls=1"></iframe></a></p>
