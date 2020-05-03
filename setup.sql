@@ -156,10 +156,11 @@ create view v_comment_count_by_task as
 
 create view v_tasks_for_sprint as
 	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, 
-	v_comment_count_by_task.comment_count, milestones.name as milestone from tasks
-	join projects on tasks.project = projects.id
+	v_comment_count_by_task.comment_count, milestones.name as milestone, projects.id as project_id from tasks
+	join projects on tasks.project = projects.id 
 	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id 
-	left join milestones on tasks.id = milestones.task and milestones.deleted = 0;
+	left join milestones on tasks.id = milestones.task and milestones.deleted = 0 
+	where projects.deleted = 0;
 
 create view v_performance_overall as
 	select count(*) as count from sprints
@@ -174,12 +175,13 @@ create view v_filtered_tasks_for_sprint as
 	v_comment_count_by_task.comment_count, projects.id as project_id, milestones.name as milestone from tasks
 	join projects on tasks.project = projects.id
 	left join v_comment_count_by_task on tasks.id = v_comment_count_by_task.id
-	left join milestones on tasks.id = milestones.task and milestones.deleted = 0;	
+	left join milestones on tasks.id = milestones.task and milestones.deleted = 0 
+	where projects.deleted = 0;	
 	
 create view v_incomplete_tasks as
 	select tasks.id, tasks.difficulty, tasks.subject, projects.name, projects.id as project_id from tasks
 	join projects on tasks.project = projects.id
-	where tasks.sprint is null and tasks.deleted = 0 order by tasks.id desc;
+	where tasks.sprint is null and tasks.deleted = 0 order by tasks.id desc and projects.deleted = 0;
 	
 create view v_tasks as
 	select tasks.difficulty, tasks.id, projects.name, projects.start_date, projects.end_date, tasks.type, 
