@@ -12,6 +12,10 @@ $(document).ready(function() {
 		addLanguage();	
 	});
 	
+	$('#addLangBtn2').on("click", function() {
+		addLanguage2();	
+	});
+	
 	$('#pushEditLanguageToDB').on("click", function() {
 		addLangsToExistingProject();
 	});
@@ -98,6 +102,21 @@ function addLangsToProject(projId, langs) {
 	});
 }
 
+function addLanguage2() {
+	var language = $('#addNewLangInput').val();
+	$('#addNewLangInput').val('');
+	$.ajax({
+		url: "repos/addLanguage.php",
+		type: "post",
+		data: {
+			"language": language
+		},
+		success: function() {
+			var projId = $('#editProjIdHdn').val();
+			getAllLanguages($('#addLangSelector'), projId);
+		}	
+	});
+}
 function addLanguage() {
 	var language = $('#newLangInput').val();
 	$('#newLangInput').val('');

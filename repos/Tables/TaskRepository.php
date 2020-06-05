@@ -339,7 +339,7 @@ class TaskRepository {
 	function getFilteredSprintTasks($sprint, $filter) {
 		if (isset($sprint) && $sprint > 0) {
 			if (isset($filter) && $filter > 0) {
-				$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint = ? AND tasks.completed IS NULL AND projects.id = ? ORDER BY tasks.id DESC";
+				$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint = ? AND tasks.completed IS NULL AND projects.id = ? AND projects.deleted = 0 ORDER BY tasks.id DESC";
 				$statement = $this->conn->prepare($sql);
 				$statement->bindParam(1, $sprint);
 				$statement->bindParam(2, $filter);
@@ -357,7 +357,7 @@ class TaskRepository {
 	
 	function getSprintTasks($sprint) {
 		if (isset($sprint) && $sprint > 0) {
-			$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint = ? AND tasks.completed IS NULL ORDER BY tasks.id DESC";
+			$sql = "SELECT tasks.id, tasks.difficulty, tasks.subject, projects.name from tasks JOIN projects ON tasks.project = projects.id WHERE tasks.sprint = ? AND tasks.completed IS NULL AND projects.deleted = 0 ORDER BY tasks.id DESC";
 			$statement = $this->conn->prepare($sql);
 			$statement->bindParam(1, $sprint);
 			$statement->execute();
