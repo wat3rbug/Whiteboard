@@ -1,11 +1,5 @@
 create database whiteboard;
 use whiteboard;
-drop view if exists `v_comment_home_page`;
-drop view if exists `v_comment_count_by_task`;
-drop view if exists `v_tasks_for_sprint`;
-drop view if exists `v_filtered_tasks_for_sprint`;
-drop view if exists `v_incomplete_tasks`;
-drop view if exists `v_tasks`;
 drop table if exists `viewed_comments`;
 drop table if exists `comments`;
 drop table if exists `milestones`;
@@ -18,6 +12,12 @@ drop table if exists `user_specialties`;
 drop table if exists `languages`;
 drop table if exists `users`;
 drop table if exists `sprints`;
+drop view if exists `v_comment_home_page`;
+drop view if exists `v_comment_count_by_task`;
+drop view if exists `v_tasks_for_sprint`;
+drop view if exists `v_filtered_tasks_for_sprint`;
+drop view if exists `v_incomplete_tasks`;
+drop view if exists `v_tasks`;
 
 
 create table languages (
@@ -76,6 +76,8 @@ create table sprints (
 	end_date date,
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
+
+insert into sprints (start_date) values (curdate());
 
 create table tasks (
 	id int auto_increment primary key,
@@ -138,7 +140,7 @@ create table viewed_comments (
 	deleted tinyint(1) not null default 0
 ) engine = InnoDB;
 
-create view v_comment_home_page as
+create or replace view v_comment_home_page as
 	select viewed_comments.id, users.first_name, users.last_name, users.email, tasks.difficulty, 
 	tasks.subject, comments.comment, viewed_comments.unread, viewed_comments.viewer, comments.comment_date,
 	projects.name
@@ -149,12 +151,12 @@ create view v_comment_home_page as
 	join users on tasks.user = users.id
 	where viewed_comments.deleted = 0 or comments.deleted = 0;
 
-create view v_comment_count_by_task as
+create or replace view v_comment_count_by_task as
 	select tasks.id, count(comments.id) as comment_count from tasks
 	left join comments on comments.task_id = tasks.id 
 	group by tasks.id;
 
-create view v_tasks_for_sprint as
+create or replace view v_tasks_for_sprint as
 	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, 
 	v_comment_count_by_task.comment_count, milestones.name as milestone, projects.id as project_id from tasks
 	join projects on tasks.project = projects.id 
@@ -162,7 +164,7 @@ create view v_tasks_for_sprint as
 	left join milestones on tasks.id = milestones.task and milestones.deleted = 0 
 	where projects.deleted = 0;
 
-create view v_performance_overall as
+create or replace view v_performance_overall as
 	select count(*) as count from sprints
 	union
 	select sum(difficulty) from tasks
@@ -170,7 +172,7 @@ create view v_performance_overall as
 	where sprint is not null and completed is not null;
 		
 	
-create view v_filtered_tasks_for_sprint as
+create or replace view v_filtered_tasks_for_sprint as
 	select tasks.id, tasks.subject, tasks.difficulty, projects.name, tasks.state, tasks.user, tasks.sprint, 
 	v_comment_count_by_task.comment_count, projects.id as project_id, milestones.name as milestone from tasks
 	join projects on tasks.project = projects.id
@@ -178,12 +180,12 @@ create view v_filtered_tasks_for_sprint as
 	left join milestones on tasks.id = milestones.task and milestones.deleted = 0 
 	where projects.deleted = 0;	
 	
-create view v_incomplete_tasks as
+create or replace view v_incomplete_tasks as
 	select tasks.id, tasks.difficulty, tasks.subject, projects.name, projects.id as project_id from tasks
 	join projects on tasks.project = projects.id
-	where tasks.sprint is null and tasks.deleted = 0 order by tasks.id desc and projects.deleted = 0;
+	where tasks.sprint is null and tasks.deleted = 0  and projects.deleted = 0 order by tasks.id desc;
 	
-create view v_tasks as
+create or replace view v_tasks as
 	select tasks.difficulty, tasks.id, projects.name, projects.start_date, projects.end_date, tasks.type, 
 	projects.description as project_description, tasks.subject, tasks.description, tasks.state, 
 	projects.id as project_id, tasks.sprint from tasks
