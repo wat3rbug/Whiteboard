@@ -5,4 +5,3 @@ create user 'whiteboarduser'@'localhost' identified by '1990BMW325!';
 grant select on *.* to 'whiteboarduser'@'localhost';
 grant select, insert, update, delete on whiteboard.* to 'whiteboarduser'@'localhost';
 flush privileges;
-create user 'root'@'10.0.0.%' identified by '91harley';
