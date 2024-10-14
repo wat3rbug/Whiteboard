@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charsset="utf-8">
+	<title>The Whiteboard</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/scrolls.css">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /> 
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+</head>
+<body>
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+	
+	<script src="js/login.js"></script>
+	<script src="js/tasks/tasks.js"></script>
+	<script src="js/dateFunctions.js"></script>
+	<script src="js/nav.js"></script>
+	
+	<div class="col-sm-12">
+		<div class="jumbotron info">
+			<h1 text="center">Whiteboard</h1>This time you won't stain your hands
+		</div>
+	</div>
+	<!-- Start Top Menu portion -->
+	
+	<div id="topMenu">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-10" role="navigation">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" href="home.html"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="project-tab" data-toggle="tab" role="tab" aria-controls="project" href="projects.html"><span class="glyphicon glyphicon-book"></span>&nbsp;Projects</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" id="task-tab" data-toggle="tab" role="tab" aria-controls="task" href="tasks.html"><span class="glyphicon glyphicon-tasks"></span>&nbsp;Tasks</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="team-tab" data-toggle="tab" role="tab" aria-controls="team" href="teams.html"><span class="glyphicon glyphicon-user"></span>&nbsp;Teams</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="sprint-tab" data-toggle="tab" role="tab" aria-controls="sprint" href="sprints.html"><span class="glyphicon glyphicon-flash"></span>&nbsp;Sprints</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="activity-tab" data-toggle="tab" role="tab" aria-controls="activity" href="activity.html"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Sprint Activity</a>
+						</li>		
+						<li class="nav-item">
+							<a class="nav-link" id="performance-tab" data-toggle="tab" role="tab" aria-controls="performance" href="performance.html"><span class="glyphicon glyphicon-stats"></span>&nbsp;Performance</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="user-tab" data-toggle="tab" role="tab" aria-controls="user" href="preferences.html"><span class="glyphicon glyphicon-cog"></span>&nbsp;User Preferences</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-2">	
+
+					<button type="button" class=" btn btn-outline-danger" id="logoutBtn">
+						<span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout
+					</button>
+				</div>
+			</div>
+		</div>
+	</div> <!-- end topMenu div -->
+	
+	<div class="row">&nbsp;</div>
+	<div class="col-lg-9">
+		<div class="row">
+			<div class="col-md-6">
+				<button type="button" class="btn btn-success" id="addTaskBtn">
+					<span class="glyphicon glyphicon-plus"></span>
+					Add Task
+				</button>
+			</div>
+			<div class="col-md-6 text-right">
+				<span class="glyphicon glyphicon-filter"><span>&nbsp;
+				<select class='selectpicker' id="filterBy">
+				</select>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row">&nbsp;</div>
+	<div class="col-lg-10">
+		<div class="project-scrollbar task-scroll">
+			<table class="table table-striped" id="tasksTable">
+				<thead>
+					<tr>
+						<th scope="col">Tasks</th>
+						<th scope="col" class="text-right">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</body>
+
+<!-- Add Task Modal Section -->
+
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Add Task</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+					<div class="col-sm-6 text-right">Project</div>
+					<div class="col-sm-4">
+						<select class="browser-default custom-select" id="addProjSelector">
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">Difficulty</div>
+					<div class="col-sm-2">
+						<select class="browser-default custom-select" id="addDiffSelector">
+							<option values="1">1</option>
+							<option values="2">2</option>
+							<option values="3">3</option>
+							<option values="5">5</option>
+							<option values="8">8</option>
+							<option values="13">13</option>
+							<option values="21">21</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">Type</div>
+					<div class="col-sm-3">
+						<select class="browser-default custom-select" id="addTaskTypeSelector">
+							<option value="0">Story</option>
+							<option value="1">Task</option>
+							<option value="2">Bug</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Subject</div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea class="form-control" rows="1" id="addSubject"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Description</div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea class="form-control" rows="4" id="addDescription"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="pushTaskToDB">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Task
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelAddTaskBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit Task Modal Section -->
+
+<div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-warning">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Edit Task</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+					<input type="hidden" id="taskIdHdn">
+					<div class="col-sm-6 text-right">Project</div>
+					<div class="col-sm-4">
+						<select class="browser-default custom-select" id="editProjSelector">
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">Difficulty</div>
+					<div class="col-sm-2">
+						<select class="browser-default custom-select" id="editDiffSelector">
+							<option values="1">1</option>
+							<option values="2">2</option>
+							<option values="3">3</option>
+							<option values="5">5</option>
+							<option values="8">8</option>
+							<option values="13">13</option>
+							<option values="21">21</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-6 text-right">Type</div>
+					<div class="col-sm-3">
+						<select class="browser-default custom-select" id="editTaskTypeSelector">
+							<option value="0">Story</option>
+							<option value="1">Task</option>
+							<option value="2">Bug</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Subject</div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea class="form-control" rows="1" id="editSubject"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-3 text-right">Description</div>
+					<div class="col-sm-8">
+						<div class="form-group">
+							<textarea class="form-control" rows="4" id="editDescription"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" id="pushEditTaskToDB">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Edit Task
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelEditTaskBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="sessionTimed"></div>
+</html>
+
+
+

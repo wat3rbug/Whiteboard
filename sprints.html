@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charsset="utf-8">
+	<title>The Whiteboard</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/scrolls.css">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /> 
+	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+	<!-- <link rel="stylesheet" href="css/sprint.css"> -->
+</head>
+<body>
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+	
+	<script src="js/login.js"></script>
+	<script src="js/dateFunctions.js"></script>
+	<script src="js/nav.js"></script>
+	<script src="js/sprints/sprints.js"></script>
+	
+	<div class="col-sm-12">
+		<div class="jumbotron info">
+			<h1 text="center">Whiteboard</h1>This time you won't stain your hands
+		</div>
+	</div>
+	<!-- Start Top Menu portion -->
+	
+	<div id="topMenu">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-10" role="navigation">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" href="home.html"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="project-tab" data-toggle="tab" role="tab" aria-controls="project" href="projects.html"><span class="glyphicon glyphicon-book"></span>&nbsp;Projects</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="task-tab" data-toggle="tab" role="tab" aria-controls="task" href="tasks.html"><span class="glyphicon glyphicon-tasks"></span>&nbsp;Tasks</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="team-tab" data-toggle="tab" role="tab" aria-controls="team" href="teams.html"><span class="glyphicon glyphicon-user"></span>&nbsp;Teams</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" id="sprint-tab" data-toggle="tab" role="tab" aria-controls="sprint" href="sprints.html"><span class="glyphicon glyphicon-flash"></span>&nbsp;Sprints</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="activity-tab" data-toggle="tab" role="tab" aria-controls="activity" href="activity.html"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Sprint Activity</a>
+						</li>		
+						<li class="nav-item">
+							<a class="nav-link" id="performance-tab" data-toggle="tab" role="tab" aria-controls="performance" href="performance.html"><span class="glyphicon glyphicon-stats"></span>&nbsp;Performance</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="user-tab" data-toggle="tab" role="tab" aria-controls="user" href="preferences.html"><span class="glyphicon glyphicon-cog"></span>&nbsp;User Preferences</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-2">	
+
+					<button type="button" class=" btn btn-outline-danger" id="logoutBtn">
+						<span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout
+					</button>
+				</div>
+			</div>
+		</div>
+	</div> <!-- end topMenu div -->
+	
+	<!-- End Top Menu portion -->
+	
+	<div class="row">&nbsp;</div>
+	<input type='hidden' id="SprintIdHdn">
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col-lg-6">
+				<button type='button' class='btn btn-success' id='startSprintBtn'>
+					<span class='glyphicon glyphicon-play'></span>&nbsp;Start Next Sprint
+				</button>&nbsp;
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h5 class="text-muted">Sprint Numbers</h5>
+						<table class="table table-striped table-bordered" id="sprintOverall">
+							<thead>
+								<tr>
+									<th scope="col">Sprint</th>
+									<th scope="col">Points</th>
+									<th scope="col">Days Left</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>		
+				<div class="row">&nbsp;</div>
+				<div id="newSprintPortion">
+					<div class="row">
+						<div class="col-md-6 text-right">
+							<h4 class="text-muted">Sprint Tasks</h4>
+						</div>
+						<div class="col-md-6">
+							<span class="glyphicon glyphicon-filter"></span>&nbsp;
+							<select class='selectpicker' id="filterTasksBy">
+							</select>
+						</div>
+					</div>
+					<table class="table table-striped sprint-scroll" id="newSprintTable">
+						<thead>
+							<tr>
+								<th scope="col" style="width:65px">Action</th>
+								<th scope="col">Task</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="2">No data</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="col-lg-6 text-center">
+				<div class="row">
+					<div class="col-md-6 text-right">
+						<h4 class="text-muted">Backlog</h4>
+					</div>
+					<div class="col-md-6">
+						<span class='glyphicon glyphicon-filter'></span>&nbsp;
+						<select class='selectpicker' id="filterBy">
+						</select>
+					</div>
+				</div>
+				<table class="table table-striped backlog-scroll" id="remainingTasksTable">
+					<thead>
+						<tr>
+							<th scope="col" style="width:65px">Action</th>
+							<th scope="col">Task</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+	
+<!-- Open Sprint Modal Section -->
+
+<div class="modal fade" id="openSprintExistsModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-danger">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Open Sprint Exists</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+
+				<div class="row">
+					<div class="col-lg-12 text-center">You need to finish the current sprint before starting another one</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Closed Sprint Modal Section -->
+
+<div class="modal fade" id="endSprintModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Sprint Closed</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+
+				<div class="row">
+					<div class="col-lg-12 text-center">Sprint has now ended</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Start Next Sprint Modal Section -->
+
+<div class="modal fade" id="nextSprintModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Sprint Completed</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+
+				<div class="row">
+					<div class="col-lg-12 text-center">Click To Start Next Sprint</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="closeBtn">
+					<span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="sessionTimed"></div>
+
+
+
+

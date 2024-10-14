@@ -1,0 +1,36 @@
+.sprint-scroll tbody {
+	display:block;
+	max-height: 425px;
+	overflow-y:scroll;
+}
+.sprint-scroll thead, tbody tr {
+	display:table;
+	width:100%;
+	table-layout:fixed;
+}
+
+.project-scroll tbody {
+	display: block;
+	position: relative;
+	height: 600px;
+	overflow-y: scroll;
+}
+
+.project-scroll thead, tbody tr {
+	display: table;
+	width:100%;
+}
+.comment-scroll thead, tbody tr {
+	display:table;
+	width:100%;
+}
+.comment-scroll tbody {
+	display: block;
+	max-height:250px;
+	overflow-y:scroll;
+}
+
+.comment-modal-row {
+	font-size:11px;
+}
+
