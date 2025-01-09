@@ -1,10 +1,10 @@
 
 var MAX_STATE = 4;
-var TODO = "0";
-var WIP = "1";
-var STAGED = "2";
-var TESTING = "3";
-var COMPLETE = "4";
+var TODO = 1;
+var WIP = 1;
+var STAGED = 2;
+var TESTING = 3;
+var COMPLETE = 4;
 
 $(document).ready(function() {
 		

@@ -5,7 +5,7 @@ class ProjectRepository {
 	
 	function __construct() {
 		include_once("DBConnection.php");
-		$db = new DBCOnnection();
+		$db = new DBConnection();
 		$servername = $db->hostname;
 		$username = $db->username;
 		$password = $db->password;

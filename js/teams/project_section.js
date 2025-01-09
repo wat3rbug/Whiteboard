@@ -4,8 +4,10 @@ $(document).ready(function () {
 	
 	// do team selector portion
 	
-	$().change(function () {
-		// find row with this selector
+	$('#projectTable tbody').on("change", '.teamSelector', function () {
+		var project_raw = $(this).attr('id');
+		var project = project_raw.substring(project_raw.indexOf('_') + 1);
+		var team = $(this).val();
 		$.ajax({
 			url: "repos/changeTeamForProject.php",
 			type: "post",
@@ -58,7 +60,7 @@ function makeCardFromProject(project, teamNames) {
 	row += "<p class='card-text'>Description: ";
 	if (project.description != null) row += project.description;
 	row += "</p>";
-	row += "<select class='browser-default custom-select' id='teamSelector_" + project.id + "'>";
+	row += "<select class='browser-default custom-select teamSelector' id='teamSelector_" + project.id + "'>";
 	row += "<option value='0'>-- None Selected --</option>"; 
 	if (teamNames != null) {
 		teamNames.forEach(function(team) {
