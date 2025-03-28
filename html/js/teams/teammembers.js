@@ -255,7 +255,7 @@ function addTeamToDB() {
 
 function buildProjectSelectorForTeamModal() {
 	$.ajax({
-		url: "repos/getProjectNameAndIds.php",
+		url: "repos/getActiveProjectNameAndIds.php",
 		dataType: "json",
 		success: function(projects) {
 			$('#projectSelector').empty();
