@@ -1,19 +1,21 @@
 <?php
-require "Tables/ProjectTeamRepository.php";
+require "Tables/TeamRepository.php";
 // $team= $_POST['team'];
 // $project = $_POST['project'];
 $team = "1";
 $project = "11";
 
 if (isset($team) && isset($project)) {
-	$db = new ProjectTeamRepository();
+	$db = new TeamRepository();
 	$hasteam = $db->doesProjectHaveTeam($project);
     var_dump($hasteam);
     
     if ($hasteam == true) {
-        $db->updateProjectTeam($project, $team);
+        $data = getTeamById($team);
+        
+        $db->updateTeam($project, $team);
     } else {
-        $db->addProjectTeam($project, $team);
+        $db->addTeam($team, $project);
     }
 }
 ?>

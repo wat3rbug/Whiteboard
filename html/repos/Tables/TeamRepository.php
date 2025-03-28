@@ -75,5 +75,21 @@ class TeamRepository {
 			$statement->execute();
 		}
 	}
+
+	function doesProjectHaveTeam($team, $project) {
+		if (isset($team) && isset($project)) {
+			$sql = "SELECT * FROM teams WHERE project = ?";
+			$statement = $this->conn->prepare($sql);
+			$statement->bindParam(1, $project);
+			$statement->execute();
+			$result = false;
+			$output = array();
+            $result = false;
+            while ($row = $statement->fetch()) {
+                $result = true;
+            }
+            return $result;
+		}
+	}
 }
 ?>

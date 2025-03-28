@@ -1,6 +1,6 @@
 
 var MAX_STATE = 4;
-var TODO = 1;
+var TODO = 0;
 var WIP = 1;
 var STAGED = 2;
 var TESTING = 3;
@@ -78,7 +78,8 @@ function fillTableWithTasks(tasks, max) {
 	var wip = 0;
 	var todo = 0;
 	for (i = 0; i < tasks.length; i++) {
-		switch (tasks[i]['state']) {
+		var state = parseInt(tasks[i]['state']);
+		switch (state) {
 		case TODO :
 			$('#td_' + todo + "_0").html(makeTaskCard(tasks[i]));
 			$('#changer' + tasks[i]['id']).val("0");

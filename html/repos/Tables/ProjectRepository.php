@@ -127,7 +127,7 @@ class ProjectRepository {
 	}
 	
 	function getAllProjects() {
-		$sql = "SELECT * FROM projects WHERE deleted = 0 ORDER BY id DESC";
+		$sql = "SELECT projects.*, teams.name AS team, teams.id AS teamid FROM projects JOIN teams ON projects.id = teams.project WHERE projects.deleted = 0 ORDER BY id DESC";
 		$statement = $this->conn->query($sql);
 		$output = array();
 		while ($row = $statement->fetch()) {
@@ -137,6 +137,16 @@ class ProjectRepository {
 	}
 	function getProjectNameAndIds() {
 		$sql = "SELECT id, name FROM projects WHERE deleted = 0";
+		$statement = $this->conn->query($sql);
+		$output = array();
+		while ($row = $statement->fetch()) {
+			$output[] = $row;				
+		}
+		return $output;
+	}
+
+	function getActiveProjectNameAndIds() {
+		$sql = "SELECT id, name FROM projects WHERE deleted = 0 AND inactive = 0";
 		$statement = $this->conn->query($sql);
 		$output = array();
 		while ($row = $statement->fetch()) {

@@ -136,7 +136,7 @@ function addTaskToDB() {
 }
 function getProjectsForAddTask() {
 	$.ajax({
-		url: "repos/getProjectNameAndIds.php",
+		url: "repos/getActiveProjectNameAndIds.php",
 		dataType: "json",
 		success: function(results) {
 			$('#addProjSelector').empty();
@@ -151,7 +151,7 @@ function getProjectsForAddTask() {
 
 function getProjectsForTask(selector) {
 	$.ajax({
-		url: "repos/getProjectNameAndIds.php",
+		url: "repos/getActiveProjectNameAndIds.php",
 		dataType: "json",
 		success: function(results) {
 			selector.empty();
