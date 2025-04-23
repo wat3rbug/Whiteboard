@@ -71,7 +71,8 @@ function buildTaskTable() {
 }
 
 function fillTableWithTasks(tasks, max) {
-	
+	const BUG = 2;
+	const TASK = 1;
 	var complete = 0;
 	var testing = 0;
 	var staged = 0;
@@ -179,8 +180,25 @@ function getDaysLeft(startDate) {
 }
 
 function makeTaskCard(task) {
+	const BUG = 2;
+	const TASK = 1;
 	var row = "<div class='card'><div class='card-body'>";
-	row += "<h5 class='card-title'>" + task['difficulty'] + " - "+ task['subject'] + "</h5>";
+	row += "<h5 class='card-title'>";
+	switch(parseInt(task.type)) {
+		case BUG: {
+			row += "<div class='alert alert-danger'>" + task['difficulty'] + " - "+ task['subject'] + "</div>";
+			break;
+		}
+		case TASK: {
+			row += "<div class='alert alert-warning'>" + task['difficulty'] + " - "+ task['subject'] + "</div>";
+			break;
+		}
+		default: {
+			row += task['difficulty'] + " - "+ task['subject'];
+			break;
+		}
+	} 
+	row += "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>" + task['name'] +" </h6>";
 	row += "<p class='card-text'>" + makeOptionListForCard(task['id']) + "</p>";
 	if (task['state'] == 4) {
