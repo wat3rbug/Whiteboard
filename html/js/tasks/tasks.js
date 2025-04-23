@@ -202,17 +202,34 @@ function buildTaskTable() {
 }
 
 function makeCardForTask(task) {
+	const STORY = 0;
+	const BUG = 2;
+	const TASK = 1;
 	var row = "<div class='card'><div class='card-body'>";
-	row += "<h5 class='card-title'>" + task.subject + "</h5>";
+	row += "<h5 class='card-title'>";
+	switch (task.type) {
+		case BUG: {
+			row += "<div class='alert alert-danger' role='alert'>" + task.subject + "</div></h5>";
+			break;
+		}
+		case TASK: {
+			row += "<div class='alert alert-warning' role='alert'>" + task.subject + "</div></h5>";
+			break;
+		}
+		default: {
+			row +=  + task.subject + "</h5>";
+			break;
+		}
+	}
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Difficulty: " + task.difficulty + "</h6>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Project: " + task.name + "</h6>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Type: ";
-	switch (task.type) {
-		case "0": row += "Story";
+	switch (parseInt(task.type)) {
+		case 0: row += "Story";
 		break;
-		case "1": row += "Task";
+		case 1: row += "Task";
 		break;
-		case "2": row += "Bug";
+		case 2: row += "Bug";
 		break;
 	}
 	row += "</h6><p class='card-text'>Description: " + task.description + "</p>";

@@ -261,7 +261,7 @@ function getDetails(id) {
 
 function getProjectsForTask() {
 	$.ajax({
-		url: "repos/getProjectNameAndIds.php",
+		url: "repos/getActiveProjectNameAndIds.php",
 		dataType: "json",
 		success: function(results) {
 			$('#filterBy').empty();
