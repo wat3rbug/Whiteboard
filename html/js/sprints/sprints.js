@@ -223,10 +223,26 @@ function getDaysLeft(startDate) {
 
 
 function makeRowForSprintItem(task) {
+	const BUG = 2;
+	const TASK = 1;
 	var row = "<tr><td style='width:65px'><button type='button' class='btn btn-danger' onclick='removeTask(" + task.id + ")'>";
 	row += "<span class='glyphicon glyphicon-minus-sign'></span></button></td><td>";
 	row += "<div class='card'><div class='card-body'>";
-	row += "<h5 class='card-title text-left'>" + task.subject +"</h5>";
+	row += "<h5 class='card-title text-left'>";
+	switch(parseInt(task.type)) {
+		case BUG: {
+			row += "<div class='alert alert-danger' role='alert'>" + task.subject + '</div>';
+			break;
+		}
+		case TASK: {
+			row += "<div class='alert alert-warning' role='alert'>" + task.subject + '</div>';
+			break;
+		}
+		default: {
+			row += task.subject;
+		}
+	}
+	row += "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted text-left'>" + task.name + "</h6>";
 	row += "<h6 class='card-subtitle mb-s text-muted text-left'>Difficulty: " + task.difficulty + "</h6>";
 	row += "</div></div>";
@@ -235,10 +251,26 @@ function makeRowForSprintItem(task) {
 }
 
 function makeRowForTask(task) {
+	const BUG = 2;
+	const TASK = 1;
 	var row = "<tr><td style='width:65px'><button type='button' class='btn btn-success' onclick='addTask(" + task.id + ")'>";
 	row += "<span class='glyphicon glyphicon-plus-sign'></span></button></td><td>";
 	row += "<div class='card'><div class='card-body'>";
-	row += "<h5 class='card-title text-left'>" + task.subject +"</h5>";
+	row += "<h5 class='card-title text-left'>";
+	switch (parseInt(task.type)) {
+		case BUG: {
+			row += "<div class='alert alert-danger' role='alert'>" + task.subject + '</div>';
+			break;
+		}
+		case TASK: {
+			row += "<div class='alert alert-warning' role='alert'>" + task.subject + '</div>';
+			break;
+		}
+		default: {
+			row += task.subject;
+		}
+	}
+	row += "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted text-left'>" + task.name + "</h6>";
 	row += "<h6 class='card-subtitle mb-s text-muted text-left'>Difficulty: " + task.difficulty + "</h6>";
 	row += "</div></div>";
