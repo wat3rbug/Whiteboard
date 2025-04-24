@@ -102,10 +102,17 @@
 						<div class="col-md-6 text-right">
 							<h4 class="text-muted">Sprint Tasks</h4>
 						</div>
-						<div class="col-md-6">
-							<span class="glyphicon glyphicon-filter"></span>&nbsp;
-							<select class='selectpicker' id="filterTasksBy">
-							</select>
+						<div class="col-md-3">&nbsp;</div>
+						<div class="col-md-3">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+								  <label class="input-group-text" for="filterBy">
+									<span class="glyphicon glyphicon-filter"></span>
+								  </label>
+								</div>
+								<select class="custom-select selectpicker" id="filterTasksBy">
+								</select>
+							  </div>
 						</div>
 					</div>
 					<table class="table table-striped sprint-scroll" id="newSprintTable">
@@ -129,10 +136,17 @@
 					<div class="col-md-6 text-right">
 						<h4 class="text-muted">Backlog</h4>
 					</div>
-					<div class="col-md-6">
-						<span class='glyphicon glyphicon-filter'></span>&nbsp;
-						<select class='selectpicker' id="filterBy">
-						</select>
+					<div class="col-md-3">&nbsp;</div>
+					<div class="col-md-3">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+							  <label class="input-group-text" for="filterBy">
+								<span class="glyphicon glyphicon-filter"></span>
+							  </label>
+							</div>
+							<select class="custom-select selectpicker" id="filterBy">
+							</select>
+						  </div>
 					</div>
 				</div>
 				<table class="table table-striped backlog-scroll" id="remainingTasksTable">
