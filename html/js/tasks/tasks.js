@@ -202,25 +202,25 @@ function buildTaskTable() {
 }
 
 function makeCardForTask(task) {
-	const STORY = 0;
 	const BUG = 2;
 	const TASK = 1;
 	var row = "<div class='card'><div class='card-body'>";
 	row += "<h5 class='card-title'>";
-	switch (task.type) {
+	switch (parseInt(task.type)) {
 		case BUG: {
-			row += "<div class='alert alert-danger' role='alert'>" + task.subject + "</div></h5>";
+			row += "<div class='alert alert-danger' role='alert'>" + task.subject + "</div>";
 			break;
 		}
 		case TASK: {
-			row += "<div class='alert alert-warning' role='alert'>" + task.subject + "</div></h5>";
+			row += "<div class='alert alert-warning' role='alert'>" + task.subject + "</div>";
 			break;
 		}
 		default: {
-			row +=  + task.subject + "</h5>";
+			row +=  task.subject;
 			break;
 		}
 	}
+	row += "</h5>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Difficulty: " + task.difficulty + "</h6>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Project: " + task.name + "</h6>";
 	row += "<h6 class='card-subtitle mb-2 text-muted'>Type: ";
