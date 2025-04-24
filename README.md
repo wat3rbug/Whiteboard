@@ -6,7 +6,7 @@ How it works: It will be following the scrum agile development method of develop
 <h2>Todo</h2>
 
 <ul>
-  <li>Make a 'left work' button on the activity page so that people can see you are no lnger working and that the timers stop (this may get complicated)</li>
-  <li>Various other annoy cliches to fix.  It's been years, and now Im back to using it, so they will get discovered.</li>
+  <li>Make a 'left work' button on the activity page so that people can see you are no longer working and that the timers stop (this may get complicated)</li>
+  <li>Various other annoying glitches to fix.  It's been years, and now Im back to using it, so they will get discovered.</li>
   <li>Add database config files to the repo - done</li>
 </ul>
