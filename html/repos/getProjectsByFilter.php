@@ -1,6 +1,7 @@
 <?php
 require "Tables/ProjectRepository.php";
-$active = $_POST['active'];
+// $active = $_POST['active'];
+$active= "0";
 
 if (isset($active) && ($active == "0" || $active == "1")) {
 	$db = new ProjectRepository();
